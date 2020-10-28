@@ -171,5 +171,18 @@ export default {
   },
   message: {
     languageChanged: '言語が変更されました'
+  },
+
+  user: {
+    listings: {
+      userId: 'ID',
+      userName: '会社名',
+      userVehicle: '車両',
+      userRunning: '走っている'
+    }
+  },
+
+  general: {
+    action: 'アクション'
   }
 }

@@ -22,3 +22,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function fetchUsers(query) {
+  return request({
+    // url: `/users?perPage=${query.limit}&page=${query.page}`,
+    url: '/vue-element-admin/user/users',
+    method: 'get'
+  })
+}
