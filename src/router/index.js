@@ -77,7 +77,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/maps-leaf/index'),
         name: 'Dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
@@ -94,67 +94,6 @@ export const constantRoutes = [
         component: () => import('@/views/profile/index'),
         name: 'Profile',
         meta: { title: 'profile', icon: 'user', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/maps/view',
-    component: Layout,
-    redirect: '/maps-view/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/maps-view/index'),
-        name: 'Maps',
-        meta: { title: 'Map-View', icon: 'el-icon-map-location', noCache: true }
-      }
-    ]
-  },
-
-  {
-    path: '/maps/leaf',
-    component: Layout,
-    redirect: '/maps-leaf/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/maps-leaf/index'),
-        name: 'Maps',
-        meta: { title: 'Map-Leaf', icon: 'el-icon-map-location', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/users',
-    component: Layout,
-    redirect: '/users/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/user/index'),
-        name: 'User',
-        meta: {
-          title: 'userListings',
-          icon: 'el-icon-user',
-          noCache: true
-        }
-      }
-    ]
-  },
-  {
-    path: '/vehicle',
-    component: Layout,
-    redirect: '/users/index',
-    children: [
-      {
-        path: '/index',
-        component: () => import('@/views/forklift/tableview/components/VehicleTable'),
-        name: 'Vehicle',
-        meta: {
-          title: 'vehicleList',
-          icon: 'el-icon-truck',
-          noCache: true
-        }
       }
     ]
   }

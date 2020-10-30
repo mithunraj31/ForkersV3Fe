@@ -184,5 +184,19 @@ export default {
 
   general: {
     action: 'アクション'
+  },
+  maps: {
+    status: {
+      running: '稼働中',
+      stopping: '停止中'
+    },
+    event: {
+      suddenAccelaration: '急発進',
+      suddenDeceleration: '急停止',
+      suddenHandle: '急旋回',
+      accident: '事故'
+    },
+    online: 'オンライン',
+    offline: 'オフライン'
   }
 }
