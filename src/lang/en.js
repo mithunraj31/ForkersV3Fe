@@ -171,5 +171,32 @@ export default {
   },
   message: {
     languageChanged: 'Language has been changed'
+  },
+
+  user: {
+    listings: {
+      userId: 'ID',
+      userName: 'Name',
+      userVehicle: 'Vehicle',
+      userRunning: 'Running'
+    }
+  },
+
+  general: {
+    action: 'Action'
+  },
+  maps: {
+    status: {
+      running: 'Running',
+      stopping: 'Stopping'
+    },
+    event: {
+      suddenAccelaration: 'Sudden acceleration',
+      suddenDeceleration: 'Sudden deceleration',
+      suddenHandle: 'Sudden handle',
+      accident: 'Accident'
+    },
+    online: 'Online',
+    offline: 'Offline'
   }
 }

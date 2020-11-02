@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -77,7 +77,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/maps-leaf/index'),
         name: 'Dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
@@ -97,6 +97,7 @@ export const constantRoutes = [
       }
     ]
   }
+
 ]
 
 // export const originalConstantRoutes = [

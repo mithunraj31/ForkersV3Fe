@@ -6,7 +6,6 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
@@ -48,7 +47,6 @@ import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import LangSelect from '@/components/LangSelect'
-import Search from '@/components/HeaderSearch'
 
 export default {
   components: {
@@ -56,8 +54,7 @@ export default {
     Hamburger,
     ErrorLog,
     Screenfull,
-    LangSelect,
-    Search
+    LangSelect
   },
   computed: {
     ...mapGetters([
@@ -83,7 +80,7 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  background: #191919;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
@@ -95,7 +92,7 @@ export default {
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background:#000000;
     }
   }
 
@@ -122,7 +119,7 @@ export default {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: #009EBA;
       vertical-align: text-bottom;
 
       &.hover-effect {

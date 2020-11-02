@@ -36,6 +36,7 @@ export default {
   vertical-align: middle;
   width: 20px;
   height: 20px;
+  fill: #009EBA;
 }
 
 .hamburger.is-active {
