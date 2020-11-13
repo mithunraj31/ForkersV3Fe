@@ -81,8 +81,8 @@ export default {
     }
   },
   async mounted() {
-    await this.fetchData()
-    await this.fetchSummary()
+    // await this.fetchData()
+    // await this.fetchSummary()
   },
   methods: {
     async fetchData() {

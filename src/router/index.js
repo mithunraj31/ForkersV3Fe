@@ -79,7 +79,20 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/maps-leaf/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+        meta: { title: 'dashboard', icon: 'dashboard', affix: false }
+      }
+    ]
+  },
+  {
+    path: '/driveSummery',
+    component: Layout,
+    children: [
+      {
+        path: ':deviceId/:start/:end',
+        component: () => import('@/views/drive-summery/index'),
+        name: 'DriveSummery',
+        meta: { title: 'Drive Summery', icon: 'documentation', affix: false },
+        props: true
       }
     ]
   },
