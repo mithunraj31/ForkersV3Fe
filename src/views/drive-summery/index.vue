@@ -8,19 +8,35 @@
         :events="events"
       />
     </el-row>
+    <h3>{{ deviceId }}の走行データ</h3>
+    <el-row>
+      <data-table-drive :data="driveSummery" />
+    </el-row>
+    <h3>{{ deviceId }}のイベント</h3>
+    <el-row>
+      <data-table-events :data="events" />
+    </el-row>
   </div>
 </template>
 
 <script>
 import { fetchDriveSummery, fetchEventsByDeviceIdAndTime } from '@/api/device'
 import TimeLine from './components/TimeLine'
+import DataTableDrive from './components/DataTableDrive'
+import DataTableEvents from './components/DataTableEvents'
 
 export default {
   name: 'DriveSummery',
   components: {
-    TimeLine
+    TimeLine,
+    DataTableDrive,
+    DataTableEvents
   },
-  props: ['deviceId', 'start', 'end'],
+  props: {
+    deviceId: { type: String, default: '' },
+    start: { type: String, default: '' },
+    end: { type: String, default: '' }
+  },
   data() {
     return {
       driveSummery: [],
@@ -33,6 +49,7 @@ export default {
     }
   },
   async mounted() {
+    console.log(this.deviceId, this.start, this.end)
     if (this.deviceId && this.start && this.end) {
       await this.fetchData()
       await this.getEventData()
@@ -41,13 +58,8 @@ export default {
   methods: {
     async fetchData() {
       this.loading = true
-      const data = await fetchDriveSummery(
-        this.deviceId,
-        this.start,
-        this.end
-      )
+      const data = await fetchDriveSummery(this.deviceId, this.start, this.end)
       this.driveSummery = data
-      console.log(this.driveSummery)
       this.makeHeader()
       this.loading = false
     },
@@ -70,7 +82,16 @@ export default {
         }
       })
       this.header.headline = this.deviceId + 'の走行データ'
-      this.header.subtitle = '<p> ' + this.start + ' - ' + this.end + '</p><p>' + this.driveSummery.length + '車両の走行データと ' + operatorSessionCount + 'オペレーターの走行データが見つかりました</p>'
+      this.header.subtitle =
+        '<p> ' +
+        this.start +
+        ' - ' +
+        this.end +
+        '</p><p>' +
+        this.driveSummery.length +
+        '車両の走行データと ' +
+        operatorSessionCount +
+        'オペレーターの走行データが見つかりました</p>'
       // this.header.subtitle = "hellow";
     }
   }

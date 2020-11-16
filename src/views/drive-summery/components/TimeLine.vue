@@ -1,7 +1,22 @@
 <template>
   <div class="app-container">
+    <el-row :gutter="20">
+      <el-col :span="8" :offset="16">
+        <el-checkbox
+          v-model="engineCheck"
+          @change="processData()"
+        >Engine</el-checkbox>
+        <el-checkbox
+          v-model="driverCheck"
+          @change="processData()"
+        >Driver</el-checkbox>
+        <el-checkbox
+          v-model="eventCheck"
+          @change="processData()"
+        >Events</el-checkbox>
+      </el-col>
+    </el-row>
     <div id="timeline-embed" style="width: 100%; height: 400px" />
-    <font-awesome-icon icon="truck" />
   </div>
 </template>
 
@@ -13,9 +28,24 @@ export default {
   name: 'TimeLine',
   components: {},
   props: {
-    header: { type: Object },
-    driveSummery: { type: Array },
-    events: { type: Array }
+    header: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    driveSummery: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    events: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
   },
   data() {
     return {
@@ -29,23 +59,27 @@ export default {
           }
         },
         events: []
-      }
+      },
+      engineCheck: true,
+      driverCheck: true,
+      eventCheck: true
     }
   },
   beforeCreate() {},
   async mounted() {
-    this.processDriveData()
-    this.processEventData()
-    if (TL != null) {
+    this.processData()
+  },
+  methods: {
+    processData() {
+      this.processedDriveData.events = []
+      this.processDriveData()
+      this.processEventData()
       this.timeline = new TL.Timeline(
         'timeline-embed',
         this.processedDriveData,
         { duration: 200, scale_factor: 2, language: 'ja', marker_width_min: 1 }
       )
-    }
-    console.log(this.events)
-  },
-  methods: {
+    },
     processDriveData() {
       this.processedDriveData['title'] = {
         text: {
@@ -56,90 +90,92 @@ export default {
       if (this.driveSummery && this.driveSummery.length > 0) {
         this.driveSummery.forEach((drive) => {
           const session = {}
-
-          // When engine session
-          if (drive.engine_started_at) {
-            session['start_date'] = {
-              year: new Date(drive.engine_started_at).getFullYear(),
-              month: new Date(drive.engine_started_at).getMonth() + 1,
-              day: new Date(drive.engine_started_at).getDay() + 1,
-              hour: new Date(drive.engine_started_at).getHours(),
-              minute: new Date(drive.engine_started_at).getMinutes(),
-              second: new Date(drive.engine_started_at).getSeconds()
-            }
-            if (drive.engine_stoped_at) {
-              session['end_date'] = {
-                year: new Date(drive.engine_stoped_at).getFullYear(),
-                month: new Date(drive.engine_stoped_at).getMonth() + 1,
-                day: new Date(drive.engine_stoped_at).getDay() + 1,
-                hour: new Date(drive.engine_stoped_at).getHours(),
-                minute: new Date(drive.engine_stoped_at).getMinutes(),
-                second: new Date(drive.engine_stoped_at).getSeconds()
+          if (this.engineCheck) {
+            // When engine session
+            if (drive.engine_started_at) {
+              session['start_date'] = {
+                year: new Date(drive.engine_started_at).getFullYear(),
+                month: new Date(drive.engine_started_at).getMonth() + 1,
+                day: new Date(drive.engine_started_at).getDay() + 1,
+                hour: new Date(drive.engine_started_at).getHours(),
+                minute: new Date(drive.engine_started_at).getMinutes(),
+                second: new Date(drive.engine_started_at).getSeconds()
               }
-            }
-
-            session['isEngineSession'] = true
-            session['background'] = {
-              color: '#324157'
-            }
-            session['group'] = '走行'
-            const drivers = drive.driver_data
-              ? drive.driver_data.length.toString()
-              : '0'
-            session['text'] = {
-              headline: '車両の走行データ',
-              text:
-                '<p>' +
-                drivers +
-                'オペレーターの走行データが見つかりました</p>'
-            }
-          }
-          this.processedDriveData.events.push(session)
-
-          // When driving data is found
-          if (drive.driver_data && drive.driver_data.length > 0) {
-            drive.driver_data.forEach((driver) => {
-              const driveSession = {}
-              if (driver.drive_start_at) {
-                driveSession['start_date'] = {
-                  year: new Date(driver.drive_start_at).getFullYear(),
-                  month: new Date(driver.drive_start_at).getMonth() + 1,
-                  day: new Date(driver.drive_start_at).getDay() + 1,
-                  hour: new Date(driver.drive_start_at).getHours(),
-                  minute: new Date(driver.drive_start_at).getMinutes(),
-                  second: new Date(driver.drive_start_at).getSeconds()
-                }
-              }
-              if (driver.drive_ended_at) {
-                driveSession['end_date'] = {
-                  year: new Date(driver.drive_ended_at).getFullYear(),
-                  month: new Date(driver.drive_ended_at).getMonth() + 1,
-                  day: new Date(driver.drive_ended_at).getDay() + 1,
-                  hour: new Date(driver.drive_ended_at).getHours(),
-                  minute: new Date(driver.drive_ended_at).getMinutes(),
-                  second: new Date(driver.drive_ended_at).getSeconds()
+              if (drive.engine_stoped_at) {
+                session['end_date'] = {
+                  year: new Date(drive.engine_stoped_at).getFullYear(),
+                  month: new Date(drive.engine_stoped_at).getMonth() + 1,
+                  day: new Date(drive.engine_stoped_at).getDay() + 1,
+                  hour: new Date(drive.engine_stoped_at).getHours(),
+                  minute: new Date(drive.engine_stoped_at).getMinutes(),
+                  second: new Date(drive.engine_stoped_at).getSeconds()
                 }
               }
 
-              driveSession['isDriveSession'] = true
-              driveSession['background'] = {
-                color: '#206655'
+              session['isEngineSession'] = true
+              session['background'] = {
+                color: '#324157'
               }
               session['group'] = '走行'
-              const driverId = driver.driver_id
-              driveSession['text'] = {
-                headline: 'オペレーターの走行データ',
-                text: '<p>オペレーター : ' + driverId + '</p>'
+              const drivers = drive.driver_data
+                ? drive.driver_data.length.toString()
+                : '0'
+              session['text'] = {
+                headline: '車両の走行データ',
+                text:
+                  '<p>' +
+                  drivers +
+                  'オペレーターの走行データが見つかりました</p>'
               }
-              this.processedDriveData.events.push(driveSession)
-            })
+            }
+            this.processedDriveData.events.push(session)
+          }
+          // When driving data is found
+          if (this.driverCheck) {
+            if (drive.driver_data && drive.driver_data.length > 0) {
+              drive.driver_data.forEach((driver) => {
+                const driveSession = {}
+                if (driver.drive_start_at) {
+                  driveSession['start_date'] = {
+                    year: new Date(driver.drive_start_at).getFullYear(),
+                    month: new Date(driver.drive_start_at).getMonth() + 1,
+                    day: new Date(driver.drive_start_at).getDay() + 1,
+                    hour: new Date(driver.drive_start_at).getHours(),
+                    minute: new Date(driver.drive_start_at).getMinutes(),
+                    second: new Date(driver.drive_start_at).getSeconds()
+                  }
+                }
+                if (driver.drive_ended_at) {
+                  driveSession['end_date'] = {
+                    year: new Date(driver.drive_ended_at).getFullYear(),
+                    month: new Date(driver.drive_ended_at).getMonth() + 1,
+                    day: new Date(driver.drive_ended_at).getDay() + 1,
+                    hour: new Date(driver.drive_ended_at).getHours(),
+                    minute: new Date(driver.drive_ended_at).getMinutes(),
+                    second: new Date(driver.drive_ended_at).getSeconds()
+                  }
+                }
+
+                driveSession['isDriveSession'] = true
+                driveSession['background'] = {
+                  color: '#206655'
+                }
+                session['group'] = '走行'
+                const driverId = driver.driver_id
+                driveSession['text'] = {
+                  headline: 'オペレーターの走行データ',
+                  text: '<p>オペレーター : ' + driverId + '</p>'
+                }
+                this.processedDriveData.events.push(driveSession)
+              })
+            }
           }
         })
       }
     },
 
     processEventData() {
-      if (this.events && this.events.length > 0) {
+      if (this.eventCheck && this.events && this.events.length > 0) {
         this.events.forEach((event) => {
           const eventSession = {}
 
@@ -184,7 +220,7 @@ export default {
               icon = '<i class="fas fa-video"></i> '
               break
             default:
-                // code block
+            // code block
           }
 
           eventSession['isEvent'] = true
@@ -195,9 +231,16 @@ export default {
           eventSession['text'] = {
             headline: icon + eventType + ' イベント',
             text:
-                '<p>デバイス :' + event.device_id + '</p>' +
-                '<p>' + icon + eventType + ' イベント</p>' +
-                '<p>オペレーター :' + event.driver_id + '</p>'
+              '<p>デバイス :' +
+              event.device_id +
+              '</p>' +
+              '<p>' +
+              icon +
+              eventType +
+              ' イベント</p>' +
+              '<p>オペレーター :' +
+              event.driver_id +
+              '</p>'
           }
 
           this.processedDriveData.events.push(eventSession)
@@ -206,7 +249,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style rel="stylesheet/scss" lang="scss">

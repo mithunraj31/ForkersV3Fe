@@ -1,3 +1,4 @@
+/* eslint-disable */
 export var TL = (function (t) {
   var e = {};
   function i(n) {
@@ -8793,7 +8794,7 @@ export var TL = (function (t) {
               if (((this._el.content_container = M("div", "tl-text-content-container", this._el.container)), (this._el.date = M("h3", "tl-headline-date", this._el.content_container)), "" != this.data.headline)) {
                   var t = "tl-headline";
                   this.options.title && (t = "tl-headline tl-headline-title"), (this._el.headline = M("h2", t, this._el.content_container)), (this._el.headline.innerHTML = this.data.headline);
-                console.log(this.data.headline)
+
                 }
               if ("" != this.data.text) {
                   var e = "";

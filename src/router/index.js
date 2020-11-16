@@ -88,11 +88,14 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: ':deviceId/:start/:end',
+        path: ':deviceId',
         component: () => import('@/views/drive-summery/index'),
         name: 'DriveSummery',
         meta: { title: 'Drive Summery', icon: 'documentation', affix: false },
-        props: true
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId })
       }
     ]
   },
