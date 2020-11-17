@@ -9,7 +9,7 @@ export function fetchDevices() {
 
 export function fetchDriveSummery(deviceId, startTime, endTime) {
   return request({
-    url: '/devices/driveSummary?deviceId=' + deviceId + '&start=' + startTime + '&end=' + endTime,
+    url: '/devices/' + deviceId + '/driveSummary?start=' + startTime + '&end=' + endTime,
     method: 'get'
   })
 }

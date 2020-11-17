@@ -100,6 +100,22 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/operator',
+    component: Layout,
+    children: [
+      {
+        path: ':operatorId/driveSummary',
+        component: () => import('@/views/operator-drive-summery'),
+        name: 'OperatorDriveSummery',
+        meta: { title: 'Operator Drive Summary', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          operatorId: route.params.operatorId })
+      }
+    ]
+  },
+  {
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',

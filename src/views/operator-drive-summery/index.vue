@@ -6,13 +6,14 @@
         :drive-summery="driveSummery"
         :header="header"
         :events="events"
+        :operator-id="operatorId"
       />
     </el-row>
-    <h3>{{ deviceId }}の走行データ</h3>
+    <h3>{{ operatorId }}の走行データ</h3>
     <el-row>
       <data-table-drive :data="driveSummery" />
     </el-row>
-    <h3>{{ deviceId }}のイベント</h3>
+    <h3>{{ operatorId }}のイベント</h3>
     <el-row>
       <data-table-events :data="events" />
     </el-row>
@@ -20,21 +21,21 @@
 </template>
 
 <script>
-import { fetchDriveSummery, fetchEventsByDeviceIdAndTime } from '@/api/device'
+import { fetchOperatorDriveSummary, fetchOperatorEvents } from '@/api/operator'
 import TimeLine from './components/TimeLine'
 import DataTableDrive from './components/DataTableDrive'
 import DataTableEvents from './components/DataTableEvents'
 import moment from '@/utils/moment'
 
 export default {
-  name: 'DriveSummery',
+  name: 'OperatorDriveSummery',
   components: {
     TimeLine,
     DataTableDrive,
     DataTableEvents
   },
   props: {
-    deviceId: { type: String, default: '' },
+    operatorId: { type: String, default: '' },
     start: { type: String, default: '' },
     end: { type: String, default: '' }
   },
@@ -46,16 +47,13 @@ export default {
         headline: '',
         subtitle: ''
       },
-      duration: {
-        engine: 0,
-        drive: 0
-      },
-      loading: false
+      loading: false,
+      duration: 0
     }
   },
   async mounted() {
-    console.log(this.deviceId, this.start, this.end)
-    if (this.deviceId && this.start && this.end) {
+    if (this.operatorId && this.start && this.end) {
+      moment.locale('ja')
       await this.fetchData()
       await this.getEventData()
     }
@@ -63,7 +61,7 @@ export default {
   methods: {
     async fetchData() {
       this.loading = true
-      const data = await fetchDriveSummery(this.deviceId, this.start, this.end)
+      const data = await fetchOperatorDriveSummary(this.operatorId, this.start, this.end)
       this.driveSummery = data.data
       this.duration = data.duration
       this.makeHeader()
@@ -71,8 +69,8 @@ export default {
     },
     async getEventData() {
       this.loading = true
-      const data = await fetchEventsByDeviceIdAndTime(
-        this.deviceId,
+      const data = await fetchOperatorEvents(
+        this.operatorId,
         this.start,
         this.end
       )
@@ -82,13 +80,7 @@ export default {
     },
     makeHeader() {
       var timeFormat = 'dddd, MMMM Do YYYY, H:mm:ss'
-      let operatorSessionCount = 0
-      this.driveSummery.forEach((drive) => {
-        if (drive.driver_data) {
-          operatorSessionCount += drive.driver_data.length
-        }
-      })
-      this.header.headline = this.deviceId + 'の走行データ'
+      this.header.headline = this.operatorId + 'の走行データ'
       this.header.subtitle =
         '<p> ' +
         moment(this.start).format(timeFormat) +
@@ -96,11 +88,8 @@ export default {
         moment(this.end).format(timeFormat) +
         '</p><p>' +
         this.driveSummery.length +
-        '車両の走行データと ' +
-        operatorSessionCount +
         'オペレーターの走行データが見つかりました</p>' +
-        '<p>Total Engine Duration: ' + moment.duration(this.duration.engine, 'seconds').format('H:mm:ss') + '</p>' +
-        '<p>Total Drive Duration: ' + moment.duration(this.duration.drive, 'seconds').format('H:mm:ss') + '</p>'
+        '</p>Total Duration: ' + moment.duration(this.duration, 'seconds').format('H:mm:ss') + '</p>'
     }
   }
 }
