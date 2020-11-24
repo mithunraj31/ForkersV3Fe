@@ -12,6 +12,15 @@
       <el-table-column prop="type" label="Type" />
       <el-table-column prop="duration" label="Duration" />
       <el-table-column prop="operator" label="Operator" />
+      <el-table-column label="Operations">
+        <template slot-scope="scope">
+          <el-button
+
+            size="mini"
+            @click="navigate(scope.row)"
+          >Map</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <pagination
       :total="total"
@@ -77,6 +86,10 @@ export default {
     Pagination
   },
   props: {
+    deviceId: {
+      type: String,
+      default: ''
+    },
     data: {
       type: Array,
       default() {
@@ -116,6 +129,8 @@ export default {
             id: null,
             start: '',
             end: '',
+            startDate: '',
+            endDate: '',
             type: '',
             duration: '',
             operator: ''
@@ -127,11 +142,13 @@ export default {
             row.start = moment(driveSummery.engine_started_at).format(
               timeFormat
             )
+            row.startDate = driveSummery.engine_started_at
             row.type = '車両の走行データ'
             if (driveSummery.engine_stoped_at) {
               row.end = moment(driveSummery.engine_stoped_at).format(
                 timeFormat
               )
+              row.endDate = driveSummery.engine_stoped_at
               row.duration = moment
                 .duration(
                   new Date(driveSummery.engine_stoped_at) -
@@ -155,6 +172,7 @@ export default {
                   child['start'] = moment(driver.drive_start_at).format(
                     timeFormat
                   )
+                  child['startDate'] = driver.drive_start_at
                   child['type'] = 'オペレーターの走行データ'
                   child['operator'] = driver.driver_id
                 }
@@ -162,6 +180,7 @@ export default {
                   child['end'] = moment(driver.drive_ended_at).format(
                     timeFormat
                   )
+                  child['endDate'] = driver.drive_ended_at
                   child['duration'] = moment
                     .duration(
                       new Date(driver.drive_ended_at) -
@@ -190,6 +209,15 @@ export default {
       this.limit = limit
       this.tableData = []
       this.processData()
+    },
+    navigate(data) {
+      console.log(data)
+      this.$router.push({
+        path: '/devices/' + this.deviceId + '/drive-route',
+        query: {
+          start: data.startDate,
+          end: data.endDate }
+      })
     }
   }
 }

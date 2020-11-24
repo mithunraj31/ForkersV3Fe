@@ -11,6 +11,15 @@
       <el-table-column prop="end" label="End" />
       <el-table-column prop="duration" label="Duration" />
       <el-table-column prop="device" label="Device" />
+      <el-table-column label="Operations">
+        <template slot-scope="scope">
+          <el-button
+
+            size="mini"
+            @click="navigate(scope.row)"
+          >Map</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <pagination
       :total="total"
@@ -70,6 +79,8 @@ export default {
             id: null,
             start: '',
             end: '',
+            startDate: '',
+            endDate: '',
             duration: '',
             device: ''
           }
@@ -80,10 +91,12 @@ export default {
             row.start = moment(driveSummery.drive_started_at).format(
               timeFormat
             )
+            row.startDate = driveSummery.drive_started_at
             if (driveSummery.drive_stoped_at) {
               row.end = moment(driveSummery.drive_stoped_at).format(
                 timeFormat
               )
+              row.endDate = driveSummery.drive_stoped_at
               row.duration = moment
                 .duration(
                   new Date(driveSummery.drive_stoped_at) -
@@ -109,6 +122,15 @@ export default {
       this.limit = limit
       this.tableData = []
       this.processData()
+    },
+    navigate(data) {
+      console.log(data)
+      this.$router.push({
+        path: '/devices/' + data.device + '/drive-route',
+        query: {
+          start: data.startDate,
+          end: data.endDate }
+      })
     }
   }
 }

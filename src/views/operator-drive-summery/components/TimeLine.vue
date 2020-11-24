@@ -123,7 +123,9 @@ export default {
             driveSession['text'] = {
               headline: 'オペレーターの走行データ',
               text: '<p>オペレーター : ' + this.operatorId + '</p>' +
-                    '<p>デバイス : ' + deviceId + '</p>'
+                    '<p>デバイス : ' + deviceId + '</p>' +
+                    ' <a style="color: #70FAFA " href="#/devices/' + deviceId + '/drive-route?start=' + driver.drive_started_at + '&end=' + driver.drive_stoped_at + '"><i class="fas fa-map-marked-alt"></i> Route Map</a> '
+
             }
             this.processedDriveData.events.push(driveSession)
           }

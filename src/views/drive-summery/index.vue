@@ -6,11 +6,12 @@
         :drive-summery="driveSummery"
         :header="header"
         :events="events"
+        :device-id="deviceId"
       />
     </el-row>
     <h3>{{ deviceId }}の走行データ</h3>
     <el-row>
-      <data-table-drive :data="driveSummery" />
+      <data-table-drive :data="driveSummery" :device-id="deviceId" />
     </el-row>
     <h3>{{ deviceId }}のイベント</h3>
     <el-row>

@@ -20,3 +20,10 @@ export function fetchEventsByDeviceIdAndTime(deviceId, startTime, endTime) {
     method: 'get'
   })
 }
+
+export function fetchDriveRoute(deviceId, startTime, endTime) {
+  return request({
+    url: '/devices/' + deviceId + '/route?start=' + startTime + '&end=' + endTime,
+    method: 'get'
+  })
+}

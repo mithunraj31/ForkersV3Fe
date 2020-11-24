@@ -28,6 +28,10 @@ export default {
   name: 'TimeLine',
   components: {},
   props: {
+    deviceId: {
+      type: String,
+      default: ''
+    },
     header: {
       type: Object,
       default() {
@@ -164,7 +168,8 @@ export default {
                 const driverId = driver.driver_id
                 driveSession['text'] = {
                   headline: 'オペレーターの走行データ',
-                  text: '<p>オペレーター : ' + driverId + '</p>'
+                  text: '<p>オペレーター : ' + driverId + '</p>' +
+                  ' <a style="color: #70FAFA " href="#/devices/' + this.deviceId + '/drive-route?start=' + driver.drive_start_at + '&end=' + driver.drive_ended_at + '"><i class="fas fa-map-marked-alt"></i> Route Map</a> '
                 }
                 this.processedDriveData.events.push(driveSession)
               })
