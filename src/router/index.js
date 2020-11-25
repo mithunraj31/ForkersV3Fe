@@ -95,7 +95,38 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          deviceId: route.params.deviceId })
+          deviceId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
+    path: '/eventSummary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: { title: 'Event Summary', icon: 'el-icon-data-line', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: { title: 'EventDetail', noCache: true }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: { title: 'EventMap', noCache: true }
       }
     ]
   },
