@@ -127,6 +127,13 @@ export const constantRoutes = [
         name: 'EventMap',
         hidden: true,
         meta: { title: 'EventMap', noCache: true }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: { title: 'EventVideo', noCache: true }
       }
     ]
   },

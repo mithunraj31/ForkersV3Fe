@@ -19,10 +19,12 @@
 </template>
 
 <script>
+import { fetchEventsById } from '@/api/event'
 export default {
   name: 'DeviceDetail',
   data() {
     return {
+      events: null,
       tableData: [
         {
           key: 'DeviceId',
@@ -43,15 +45,18 @@ export default {
       ]
     }
   },
+
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row)
-    },
-    handleDelete(index, row) {
-      console.log(index, row)
-    },
-    detailMethod() {
-      console.log('clicked')
+    async fetchListings() {
+      let response = null
+      this.loading = true
+      response = await fetchEventsById(this.$route.params.eventId)
+      const datas = response.data
+      this.events = datas.map(this.mapEventsToDataTable)
+      this.loading = false
+      this.$router.push({
+        query: this.listQuery
+      })
     }
   }
 }
