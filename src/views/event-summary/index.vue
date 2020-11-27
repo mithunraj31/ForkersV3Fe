@@ -1,7 +1,13 @@
 <template>
   <el-col :span="24">
-    <el-table v-loading="loading" :data="events" style="width: 100%" @row-click="eventDetails">
-      <el-table-column label="EventId" prop="eventId" width="350" />
+    <el-table v-loading="loading" :data="events" style="width: 100%">
+      <el-table-column label="EventId" prop="eventId" width="350">
+        <template slot-scope="scope">
+          <label class="click" @click="eventClick(scope.row.eventId)">
+            {{ scope.row.eventId }}
+          </label>
+        </template>
+      </el-table-column>
       <el-table-column label="DeviceId" prop="deviceId" />
       <el-table-column label="Type" prop="type">
         <template slot-scope="scope">
@@ -9,8 +15,10 @@
         </template>
       </el-table-column>
       <el-table-column label="Video" prop="video">
-        <template v-if="scope.row" slot-scope="scope">
-          <i class="el-icon-video-camera-solid" />
+        <template v-if="scope.row.video" slot-scope="scope">
+          <div class="click">
+            <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="Company" prop="company" />
@@ -103,7 +111,7 @@ export default {
     }
   },
 
-  async created() {
+  async mounted() {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
       limit: +(this.$route.query.limit || this.listQuery.limit)
@@ -123,6 +131,14 @@ export default {
         video: event.video_id,
         company: event.username
       }
+    },
+
+    eventClick(eventId) {
+      this.$router.push(`/eventSummary/${eventId}/event-detail`)
+    },
+
+    videoClick(eventId) {
+      this.$router.push(`/eventSummary/${eventId}/event-video`)
     },
 
     eventDetails(val) {

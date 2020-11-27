@@ -1,18 +1,19 @@
 <template>
   <div class="app-container">
-    <div v-for="item in tableData" :key="item.key">
+    <div v-for="item in events" :key="item.key">
       <el-row>
         <el-col
           :span="3"
         ><div class="grid-content bg-purple" align="middle">
-          {{ item.key }}
+          <label> {{ item.key }}</label>
         </div>
         </el-col>
         <el-col
           :span="12"
         ><div class="grid-content bg-purple-light" align="middle">
           {{ item.value }}
-        </div></el-col>
+        </div>
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -25,27 +26,87 @@ export default {
   data() {
     return {
       events: null,
-      tableData: [
-        {
-          key: 'DeviceId',
-          value: '2003270003'
-        },
-        {
-          key: 'EventId',
-          value: '34f6a9aa-ee4c-42af-b255-0f8c1fad6ed6'
-        },
-        {
-          key: 'driverId',
-          value: '1'
-        },
-        {
-          key: 'videoId',
-          value: '34f6a9aa-ee4c-42af-b255-0f8c1fad6ed6'
-        }
-      ]
+      mapEventsToDataTable(event) {
+        return [
+          {
+            key: 'DeviceId',
+            value: event.device_id
+          },
+          {
+            key: 'EventId',
+            value: event.event_id
+          },
+          {
+            key: 'driverId',
+            value: event.driver_id
+          },
+          {
+            key: 'type',
+            value: event.type
+          },
+          {
+            key: 'latitude',
+            value: event.latitude
+          },
+          {
+            key: 'longitude',
+            value: event.longitude
+          },
+          {
+            key: 'gx',
+            value: event.gx
+          },
+          {
+            key: 'gy',
+            value: event.gy
+          },
+          {
+            key: 'gz',
+            value: event.gz
+          },
+          {
+            key: 'roll',
+            value: event.roll
+          },
+          {
+            key: 'pitch',
+            value: event.pitch
+          },
+          {
+            key: 'yaw',
+            value: event.yaw
+          },
+          {
+            key: 'status',
+            value: event.status
+          },
+          {
+            key: 'direction',
+            value: event.direction
+          },
+          {
+            key: 'speed',
+            value: event.speed
+          },
+          {
+            key: 'video_id',
+            value: event.video_id
+          },
+          {
+            key: 'time',
+            value: event.time
+          },
+          {
+            key: 'username',
+            value: event.username
+          }
+        ]
+      }
     }
   },
-
+  async mounted() {
+    await this.fetchListings()
+  },
   methods: {
     async fetchListings() {
       let response = null
@@ -53,10 +114,8 @@ export default {
       response = await fetchEventsById(this.$route.params.eventId)
       const datas = response.data
       this.events = datas.map(this.mapEventsToDataTable)
+      this.events = this.events[0]
       this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
     }
   }
 }
@@ -80,11 +139,11 @@ export default {
   background: #e5e9f2;
 }
 .grid-content {
-  border-radius: 1px;
-  min-height: 30px;
+  border-radius: 2px;
+  min-height: 10px;
 }
 .row-bg {
-  padding: 10px 0;
+  padding: 0;
   background-color: #f9fafc;
 }
 </style>

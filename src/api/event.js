@@ -16,7 +16,14 @@ export function fetchEvents(query) {
 
 export function fetchEventsById(eventId) {
   return request({
-    url: '/events?eventId=' + eventId,
+    url: `/events/${eventId}`,
+    method: 'get'
+  })
+}
+
+export function fetchEventsVideoById(eventId) {
+  return request({
+    url: `/events/video/${eventId}`,
     method: 'get'
   })
 }

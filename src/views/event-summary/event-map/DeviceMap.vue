@@ -1,15 +1,15 @@
 <template>
-  <div class="app-container">
+  <div class="map-container">
     <div v-loading="mapsLoading" style="height: 500px; width: 100%">
       <l-map v-if="showMap" :zoom="zoom" :center="center" :options="mapOptions" @update:center="centerUpdate" @update:zoom="zoomUpdate">
         <l-tile-layer :url="url" :attribution="attribution" />
-        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.location.lat, item.location.lng]">
+        <l-marker v-if="devices" :lat-lng="[devices.latitude, devices.longitude]">
           <l-icon>
             <font-awesome-icon
               icon="truck"
               :class="{
-                'truck-online': item.online,
-                'truck-offline': !item.online,
+                'truck-online': devices.status,
+                'truck-offline': !devices.status,
               }"
             />
           </l-icon>
@@ -20,8 +20,7 @@
 </template>
 
 <script>
-import { fetchDevices } from '@/api/device'
-import { fetchEventSummary } from '@/api/event'
+import { fetchEventsById } from '@/api/event'
 import { latLng } from 'leaflet'
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
 
@@ -35,7 +34,7 @@ export default {
   },
   data() {
     return {
-      devices: [],
+      devices: null,
       zoom: 5,
       center: latLng(39.8409351, 138.5981832),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -52,21 +51,15 @@ export default {
     }
   },
   async mounted() {
-    // await this.fetchData()
-    // await this.fetchSummary()
+    await this.fetchData()
   },
   methods: {
     async fetchData() {
       this.mapsLoading = true
-      const { data } = await fetchDevices()
-      this.devices = data
-      this.events.online = data.filter((x) => x.online).length
+      const { data } = await fetchEventsById(this.$route.params.eventId)
+      this.devices = data[0]
+      console.log(this.devices)
       this.mapsLoading = false
-    },
-    async fetchSummary() {
-      this.eventPanelLoading = true
-      const { data } = await fetchEventSummary()
-      console.log(data)
     },
     zoomUpdate(zoom) {
       this.currentZoom = zoom
@@ -87,7 +80,7 @@ export default {
 <style lang="scss">
 html,
 body,
-#app {
+#map {
   height: 100%;
   z-index: 400;
 }
@@ -110,11 +103,11 @@ body {
 
 .truck-online {
   font-size: 24px;
-  color: #24ae21;
+  color: #cad6ca;
 }
 
 .truck-offline {
   font-size: 24px;
-  color: #c0c0c0;
+  color: #0e0101;
 }
 </style>
