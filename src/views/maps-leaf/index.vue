@@ -25,7 +25,7 @@
           :url="url"
           :attribution="attribution"
         />
-        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.location.lat, item.location.lng]">
+        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.latitude, item.longitude]">
           <l-icon>
             <font-awesome-icon icon="truck" :class="{ 'truck-online': item.online, 'truck-offline': !item.online }" />
           </l-icon>
@@ -81,16 +81,16 @@ export default {
     }
   },
   async mounted() {
-    // await this.fetchData()
-    // await this.fetchSummary()
+    this.fetchData()
+    this.fetchSummary()
   },
   methods: {
     async fetchData() {
       this.mapsLoading = true
-      const { data } = await fetchDevices()
+      const { data, meta } = await fetchDevices()
       this.devices = data
-      this.events.online = data.filter(x => x.online).length
-      this.events.total = data.length
+      this.events.online = meta.online_count
+      this.events.total = meta.online_count + meta.offline_count
       this.mapsLoading = false
     },
     async fetchSummary() {
@@ -143,12 +143,12 @@ body {
 }
 
 .truck-online {
-  font-size: 24px;
+  font-size: 18px;
   color: #24AE21;
 }
 
 .truck-offline {
-  font-size: 24px;
-  color: #c0c0c0;
+  font-size: 18px;
+  color: #504d4d;
 }
 </style>
