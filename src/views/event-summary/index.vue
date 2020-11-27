@@ -16,13 +16,15 @@
           </template>
         </el-table-column>
         <el-table-column label="Video" prop="video">
-          <template v-if="scope.row.video" slot-scope="scope">
-            <div class="click">
+          <template slot-scope="scope">
+            <div v-if="scope.row.video" class="click">
               <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
+              <span>Available</span>
             </div>
-          </template>
-          <template v-else>
-            <p>processing</p>
+            <div v-else class="unclick">
+              <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
+              <span>Processing</span>
+            </div>
           </template>
         </el-table-column>
         <el-table-column label="Company" prop="company" />
