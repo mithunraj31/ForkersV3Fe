@@ -1,30 +1,35 @@
 <template>
-  <el-col :span="24">
-    <el-table v-loading="loading" :data="events" style="width: 100%">
-      <el-table-column label="EventId" prop="eventId" width="350">
-        <template slot-scope="scope">
-          <label class="click" @click="eventClick(scope.row.eventId)">
-            {{ scope.row.eventId }}
-          </label>
-        </template>
-      </el-table-column>
-      <el-table-column label="DeviceId" prop="deviceId" />
-      <el-table-column label="Type" prop="type">
-        <template slot-scope="scope">
-          {{ typeName(scope.row.type) }}
-        </template>
-      </el-table-column>
-      <el-table-column label="Video" prop="video">
-        <template v-if="scope.row.video" slot-scope="scope">
-          <div class="click">
-            <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="Company" prop="company" />
-    </el-table>
-    <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="onPaged" />
-  </el-col>
+  <el-card class="box-card" shadow="always">
+    <el-col :span="24">
+      <el-table v-loading="loading" :data="events" style="width: 100%">
+        <el-table-column label="EventId" prop="eventId" width="350">
+          <template slot-scope="scope">
+            <label class="click" @click="eventClick(scope.row.eventId)">
+              {{ scope.row.eventId }}
+            </label>
+          </template>
+        </el-table-column>
+        <el-table-column label="DeviceId" prop="deviceId" />
+        <el-table-column label="Type" prop="type">
+          <template slot-scope="scope">
+            {{ typeName(scope.row.type) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Video" prop="video">
+          <template v-if="scope.row.video" slot-scope="scope">
+            <div class="click">
+              <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
+            </div>
+          </template>
+          <template v-else>
+            <p>processing</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="Company" prop="company" />
+      </el-table>
+      <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="onPaged" />
+    </el-col>
+  </el-card>
 </template>
 
 <script>
@@ -125,10 +130,10 @@ export default {
   methods: {
     mapEventsToDataTable(event) {
       return {
-        eventId: event.event_id,
-        deviceId: event.device_id,
+        eventId: event.eventId,
+        deviceId: event.deviceId,
         type: event.type,
-        video: event.video_id,
+        video: event.video.convertedVideoUrl,
         company: event.username
       }
     },
@@ -148,8 +153,8 @@ export default {
       let response = null
       this.loading = true
       response = await fetchEvents(this.listQuery)
-      const datas = response.data.data
-      this.total = response.data.total
+      const datas = response.data
+      this.total = datas.length
       this.events = datas.map(this.mapEventsToDataTable)
       this.loading = false
       this.$router.push({
@@ -168,5 +173,9 @@ export default {
 .click {
   color: blue;
   cursor: pointer;
+}
+
+.box-card {
+  width: 100%;
 }
 </style>

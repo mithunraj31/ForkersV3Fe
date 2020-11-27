@@ -1,22 +1,24 @@
 <template>
-  <div class="app-container">
-    <div v-for="item in events" :key="item.key">
-      <el-row>
-        <el-col
-          :span="3"
-        ><div class="grid-content bg-purple" align="middle">
-          <label> {{ item.key }}</label>
-        </div>
-        </el-col>
-        <el-col
-          :span="12"
-        ><div class="grid-content bg-purple-light" align="middle">
-          {{ item.value }}
-        </div>
-        </el-col>
-      </el-row>
+  <el-card class="box-card" shadow="always">
+    <div v-loading="detailLoading" style="height: 500px; width: 100%">
+      <div v-for="item in events" :key="item.key">
+        <el-row>
+          <el-col
+            :span="3"
+          ><div class="grid-content bg-purple" align="middle">
+            <label> {{ item.key }}</label>
+          </div>
+          </el-col>
+          <el-col
+            :span="12"
+          ><div class="grid-content bg-purple-light" align="middle">
+            {{ item.value }}
+          </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -26,6 +28,7 @@ export default {
   data() {
     return {
       events: null,
+      detailLoading: false,
       mapEventsToDataTable(event) {
         return [
           {
@@ -109,13 +112,14 @@ export default {
   },
   methods: {
     async fetchListings() {
+      this.detailLoading = true
       let response = null
       this.loading = true
       response = await fetchEventsById(this.$route.params.eventId)
       const datas = response.data
       this.events = datas.map(this.mapEventsToDataTable)
       this.events = this.events[0]
-      this.loading = false
+      this.detailLoading = false
     }
   }
 }
