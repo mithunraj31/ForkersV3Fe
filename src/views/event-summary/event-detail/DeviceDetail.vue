@@ -1,23 +1,22 @@
 <template>
-  <el-card class="box-card" shadow="always">
-    <div v-loading="detailLoading" style="height: 500px; width: 100%">
-      <div v-for="item in events" :key="item.key">
-        <el-row>
-          <el-col
-            :span="3"
-          ><div class="grid-content bg-purple" align="middle">
-            <label> {{ item.key }}</label>
-          </div>
-          </el-col>
-          <el-col
-            :span="12"
-          ><div class="grid-content bg-purple-light" align="middle">
-            {{ item.value }}
-          </div>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
+  <el-card class="box-card">
+    <el-table
+      v-loading="detailLoading"
+      :data="events"
+      border
+      size="small"
+      stripe
+      style="width: 100%"
+    >
+      <el-table-column label="Title" prop="key" width="200">
+        <template slot-scope="scope">
+          <label>
+            {{ scope.row.key }}
+          </label>
+        </template>
+      </el-table-column>
+      <el-table-column label="Value" prop="value" />
+    </el-table>
   </el-card>
 </template>
 
@@ -92,7 +91,7 @@ export default {
             value: event.speed
           },
           {
-            key: 'video_id',
+            key: 'videoId',
             value: event.video_id
           },
           {
@@ -126,28 +125,4 @@ export default {
 </script>
 
 <style>
-.el-row {
-  margin-bottom: 10px;
-}
-.el-col {
-  border-radius: 2px;
-}
-
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 2px;
-  min-height: 10px;
-}
-.row-bg {
-  padding: 0;
-  background-color: #f9fafc;
-}
 </style>

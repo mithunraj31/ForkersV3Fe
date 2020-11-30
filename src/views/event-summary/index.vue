@@ -6,6 +6,7 @@
         :data="events"
         border
         size="small"
+        stripe
         style="width: 100%"
       >
         <el-table-column label="EventId" prop="eventId" width="200">
