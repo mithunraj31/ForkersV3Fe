@@ -1,8 +1,14 @@
 <template>
   <el-card class="box-card" shadow="always">
     <el-col :span="24">
-      <el-table v-loading="loading" :data="events" border style="width: 100%">
-        <el-table-column label="EventId" prop="eventId" width="350">
+      <el-table
+        v-loading="loading"
+        :data="events"
+        border
+        size="small"
+        style="width: 100%"
+      >
+        <el-table-column label="EventId" prop="eventId" width="200">
           <template slot-scope="scope">
             <label class="click" @click="eventClick(scope.row.eventId)">
               {{ scope.row.eventId }}
@@ -17,19 +23,28 @@
         </el-table-column>
         <el-table-column label="Video" prop="video">
           <template slot-scope="scope">
-            <div v-if="scope.row.video" class="click">
-              <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
+            <div
+              v-if="scope.row.video"
+              class="click"
+              @click="videoClick(scope.row.eventId)"
+            >
+              <i class="el-icon-video-camera-solid" />
               <span>Available</span>
             </div>
             <div v-else class="unclick">
-              <i class="el-icon-video-camera-solid" @click="videoClick(scope.row.eventId)" />
+              <i class="el-icon-video-camera-solid" />
               <span>Processing</span>
             </div>
           </template>
         </el-table-column>
         <el-table-column label="Company" prop="company" />
       </el-table>
-      <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="onPaged" />
+      <pagination
+        :total="total"
+        :page.sync="listQuery.page"
+        :limit.sync="listQuery.limit"
+        @pagination="onPaged"
+      />
     </el-col>
   </el-card>
 </template>

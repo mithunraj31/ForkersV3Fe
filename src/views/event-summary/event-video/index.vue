@@ -3,7 +3,12 @@
     <div v-if="!video">
       <h3>still processing video please wait</h3>
     </div>
-    <Media class="video" :kind="'video'" :controls="true" :src="['{{video}}']" />
+    <Media
+      class="video"
+      :kind="'video'"
+      :controls="true"
+      :src="['{{video}}']"
+    />
   </div>
 </template>
 
@@ -29,8 +34,12 @@ export default {
   methods: {
     async fetchData() {
       this.videoLoading = true
-      const { data } = await fetchEventsVideoById(this.$route.params.eventId)
-      this.video = data
+      try {
+        const { data } = await fetchEventsVideoById(this.$route.params.eventId)
+        this.video = data
+      } catch (e) {
+        console.log('error caught' + e)
+      }
       this.videoLoading = false
     }
   }
