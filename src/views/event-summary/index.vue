@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card" shadow="always">
     <el-col :span="24">
-      <el-table v-loading="loading" :data="events" style="width: 100%">
+      <el-table v-loading="loading" :data="events" border style="width: 100%">
         <el-table-column label="EventId" prop="eventId" width="350">
           <template slot-scope="scope">
             <label class="click" @click="eventClick(scope.row.eventId)">

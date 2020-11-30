@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <el-card class="box-card" shadow="always">
     <h3>{{ this.$t("event.id") }}: {{ $route.params.eventId }}</h3>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="DeviceDetails" name="first">
@@ -12,7 +12,7 @@
         <event-video />
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </el-card>
 </template>
 <script>
 import DeviceDetail from '../event-detail/DeviceDetail'
@@ -29,10 +29,9 @@ export default {
       activeName: 'first'
     }
   },
+  mounted() {},
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event)
-    }
+    handleClick(tab, event) {}
   }
 }
 </script>

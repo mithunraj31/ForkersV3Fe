@@ -82,7 +82,7 @@ html,
 body,
 #map {
   height: 100%;
-  z-index: 400;
+  z-index: 200;
 }
 
 body {
