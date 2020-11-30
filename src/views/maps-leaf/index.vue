@@ -12,7 +12,7 @@
         />
       </el-col>
     </el-row>
-    <div v-loading="mapsLoading" style="height: 500px; width: 100%">
+    <div v-loading="mapsLoading" style="height: 575px; width: 100%">
       <l-map
         v-if="showMap"
         :zoom="zoom"
@@ -88,7 +88,7 @@ export default {
     async fetchData() {
       this.mapsLoading = true
       const { data, meta } = await fetchDevices()
-      this.devices = data
+      this.devices = data.filter(device => device.latitude !== 0)
       this.events.online = meta.online_count
       this.events.total = meta.online_count + meta.offline_count
       this.mapsLoading = false
