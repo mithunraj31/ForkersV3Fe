@@ -6,10 +6,14 @@
         <device-detail />
       </el-tab-pane>
       <el-tab-pane :label="this.$t('event.mapsView')" name="second">
-        <device-map />
+        <div v-if="activeName === 'second'">
+          <device-map />
+        </div>
       </el-tab-pane>
       <el-tab-pane :label="this.$t('event.video')" name="third">
-        <event-video />
+        <div v-if="activeName === 'third'">
+          <event-video />
+        </div>
       </el-tab-pane>
     </el-tabs>
   </el-card>

@@ -1,9 +1,10 @@
 <template>
-  <div>
-    <div v-if="!video">
+  <div v-loading="videoLoading">
+    <div v-if="video === null">
       <h3>{{ this.$t("event.videoProcessing") }}</h3>
     </div>
     <Media
+      v-else
       class="video"
       :kind="'video'"
       :controls="true"
@@ -34,12 +35,8 @@ export default {
   methods: {
     async fetchData() {
       this.videoLoading = true
-      try {
-        const { data } = await fetchEventsVideoById(this.$route.params.eventId)
-        this.video = data
-      } catch (e) {
-        console.log('error caught' + e)
-      }
+      const { data } = await fetchEventsVideoById(this.$route.params.eventId)
+      this.video = data
       this.videoLoading = false
     }
   }
