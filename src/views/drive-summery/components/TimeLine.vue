@@ -22,7 +22,7 @@
 
 <script>
 // import { TL } from "./timeline-lib";
-var _TL = require('./timeline-lib')
+var _TL = require('./../../../utils/timeline-lib.js')
 var TL = _TL.TL
 export default {
   name: 'TimeLine',
@@ -168,8 +168,17 @@ export default {
                 const driverId = driver.driver_id
                 driveSession['text'] = {
                   headline: 'オペレーターの走行データ',
-                  text: '<p>オペレーター : ' + driverId + '</p>' +
-                  ' <a style="color: #70FAFA " href="#/devices/' + this.deviceId + '/drive-route?start=' + driver.drive_start_at + '&end=' + driver.drive_ended_at + '"><i class="fas fa-map-marked-alt"></i> Route Map</a> '
+                  text:
+                    '<p>オペレーター : ' +
+                    driverId +
+                    '</p>' +
+                    ' <a style="color: #70FAFA " href="#/devices/' +
+                    this.deviceId +
+                    '/drive-route?start=' +
+                    driver.drive_start_at +
+                    '&end=' +
+                    driver.drive_ended_at +
+                    '"><i class="fas fa-map-marked-alt"></i> Route Map</a> '
                 }
                 this.processedDriveData.events.push(driveSession)
               })
@@ -247,9 +256,15 @@ export default {
               event.driver_id +
               '</p>'
           }
+          if (event.video && event.video.convertedVideoUrl) {
+            eventSession['media'] = {
+              url: event.video.convertedVideoUrl
+            }
+          }
 
           this.processedDriveData.events.push(eventSession)
         })
+        console.log(this.processedDriveData.events)
       }
     }
   }

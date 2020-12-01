@@ -25,7 +25,7 @@
           :url="url"
           :attribution="attribution"
         />
-        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.latitude, item.longitude]">
+        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.latitude, item.longitude]" :z-index-offset="item.online?100:0">
           <l-icon>
             <font-awesome-icon icon="truck" :class="{ 'truck-online': item.online, 'truck-offline': !item.online }" />
           </l-icon>
@@ -88,7 +88,10 @@ export default {
     async fetchData() {
       this.mapsLoading = true
       const { data, meta } = await fetchDevices()
-      this.devices = data.filter(device => device.latitude !== 0)
+      const datafilter = data.filter(device => device.latitude !== 0)
+
+      this.devices = datafilter
+
       this.events.online = meta.online_count
       this.events.total = meta.online_count + meta.offline_count
       this.mapsLoading = false

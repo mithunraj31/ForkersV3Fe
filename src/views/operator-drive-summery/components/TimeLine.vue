@@ -18,7 +18,7 @@
 
 <script>
 // import { TL } from "./timeline-lib";
-var _TL = require('./timeline-lib')
+var _TL = require('./../../../utils/timeline-lib.js')
 var TL = _TL.TL
 export default {
   name: 'TimeLine',

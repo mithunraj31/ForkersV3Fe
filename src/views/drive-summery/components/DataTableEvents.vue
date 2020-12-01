@@ -15,6 +15,40 @@
         </template>
       </el-table-column>
       <el-table-column prop="operator" label="Operator" />
+      <el-table-column label="Video">
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.video"
+            icon="fas fa-play"
+            size="mini"
+            @click="navigateToVideo(scope.row)"
+          />
+          <template v-if="!scope.row.video">
+            <i class="fas fa-clock" />
+            <span style="margin-left: 10px">{{ scope.row.videoStatus }}</span>
+          </template>
+        </template>
+      </el-table-column>
+      <el-table-column label="Map">
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.map"
+            icon="fa fa-map-marked-alt"
+            size="mini"
+            @click="navigateToMap(scope.row)"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="Event">
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.map"
+            icon="fa fa-info"
+            size="mini"
+            @click="navigateToEvent(scope.row)"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <pagination
       :total="total"
@@ -71,21 +105,24 @@ export default {
           i < this.data.length && i < this.page * this.limit;
           i++
         ) {
-          const driveSummery = this.data[i]
+          const eventSummery = this.data[i]
           var row = {
             id: null,
             type: '',
             operator: '',
             date: '',
-            icon: ''
+            icon: '',
+            video: false,
+            videoStatus: '',
+            map: false
           }
 
-          row.id = driveSummery.event_id
-          row.date = moment(driveSummery.time).format(timeFormat)
-          row.operator = driveSummery.driver_id
+          row.id = eventSummery.event_id
+          row.date = moment(eventSummery.time).format(timeFormat)
+          row.operator = eventSummery.driver_id
           var eventType = 'Unknown'
           var icon = ''
-          switch (driveSummery.type) {
+          switch (eventSummery.type) {
             case 16:
               eventType = 'Acceleration'
               icon = 'fas fa-shipping-fast'
@@ -117,11 +154,25 @@ export default {
             default:
             // code block
           }
+          if (eventSummery.video) {
+            if (eventSummery.video.convertedVideoUrl) {
+              row.video = true
+            }
+            row.videoStatus = eventSummery.video.videoUrls
+              ? eventSummery.video.videoUrls.length
+              : 0
+            row.videoStatus += '/' + eventSummery.numberOfCameras
+          } else {
+            row.videoStatus = 'N/A'
+          }
+          if (eventSummery.sensorValue.latitude !== 0) {
+            row.map = true
+          }
+
           row.type = eventType
           row.icon = icon
           this.tableData.push(row)
         }
-        console.log(this.tableData)
       }
     },
     onPage({ page, limit }) {
@@ -129,6 +180,21 @@ export default {
       this.limit = limit
       this.tableData = []
       this.processData()
+    },
+    navigateToMap(data) {
+      this.$router.push({
+        path: '/eventSummary/' + data.id + '/event-map'
+      })
+    },
+    navigateToVideo(data) {
+      this.$router.push({
+        path: '/eventSummary/' + data.id + '/event-video'
+      })
+    },
+    navigateToEvent(data) {
+      this.$router.push({
+        path: '/eventSummary/' + data.id + '/event-detail'
+      })
     }
   }
 }

@@ -8022,7 +8022,7 @@ export var TL = (function (t) {
           }
           addEvent(t, e) {
               var i = this._assignID(t);
-              return void 0 === t.start_date ? (z("Missing start date, skipping event"), null) : (this._processDates(t), this._tidyFields(t), this.events.push(t), (this.event_dict[i] = t), e || Pt(this.events), i);
+              return void 0 === t.start_date ? (z("Missing start date, skipping event"), console.log(t), null) : (this._processDates(t), this._tidyFields(t), this.events.push(t), (this.event_dict[i] = t), e || Pt(this.events), i);
           }
           addEra(t) {
               var e = this._assignID(t);
@@ -10053,7 +10053,8 @@ export var TL = (function (t) {
                   (this._el.line_right = M("div", "tl-timemarker-line-right", this._el.timespan)),
                   this.data.media)
               ) {
-                  this._el.media_container = M("div", "tl-timemarker-media-container", this._el.content);
+                  this._el.media_container = this._el.content;
+                  // this._el.media_container = M("div", "tl-timemarker-media-container", this._el.content);
                   var t = { url: this.data.media.thumbnail },
                       e = this.data.media.thumbnail ? We(t, !0) : null;
                   if (e) {
@@ -10067,7 +10068,7 @@ export var TL = (function (t) {
                           i.loadMedia();
                   } else {
                       var n = We(this.data.media).type;
-                      this._el.media = M("span", "tl-icon-" + n, this._el.media_container);
+                      // this._el.media = M("span", "tl-icon-" + n, this._el.media_container);
                   }
               }
 
