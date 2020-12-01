@@ -26,12 +26,14 @@ export default {
   },
   data() {
     return {
-      activeName: 'first'
+      activeName: localStorage.getItem('Tab') || 'first'
     }
   },
   mounted() {},
   methods: {
-    handleClick(tab, event) {}
+    handleClick(tab, event) {
+      localStorage.setItem('Tab', this.activeName)
+    }
   }
 }
 </script>
