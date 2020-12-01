@@ -32,7 +32,6 @@
 <script>
 import { fetchEventsById } from '@/api/event'
 import { latLng } from 'leaflet'
-import 'leaflet/dist/leaflet.css'
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
 
 export default {

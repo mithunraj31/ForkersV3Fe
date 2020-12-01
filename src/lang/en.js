@@ -207,7 +207,8 @@ export default {
     value: 'value',
     yaw: 'yaw',
     deviceDetails: 'Device Details',
-    mapsView: 'Maps View'
+    mapsView: 'Maps View',
+    videoProcessing: 'still processing video please wait'
 
   },
 

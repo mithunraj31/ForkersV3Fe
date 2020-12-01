@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!video">
-      <h3>still processing video please wait</h3>
+      <h3>{{ this.$t("event.videoProcessing") }}</h3>
     </div>
     <Media
       class="video"
