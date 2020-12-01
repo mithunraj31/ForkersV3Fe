@@ -152,10 +152,10 @@ export default {
   methods: {
     mapEventsToDataTable(event) {
       return {
-        eventId: event.eventId,
-        deviceId: event.deviceId,
+        eventId: event.event_id,
+        deviceId: event.device_id,
         type: event.type,
-        video: event.video.convertedVideoUrl,
+        video: event.video.converted_video_url,
         company: event.username
       }
     },

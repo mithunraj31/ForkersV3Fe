@@ -37,9 +37,12 @@ export default {
   methods: {
     async fetchData() {
       this.videoLoading = true
-      const { data } = await fetchEventsVideoById(this.$route.params.eventId)
-      this.video = data
-      this.videoLoading = false
+      try {
+        const { data } = await fetchEventsVideoById(this.$route.params.eventId)
+        this.video = data
+      } catch (exception) {
+        this.videoLoading = false
+      }
     }
   }
 }
