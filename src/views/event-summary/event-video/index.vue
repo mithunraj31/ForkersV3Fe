@@ -40,6 +40,7 @@ export default {
       try {
         const { data } = await fetchEventsVideoById(this.$route.params.eventId)
         this.video = data
+        this.videoLoading = false
       } catch (exception) {
         this.videoLoading = false
       }
