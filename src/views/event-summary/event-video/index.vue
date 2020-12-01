@@ -1,15 +1,17 @@
 <template>
-  <div v-loading="videoLoading">
-    <div v-if="video === null">
-      <h3>{{ this.$t("event.videoProcessing") }}</h3>
+  <div>
+    <div v-loading="videoLoading" style="height: 500px; width: 100%">
+      <div v-if="video === null">
+        <h3>{{ this.$t("event.videoProcessing") }}</h3>
+      </div>
+      <Media
+        v-else
+        class="video"
+        :kind="'video'"
+        :controls="true"
+        :src="['{{video}}']"
+      />
     </div>
-    <Media
-      v-else
-      class="video"
-      :kind="'video'"
-      :controls="true"
-      :src="['{{video}}']"
-    />
   </div>
 </template>
 
@@ -18,14 +20,14 @@ import { fetchEventsVideoById } from '@/api/event'
 import Media from '@dongido/vue-viaudio'
 
 export default {
-  name: 'App',
-  videoLoading: 'false',
+  name: 'EventVideo',
   components: {
     Media
   },
   data() {
     return {
-      video: null
+      video: null,
+      videoLoading: false
     }
   },
   async mounted() {

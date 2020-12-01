@@ -21,6 +21,7 @@
                 'truck-online': devices.status,
                 'truck-offline': !devices.status,
               }"
+              @click="eventClick()"
             />
           </l-icon>
         </l-marker>
@@ -82,6 +83,12 @@ export default {
     },
     innerClick() {
       alert('Click')
+    },
+    eventClick() {
+      localStorage.setItem('Tab', 'first')
+      this.$router.push(
+        `/eventSummary/${this.$route.params.eventId}/event-detail`
+      )
     }
   }
 }
@@ -113,7 +120,7 @@ body {
 
 .truck-online {
   font-size: 24px;
-  color: #cad6ca;
+  color: #e6c01a;
 }
 
 .truck-offline {
