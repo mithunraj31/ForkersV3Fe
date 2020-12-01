@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card" shadow="always">
-    <h3>{{ this.$t("event.id") }}: {{ $route.params.eventId }}</h3>
+    <h5>{{ this.$t("event.id") }}: {{ $route.params.eventId }}</h5>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="DeviceDetails" name="first">
         <device-detail />

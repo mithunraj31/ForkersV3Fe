@@ -172,7 +172,7 @@ export default {
       this.loading = true
       response = await fetchEvents(this.listQuery)
       const datas = response.data
-      this.total = datas.length
+      this.total = response.total
       this.events = datas.map(this.mapEventsToDataTable)
       this.loading = false
       this.$router.push({
