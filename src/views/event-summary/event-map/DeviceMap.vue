@@ -1,9 +1,19 @@
 <template>
   <div class="map-container">
     <div v-loading="mapsLoading" style="height: 500px; width: 100%">
-      <l-map v-if="showMap" :zoom="zoom" :center="center" :options="mapOptions" @update:center="centerUpdate" @update:zoom="zoomUpdate">
+      <l-map
+        v-if="showMap"
+        :zoom="zoom"
+        :center="center"
+        :options="mapOptions"
+        @update:center="centerUpdate"
+        @update:zoom="zoomUpdate"
+      >
         <l-tile-layer :url="url" :attribution="attribution" />
-        <l-marker v-if="devices" :lat-lng="[devices.latitude, devices.longitude]">
+        <l-marker
+          v-if="devices"
+          :lat-lng="[devices.latitude, devices.longitude]"
+        >
           <l-icon>
             <font-awesome-icon
               icon="truck"
@@ -22,6 +32,7 @@
 <script>
 import { fetchEventsById } from '@/api/event'
 import { latLng } from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
 
 export default {
@@ -38,7 +49,8 @@ export default {
       zoom: 5,
       center: latLng(39.8409351, 138.5981832),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       currentZoom: 5,
       currentCenter: latLng(39.8409351, 138.5981832),
       showParagraph: false,
@@ -58,7 +70,6 @@ export default {
       this.mapsLoading = true
       const { data } = await fetchEventsById(this.$route.params.eventId)
       this.devices = data[0]
-      console.log(this.devices)
       this.mapsLoading = false
     },
     zoomUpdate(zoom) {

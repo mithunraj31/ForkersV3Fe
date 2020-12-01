@@ -8,14 +8,14 @@
       stripe
       style="width: 100%"
     >
-      <el-table-column label="Title" prop="key" width="200">
+      <el-table-column :label="this.$t('event.title')" prop="key" width="200">
         <template slot-scope="scope">
           <label>
             {{ scope.row.key }}
           </label>
         </template>
       </el-table-column>
-      <el-table-column label="Value" prop="value" />
+      <el-table-column :label="this.$t('event.value')" prop="value" />
     </el-table>
   </el-card>
 </template>
@@ -25,81 +25,99 @@ import { fetchEventsById } from '@/api/event'
 export default {
   name: 'DeviceDetail',
   data() {
+    const deviceIdColumn = this.$t('event.deviceId')
+    const eventIdColumn = this.$t('event.eventId')
+    const typeColumn = this.$t('event.type')
+    const driverIdColumn = this.$t('event.driverId')
+    const latitudeColumn = this.$t('event.latitude')
+    const longitudeColumn = this.$t('event.longitude')
+    const gxColumn = this.$t('event.gx')
+    const gyColumn = this.$t('event.gy')
+    const gzColumn = this.$t('event.gz')
+    const rollColumn = this.$t('event.roll')
+    const pitchColumn = this.$t('event.pitch')
+    const yawColumn = this.$t('event.yaw')
+    const statusColumn = this.$t('event.status')
+    const directionColumn = this.$t('event.direction')
+    const speedColumn = this.$t('event.speed')
+    const videoIdColumn = this.$t('event.videoId')
+    const timeColumn = this.$t('event.time')
+    const usernameColumn = this.$t('event.username')
     return {
       events: null,
       detailLoading: false,
       mapEventsToDataTable(event) {
         return [
           {
-            key: 'DeviceId',
+            key: deviceIdColumn,
             value: event.device_id
           },
           {
-            key: 'EventId',
+            key: eventIdColumn,
             value: event.event_id
           },
           {
-            key: 'driverId',
+            key: driverIdColumn,
             value: event.driver_id
           },
           {
-            key: 'type',
+            key: typeColumn,
             value: event.type
           },
           {
-            key: 'latitude',
+            key: latitudeColumn,
             value: event.latitude
           },
           {
-            key: 'longitude',
+            key: longitudeColumn,
             value: event.longitude
           },
           {
-            key: 'gx',
+            key: gxColumn,
             value: event.gx
           },
           {
-            key: 'gy',
+            key: gyColumn,
             value: event.gy
           },
           {
-            key: 'gz',
+            key: gzColumn,
             value: event.gz
           },
           {
-            key: 'roll',
+            key: rollColumn,
             value: event.roll
           },
           {
-            key: 'pitch',
+            key: pitchColumn,
             value: event.pitch
           },
           {
-            key: 'yaw',
+            key: yawColumn,
             value: event.yaw
           },
           {
-            key: 'status',
+            key: statusColumn,
             value: event.status
           },
           {
-            key: 'direction',
+            key: directionColumn,
             value: event.direction
           },
           {
-            key: 'speed',
+            key: speedColumn,
             value: event.speed
           },
           {
-            key: 'videoId',
+            key: videoIdColumn,
             value: event.video_id
           },
           {
-            key: 'time',
+            key: timeColumn,
             value: event.time
           },
           {
-            key: 'username',
+            key: usernameColumn,
             value: event.username
           }
         ]

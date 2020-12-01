@@ -1,14 +1,14 @@
 <template>
   <el-card class="box-card" shadow="always">
-    <h5>{{ this.$t("event.id") }}: {{ $route.params.eventId }}</h5>
+    <h5>{{ this.$t("event.eventId") }}: {{ $route.params.eventId }}</h5>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="DeviceDetails" name="first">
+      <el-tab-pane :label="this.$t('event.deviceDetails')" name="first">
         <device-detail />
       </el-tab-pane>
-      <el-tab-pane label="Maps View" name="second">
+      <el-tab-pane :label="this.$t('event.mapsView')" name="second">
         <device-map />
       </el-tab-pane>
-      <el-tab-pane label="Video" name="third">
+      <el-tab-pane :label="this.$t('event.video')" name="third">
         <event-video />
       </el-tab-pane>
     </el-tabs>

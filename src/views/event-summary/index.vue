@@ -9,20 +9,24 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column label="EventId" prop="eventId" width="200">
+        <el-table-column
+          :label="this.$t('event.eventId')"
+          prop="eventId"
+          width="200"
+        >
           <template slot-scope="scope">
             <label class="click" @click="eventClick(scope.row.eventId)">
               {{ scope.row.eventId }}
             </label>
           </template>
         </el-table-column>
-        <el-table-column label="DeviceId" prop="deviceId" />
-        <el-table-column label="Type" prop="type">
+        <el-table-column :label="this.$t('event.deviceId')" prop="deviceId" />
+        <el-table-column :label="this.$t('event.type')" prop="type">
           <template slot-scope="scope">
             {{ typeName(scope.row.type) }}
           </template>
         </el-table-column>
-        <el-table-column label="Video" prop="video">
+        <el-table-column :label="this.$t('event.video')" prop="video">
           <template slot-scope="scope">
             <div
               v-if="scope.row.video"
@@ -38,7 +42,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Company" prop="company" />
+        <el-table-column :label="this.$t('event.company')" prop="company" />
       </el-table>
       <pagination
         :total="total"
@@ -80,55 +84,55 @@ export default {
       return (type) => {
         switch (type) {
           case 0:
-            return this.$t('Manual')
+            return this.$t('type.Manual')
           case 1:
-            return this.$t('Time')
+            return this.$t('type.Time')
           case 2:
-            return this.$t('Motion')
+            return this.$t('type.Motion')
           case 3:
-            return this.$t('Speed')
+            return this.$t('type.Speed')
           case 4:
-            return this.$t('Gsensor')
+            return this.$t('type.Gsensor')
           case 5:
-            return this.$t('Temperature')
+            return this.$t('type.Temperature')
           case 6:
-            return this.$t('Alaram' + '1')
+            return this.$t('type.Alaram') + '1'
           case 7:
-            return this.$t('Alaram' + '2')
+            return this.$t('type.Alaram') + '2'
           case 8:
-            return this.$t('Alaram' + '3')
+            return this.$t('type.Alaram') + '3'
           case 9:
-            return this.$t('Alaram' + '4')
+            return this.$t('type.Alaram') + '4'
           case 10:
-            return this.$t('Alaram' + '5')
+            return this.$t('type.Alaram') + '5'
           case 11:
-            return this.$t('Alaram' + '6')
+            return this.$t('type.Alaram') + '6'
           case 12:
-            return this.$t('Alaram' + '7')
+            return this.$t('type.Alaram') + '7'
           case 13:
-            return this.$t('Alaram' + '8')
+            return this.$t('type.Alaram') + '8'
           case 14:
-            return this.$t('Button')
+            return this.$t('type.Button')
           case 15:
-            return this.$t('RFID')
+            return this.$t('type.RFID')
           case 16:
-            return this.$t('Accelerate')
+            return this.$t('type.Accelerate')
           case 17:
-            return this.$t('Deceleration')
+            return this.$t('type.Deceleration')
           case 18:
-            return this.$t('TurnAngle')
+            return this.$t('type.TurnAngle')
           case 19:
-            return this.$t('TurnGyroscope')
+            return this.$t('type.TurnGyroscope')
           case 20:
-            return this.$t('Impact')
+            return this.$t('type.Impact')
           case 21:
-            return this.$t('TurnLeft​')
+            return this.$t('type.TurnLeft​')
           case 22:
-            return this.$t('TurnRight')
+            return this.$t('type.TurnRight')
           case 23:
-            return this.$t('clip')
+            return this.$t('type.clip')
           default:
-            return this.$t('none')
+            return this.$t('type.none')
         }
       }
     }

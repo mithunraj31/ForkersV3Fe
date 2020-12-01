@@ -108,7 +108,7 @@ export const constantRoutes = [
         path: '',
         component: () => import('@/views/event-summary/index'),
         name: 'EventSummary',
-        meta: { title: 'Event Summary', icon: 'el-icon-data-line', affix: false },
+        meta: { title: 'EventSummary', icon: 'el-icon-data-line', affix: false },
         props: route => ({
           start: route.query.start,
           end: route.query.end
