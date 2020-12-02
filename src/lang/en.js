@@ -29,6 +29,7 @@ export default {
     mixChart: 'Mix Chart',
     example: 'Example',
     nested: 'Nested Routes',
+    EventSummary: 'Event Summary',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -180,6 +181,57 @@ export default {
       userVehicle: 'Vehicle',
       userRunning: 'Running'
     }
+  },
+
+  event: {
+    eventId: 'Event ID',
+    deviceId: 'Device ID',
+    type: 'Type',
+    video: 'Video',
+    company: 'Company',
+    driverId: 'driverId',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    gx: 'gx',
+    gy: 'gy',
+    gz: 'gz',
+    roll: 'roll',
+    pitch: 'pitch',
+    status: 'status',
+    direction: 'direction',
+    speed: 'speed',
+    videoId: 'videoId',
+    time: 'time',
+    username: 'username',
+    title: 'title',
+    value: 'value',
+    yaw: 'yaw',
+    deviceDetails: 'Device Details',
+    mapsView: 'Maps View',
+    videoProcessing: 'still processing video please wait'
+
+  },
+
+  type: {
+    Manual: 'Manual',
+    Time: 'Time',
+    Motion: 'Motion',
+    Speed: 'Speed',
+    Gsensor: 'Gsensor',
+    Temperature: 'Temperature',
+    Alaram: 'Alaram',
+    Button: 'Button',
+    RFID: 'RFID',
+    Accelerate: 'Accelerate',
+    Deceleration: 'Deceleration',
+    TurnAngle: 'TurnAngle',
+    TurnGyroscope: 'TurnGyroscope',
+    Impact: 'Impact',
+    TurnLeft: 'TurnLeft',
+    TurnRight: 'TurnRight',
+    clip: 'clip',
+    default: 'default',
+    none: 'none'
   },
 
   general: {

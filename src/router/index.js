@@ -110,6 +110,43 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/eventSummary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: { title: 'EventSummary', icon: 'el-icon-data-line', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: { title: 'EventDetail', noCache: true }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: { title: 'EventMap', noCache: true }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: { title: 'EventVideo', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/operator',
     component: Layout,
     children: [

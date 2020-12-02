@@ -29,6 +29,7 @@ export default {
     mixChart: 'Mixチャート',
     example: 'Example',
     nested: 'Nested Routes',
+    EventSummary: 'イベントの概要',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -180,6 +181,57 @@ export default {
       userVehicle: '車両',
       userRunning: '走っている'
     }
+  },
+
+  event: {
+    eventId: 'イベントID',
+    deviceId: 'デバイスID',
+    type: 'タイプ',
+    video: 'ビデオ',
+    company: '会社',
+    driverId: 'ドライバーID',
+    latitude: '緯度',
+    longitude: '経度',
+    gx: 'gx',
+    gy: 'gy',
+    gz: 'gz',
+    roll: 'ロール',
+    pitch: 'ピッチ',
+    status: '状態',
+    direction: '方向',
+    speed: '速度',
+    videoId: 'ビデオID',
+    time: '時間',
+    username: 'ユーザー名',
+    title: '題名',
+    value: '値',
+    yaw: 'yaw',
+    deviceDetails: 'デバイスの詳細',
+    mapsView: 'マップビュー',
+    videoProcessing: 'まだビデオを処理していますしばらくお待ちください'
+
+  },
+
+  type: {
+    Manual: 'マニュアル',
+    Time: '時間',
+    Motion: 'モーション',
+    Speed: '速度',
+    Gsensor: 'Gセンサー',
+    Temperature: '温度',
+    Alaram: 'アララム',
+    Button: 'ボタン',
+    RFID: 'RFID',
+    Accelerate: '加速',
+    Deceleration: '減速',
+    TurnAngle: '角度',
+    TurnGyroscope: 'ターンジャイロスコープ',
+    Impact: '影響',
+    TurnLeft: '左折してください',
+    TurnRight: '右に曲がる',
+    clip: 'クリップ',
+    default: 'デフォルト',
+    none: '無し'
   },
 
   general: {
