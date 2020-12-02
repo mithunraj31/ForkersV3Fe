@@ -13,6 +13,7 @@
         <l-marker
           v-if="devices"
           :lat-lng="[devices.latitude, devices.longitude]"
+          @click="eventClick()"
         >
           <l-icon>
             <font-awesome-icon
@@ -21,7 +22,6 @@
                 'truck-online': devices.status,
                 'truck-offline': !devices.status,
               }"
-              @click="eventClick()"
             />
           </l-icon>
         </l-marker>
