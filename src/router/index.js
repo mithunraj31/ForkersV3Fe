@@ -95,7 +95,8 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          deviceId: route.params.deviceId })
+          deviceId: route.params.deviceId
+        })
       },
       {
         path: ':deviceId/drive-route',
@@ -105,7 +106,8 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          deviceId: route.params.deviceId })
+          deviceId: route.params.deviceId
+        })
       }
     ]
   },
@@ -147,6 +149,23 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/video',
+    component: Layout,
+    children: [
+      {
+        path: ':eventId/create',
+        component: () => import('@/views/on-demand-video/index'),
+        name: 'createVideo',
+        meta: { title: 'Create Video', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          eventId: route.params.operatorId
+        })
+      }
+    ]
+  },
+  {
     path: '/operator',
     component: Layout,
     children: [
@@ -158,7 +177,8 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          operatorId: route.params.operatorId })
+          operatorId: route.params.operatorId
+        })
       }
     ]
   },
