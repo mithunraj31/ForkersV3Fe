@@ -155,17 +155,17 @@ export default {
             // code block
           }
           if (eventSummery.video) {
-            if (eventSummery.video.convertedVideoUrl) {
+            if (eventSummery.video.converted_video_url) {
               row.video = true
             }
-            row.videoStatus = eventSummery.video.videoUrls
-              ? eventSummery.video.videoUrls.length
+            row.videoStatus = eventSummery.video.video_urls
+              ? eventSummery.video.video_urls.length
               : 0
-            row.videoStatus += '/' + eventSummery.numberOfCameras
+            row.videoStatus += '/' + eventSummery.number_of_cameras
           } else {
             row.videoStatus = 'N/A'
           }
-          if (eventSummery.sensorValue.latitude !== 0) {
+          if (eventSummery.sensor_value.latitude !== 0) {
             row.map = true
           }
 
