@@ -256,9 +256,9 @@ export default {
               event.driver_id +
               '</p>'
           }
-          if (event.video && event.video.convertedVideoUrl) {
+          if (event.video && event.video.converted_video_url) {
             eventSession['media'] = {
-              url: event.video.convertedVideoUrl
+              url: event.video.converted_video_url
             }
           }
 
