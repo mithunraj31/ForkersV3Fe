@@ -4,26 +4,20 @@
       <div v-if="video === null">
         <h3>{{ this.$t("event.videoProcessing") }}</h3>
       </div>
-      <Media
-        v-else
-        class="video"
-        :kind="'video'"
-        :controls="true"
-        :src="['{{video}}']"
-      />
+
+      <video v-else controls="" class="video">
+        <source class="" :src="video" type="video/mp4">
+        Your browser doesn't support HTML5 video with video/mp4
+      </video>
     </div>
   </div>
 </template>
 
 <script>
 import { fetchEventsVideoById } from '@/api/event'
-import Media from '@dongido/vue-viaudio'
 
 export default {
   name: 'EventVideo',
-  components: {
-    Media
-  },
   data() {
     return {
       video: null,
@@ -51,6 +45,7 @@ export default {
 
 <style scoped>
 .video {
-  width: 600px;
+  max-height: 205px;
+  width: auto;
 }
 </style>
