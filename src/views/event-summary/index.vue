@@ -12,7 +12,6 @@
         <el-table-column
           :label="this.$t('event.eventId')"
           prop="eventId"
-          width="200"
         >
           <template slot-scope="scope">
             <label class="click" @click="eventClick(scope.row.eventId)">
