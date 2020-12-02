@@ -12,7 +12,7 @@
         />
       </el-col>
     </el-row>
-    <div v-loading="mapsLoading" style="height: 500px; width: 100%">
+    <div v-loading="mapsLoading" style="height: 575px; width: 100%">
       <l-map
         v-if="showMap"
         :zoom="zoom"
@@ -25,7 +25,7 @@
           :url="url"
           :attribution="attribution"
         />
-        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.location.lat, item.location.lng]">
+        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.latitude, item.longitude]" :z-index-offset="item.online?100:0">
           <l-icon>
             <font-awesome-icon icon="truck" :class="{ 'truck-online': item.online, 'truck-offline': !item.online }" />
           </l-icon>
@@ -81,16 +81,19 @@ export default {
     }
   },
   async mounted() {
-    await this.fetchData()
-    await this.fetchSummary()
+    this.fetchData()
+    this.fetchSummary()
   },
   methods: {
     async fetchData() {
       this.mapsLoading = true
-      const { data } = await fetchDevices()
-      this.devices = data
-      this.events.online = data.filter(x => x.online).length
-      this.events.total = data.length
+      const { data, meta } = await fetchDevices()
+      const datafilter = data.filter(device => device.latitude !== 0)
+
+      this.devices = datafilter
+
+      this.events.online = meta.online_count
+      this.events.total = meta.online_count + meta.offline_count
       this.mapsLoading = false
     },
     async fetchSummary() {
@@ -143,12 +146,12 @@ body {
 }
 
 .truck-online {
-  font-size: 24px;
+  font-size: 18px;
   color: #24AE21;
 }
 
 .truck-offline {
-  font-size: 24px;
-  color: #c0c0c0;
+  font-size: 18px;
+  color: #504d4d;
 }
 </style>

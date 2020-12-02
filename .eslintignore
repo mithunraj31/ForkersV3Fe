@@ -2,3 +2,5 @@ build/*.js
 src/assets
 public
 dist
+src/views/drive-summery/components/timeline-lib.js
+src/views/drive-summery/components/timeline-lib-min.js

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="40" class="panel-group" />
+    <!-- <el-row :gutter="20" class="panel-group" /> -->
     <el-row :gutter="40" class="panel-group">
       <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
@@ -132,11 +132,11 @@ export default {
   margin-top: 18px;
 
   .card-panel-col {
-    margin-bottom: 32px;
+    margin-bottom: 23px;
   }
 
   .card-panel {
-    height: 108px;
+    height: 75px; // note
     cursor: pointer;
     font-size: 12px;
     position: relative;
@@ -202,8 +202,8 @@ export default {
 
     .card-panel-icon-wrapper {
       float: left;
-      margin: 14px 0 0 14px;
-      padding: 16px;
+      margin: 0 0 0 14px; // note
+      padding: 13.5px;
       transition: all 0.38s ease-out;
       border-radius: 6px;
     }
@@ -216,8 +216,7 @@ export default {
     .card-panel-description {
       float: right;
       font-weight: bold;
-      margin: 26px;
-      margin-left: 0px;
+      margin: 14px 26px 26px 0; // note
 
       .card-panel-text {
         line-height: 18px;
