@@ -9,7 +9,7 @@ export function fetchDevices() {
 
 export function fetchDriveSummery(deviceId, startTime, endTime) {
   return request({
-    url: '/devices/driveSummary?deviceId=' + deviceId + '&start=' + startTime + '&end=' + endTime,
+    url: '/devices/' + deviceId + '/driveSummary?start=' + startTime + '&end=' + endTime,
     method: 'get'
   })
 }
@@ -17,6 +17,13 @@ export function fetchDriveSummery(deviceId, startTime, endTime) {
 export function fetchEventsByDeviceIdAndTime(deviceId, startTime, endTime) {
   return request({
     url: '/events/?deviceId=' + deviceId + '&start=' + startTime + '&end=' + endTime,
+    method: 'get'
+  })
+}
+
+export function fetchDriveRoute(deviceId, startTime, endTime) {
+  return request({
+    url: '/devices/' + deviceId + '/route?start=' + startTime + '&end=' + endTime,
     method: 'get'
   })
 }
