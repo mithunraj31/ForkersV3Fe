@@ -15,10 +15,17 @@
       <el-table-column label="Operations">
         <template slot-scope="scope">
           <el-button
-
             size="mini"
             @click="navigate(scope.row)"
           >Map</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="Video">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="newVideo(scope.row)"
+          >make</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -172,6 +179,9 @@ export default {
           start: data.startDate,
           end: data.endDate }
       })
+    },
+    newVideo(row) {
+      this.$router.push(`/video/${this.deviceId}/create?start=${row.startDate}&end=${row.endDate}`)
     }
   }
 }

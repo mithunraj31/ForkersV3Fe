@@ -171,7 +171,11 @@ export default {
     sidebarLogo: 'Sidebar Logo'
   },
   message: {
-    languageChanged: 'Language has been changed'
+    languageChanged: 'Language has been changed',
+    invalidDatetimeRange: 'Datetime range, Duration should be between',
+    videoDuration: 'Video duration should be between',
+    noVideo: 'No video',
+    videoIsProcessing: 'Video is processing'
   },
 
   user: {
@@ -235,7 +239,9 @@ export default {
   },
 
   general: {
-    action: 'Action'
+    action: 'Action',
+    minutes: 'Minutes',
+    seconds: 'Seconds'
   },
   maps: {
     status: {
@@ -250,5 +256,17 @@ export default {
     },
     online: 'Online',
     offline: 'Offline'
+  },
+
+  onDemandVideo: {
+    videoPeriod: 'Video period',
+    fromBegin: 'From begin',
+    fromEnd: 'From end',
+    customRange: 'Custom range',
+    timeRange: 'Time range',
+    duration: 'Duration',
+    datetime: 'Datetime',
+    submitButton: 'Create',
+    clearButton: 'Clear'
   }
 }

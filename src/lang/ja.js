@@ -171,7 +171,11 @@ export default {
     sidebarLogo: 'Sidebar Logo'
   },
   message: {
-    languageChanged: '言語が変更されました'
+    languageChanged: '言語が変更されました',
+    invalidDatetimeRange: '日時の範囲、期間は',
+    videoDuration: 'ビデオの長さは',
+    noVideo: 'ビデオはありません',
+    videoIsProcessing: 'ビデオは処理中'
   },
 
   user: {
@@ -235,7 +239,9 @@ export default {
   },
 
   general: {
-    action: 'アクション'
+    action: 'アクション',
+    minutes: '分',
+    seconds: '秒'
   },
   maps: {
     status: {
@@ -250,5 +256,17 @@ export default {
     },
     online: 'オンライン',
     offline: 'オフライン'
+  },
+
+  onDemandVideo: {
+    videoPeriod: 'ビデオ期間',
+    fromBegin: '最初から',
+    fromEnd: '最後から',
+    customRange: 'カスタム日付時間範囲',
+    timeRange: '時間範囲',
+    duration: '期限',
+    datetime: '日付時刻',
+    submitButton: '作成',
+    clearButton: 'クリアー'
   }
 }
