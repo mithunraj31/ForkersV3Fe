@@ -20,7 +20,7 @@
         <el-table-column :label="this.$t('general.action')" style="width=300%">
           <template slot-scope="scope">
             <el-dropdown>
-              <el-button type="primary" size="mini">
+              <el-button type="primary" class="device-summary-btn" size="mini">
                 {{ $t("device.drive")
                 }}<i class="el-icon-arrow-down el-icon--right" />
               </el-button>
@@ -31,9 +31,9 @@
                       v-model="drivetimeRange"
                       type="datetimerange"
                       :picker-options="pickerOptions"
-                      range-separator="To"
-                      start-placeholder="Start time"
-                      end-placeholder="End time"
+                      range-separator="~"
+                      :start-placeholder="$t('general.begin')"
+                      :end-placeholder="$t('general.end')"
                       align="right"
                       value-format="yyyy-MM-dd HH:mm:ss"
                       @change="driveClick(drivetimeRange, scope.row.deviceId)"
@@ -43,7 +43,7 @@
               </el-dropdown-menu>
             </el-dropdown>
             <el-dropdown>
-              <el-button type="info" size="mini">
+              <el-button size="mini">
                 {{ $t("device.route")
                 }}<i class="el-icon-arrow-down el-icon--right" />
               </el-button>
@@ -54,9 +54,9 @@
                       v-model="routetimeRange"
                       type="datetimerange"
                       :picker-options="pickerOptions"
-                      range-separator="To"
-                      start-placeholder="Start time"
-                      end-placeholder="End time"
+                      range-separator="~"
+                      :start-placeholder="$t('general.begin')"
+                      :end-placeholder="$t('general.end')"
                       align="right"
                       value-format="yyyy-MM-dd HH:mm:ss"
                       @change="routeClick(routetimeRange, scope.row.deviceId)"
@@ -97,7 +97,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: 'This hour',
+            text: this.$t('general.thisHour'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -106,7 +106,7 @@ export default {
             }
           },
           {
-            text: 'Today',
+            text: this.$t('general.toDay'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -117,7 +117,7 @@ export default {
             }
           },
           {
-            text: 'This week',
+            text: this.$t('general.thisWeek'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -126,7 +126,7 @@ export default {
             }
           },
           {
-            text: 'This month',
+            text: this.$t('general.thisMonth'),
             onClick(picker) {
               const end = new Date()
               const start = new Date()
@@ -206,5 +206,9 @@ export default {
 
 .box-card {
   width: 100%;
+}
+
+.device-summary-btn {
+  margin-right: 5px;
 }
 </style>

@@ -245,7 +245,13 @@ export default {
   },
 
   general: {
-    action: 'アクション'
+    action: 'アクション',
+    thisHour: 'この時間',
+    toDay: '今日',
+    thisWeek: '今週',
+    thisMonth: '今月',
+    begin: '開始',
+    end: '終了'
   },
   maps: {
     status: {

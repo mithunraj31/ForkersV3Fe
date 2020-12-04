@@ -245,7 +245,14 @@ export default {
   },
 
   general: {
-    action: 'Action'
+    action: 'Action',
+    thisHour: 'This hour',
+    toDay: 'Today',
+    thisWeek: 'This week',
+    thisMonth: 'This month',
+    begin: 'Begin',
+    end: 'End'
+
   },
   maps: {
     status: {
