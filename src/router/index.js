@@ -165,6 +165,24 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/video',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: ':deviceId/create',
+        component: () => import('@/views/on-demand-video/index'),
+        name: 'createVideo',
+        meta: { title: 'Create Video', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          eventId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
     path: '/operator',
     component: Layout,
     children: [
