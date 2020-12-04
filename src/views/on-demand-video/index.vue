@@ -95,6 +95,21 @@ export default {
       return moment(this.$route.query.end).format('YYYY-MM-DD hh:mm:ss')
     }
   },
+  watch: {
+    durationAsSeconds: {
+      deep: true,
+      handler: function(newVal) {
+        if (this.form.resource === 3) {
+          const start = moment(`${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('h:mm:ss')}`)
+          const end = moment(`${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('h:mm:ss')}`)
+          const timePickerDuration = moment.duration(end.diff(start))
+          this.form.duration = timePickerDuration.asMinutes()
+        }
+        const { duration } = this.getDurationFormQueryString()
+        this.form.duration = duration.asMinutes()
+      }
+    }
+  },
   mounted() {
     this.initialForm()
   },
@@ -123,7 +138,6 @@ export default {
       }
 
       videoMaker.deviceId = this.$route.params.deviceId
-      console.log(videoMaker)
       this.loading = true
       try {
         const { data } = await makeVideo(videoMaker)
