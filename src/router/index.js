@@ -95,7 +95,8 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          deviceId: route.params.deviceId })
+          deviceId: route.params.deviceId
+        })
       },
       {
         path: ':deviceId/drive-route',
@@ -105,7 +106,8 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          deviceId: route.params.deviceId })
+          deviceId: route.params.deviceId
+        })
       }
     ]
   },
@@ -146,6 +148,19 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/deviceListings',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/device-listings/index'),
+        name: 'DeviceListing',
+        meta: { title: 'DeviceListing', icon: 'el-icon-s-order', affix: false }
+      }
+    ]
+  },
   {
     path: '/operator',
     component: Layout,
@@ -158,7 +173,8 @@ export const constantRoutes = [
         props: route => ({
           start: route.query.start,
           end: route.query.end,
-          operatorId: route.params.operatorId })
+          operatorId: route.params.operatorId
+        })
       }
     ]
   },

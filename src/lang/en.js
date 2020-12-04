@@ -30,6 +30,7 @@ export default {
     example: 'Example',
     nested: 'Nested Routes',
     EventSummary: 'Event Summary',
+    DeviceListing: 'Device Listings',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -210,6 +211,15 @@ export default {
     mapsView: 'Maps View',
     videoProcessing: 'still processing video please wait'
 
+  },
+
+  device: {
+    deviceId: 'Device ID',
+    type: 'Type',
+    userName: 'User',
+    driverId: 'Driver ID',
+    drive: 'Drive',
+    route: 'Route'
   },
 
   type: {

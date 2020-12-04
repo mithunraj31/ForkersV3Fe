@@ -30,6 +30,7 @@ export default {
     example: 'Example',
     nested: 'Nested Routes',
     EventSummary: 'イベントの概要',
+    DeviceListing: 'デバイスリスト',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -232,6 +233,15 @@ export default {
     clip: 'クリップ',
     default: 'デフォルト',
     none: '無し'
+  },
+
+  device: {
+    deviceId: 'デバイスID',
+    type: 'タイプ',
+    userName: 'ユーザー',
+    driverId: 'ドライバーID',
+    drive: '概要',
+    route: 'ルート'
   },
 
   general: {
