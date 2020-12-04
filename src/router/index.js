@@ -88,10 +88,17 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
+        path: '',
+        component: () => import('@/views/device-listings/index'),
+        name: 'DeviceListing',
+        meta: { title: 'DeviceListing', icon: 'list', affix: false }
+      },
+      {
         path: ':deviceId/drive-summary',
         component: () => import('@/views/drive-summery/index'),
         name: 'DriveSummary',
         meta: { title: 'Drive Summary', icon: 'documentation', affix: false },
+        hidden: true,
         props: route => ({
           start: route.query.start,
           end: route.query.end,
@@ -102,6 +109,7 @@ export const constantRoutes = [
         path: ':deviceId/drive-route',
         component: () => import('@/views/map-route/index'),
         name: 'DriveRoute',
+        hidden: true,
         meta: { title: 'Drive Route', icon: 'documentation', affix: false },
         props: route => ({
           start: route.query.start,
@@ -148,6 +156,14 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/deviceListings',
+    component: Layout,
+    children: [
+
+    ]
+  },
   {
     path: '/video',
     component: Layout,
@@ -174,6 +190,7 @@ export const constantRoutes = [
         path: ':operatorId/driveSummary',
         component: () => import('@/views/operator-drive-summery'),
         name: 'OperatorDriveSummery',
+        hidden: true,
         meta: { title: 'Operator Drive Summary', icon: 'documentation', affix: false },
         props: route => ({
           start: route.query.start,
