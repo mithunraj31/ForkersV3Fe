@@ -245,7 +245,8 @@ export default {
     userName: 'ユーザー',
     driverId: 'ドライバーID',
     drive: '概要',
-    route: 'ルート'
+    route: 'ルート',
+    video: 'ビデオ'
   },
 
   general: {

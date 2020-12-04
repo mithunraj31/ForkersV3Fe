@@ -223,7 +223,8 @@ export default {
     userName: 'User',
     driverId: 'Driver ID',
     drive: 'Drive',
-    route: 'Route'
+    route: 'Route',
+    video: 'Video'
   },
 
   type: {
