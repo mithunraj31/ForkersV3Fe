@@ -30,6 +30,7 @@ export default {
     example: 'Example',
     nested: 'Nested Routes',
     EventSummary: 'Event Summary',
+    DeviceListing: 'Device Listings',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -212,6 +213,15 @@ export default {
 
   },
 
+  device: {
+    deviceId: 'Device ID',
+    type: 'Type',
+    userName: 'User',
+    driverId: 'Driver ID',
+    drive: 'Drive',
+    route: 'Route'
+  },
+
   type: {
     Manual: 'Manual',
     Time: 'Time',
@@ -235,7 +245,14 @@ export default {
   },
 
   general: {
-    action: 'Action'
+    action: 'Action',
+    thisHour: 'This hour',
+    toDay: 'Today',
+    thisWeek: 'This week',
+    thisMonth: 'This month',
+    begin: 'Begin',
+    end: 'End'
+
   },
   maps: {
     status: {
