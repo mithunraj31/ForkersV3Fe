@@ -9,10 +9,7 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column
-          :label="this.$t('event.eventId')"
-          prop="eventId"
-        >
+        <el-table-column :label="this.$t('event.eventId')" prop="eventId">
           <template slot-scope="scope">
             <label class="click" @click="eventClick(scope.row.eventId)">
               {{ scope.row.eventId }}
@@ -29,15 +26,15 @@
           <template slot-scope="scope">
             <div
               v-if="scope.row.video"
-              class="click"
+              class="video-click"
               @click="videoClick(scope.row.eventId)"
             >
               <i class="el-icon-video-camera-solid" />
-              <span>Available</span>
+              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
             </div>
             <div v-else class="unclick">
               <i class="el-icon-video-camera-solid" />
-              <span>Processing</span>
+              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
             </div>
           </template>
         </el-table-column>
@@ -155,7 +152,9 @@ export default {
         deviceId: event.device_id,
         type: event.type,
         video: event.video.converted_video_url,
-        company: event.username
+        company: event.username,
+        cameras: event.number_of_cameras,
+        videoUrl: event.video.video_urls.length
       }
     },
 
@@ -193,6 +192,11 @@ export default {
 .click {
   color: blue;
   cursor: pointer;
+}
+.video-click {
+  color: blue;
+  cursor: pointer;
+  font-size: 15px;
 }
 
 .box-card {
