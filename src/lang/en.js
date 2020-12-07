@@ -223,7 +223,8 @@ export default {
     userName: 'User',
     driverId: 'Driver ID',
     drive: 'Drive',
-    route: 'Route'
+    route: 'Route',
+    device: 'Device'
   },
 
   type: {
@@ -241,11 +242,12 @@ export default {
     TurnAngle: 'TurnAngle',
     TurnGyroscope: 'TurnGyroscope',
     Impact: 'Impact',
-    TurnLeft: 'TurnLeft',
-    TurnRight: 'TurnRight',
-    clip: 'clip',
+    TurnLeft: 'Turn Left',
+    TurnRight: 'Turn Right',
+    clip: 'Clip',
     default: 'default',
-    none: 'none'
+    none: 'none',
+    Acceleration: 'Acceleration'
   },
 
   general: {
@@ -257,8 +259,10 @@ export default {
     thisWeek: 'This week',
     thisMonth: 'This month',
     begin: 'Begin',
-    end: 'End'
-
+    end: 'End',
+    and: 'and',
+    video: 'Video',
+    create: 'Create'
   },
   maps: {
     status: {
@@ -285,5 +289,28 @@ export default {
     datetime: 'Datetime',
     submitButton: 'Create',
     clearButton: 'Clear'
+  },
+
+  driveSummary: {
+    drivingData: '\'s Driving data',
+    event: '\'s Event',
+    vehicleDrivingData: 'Vehicle driving data',
+    operatorDrivingData: 'Operator driving data',
+    discovered: 'discovered',
+    totalEngineDuration: 'Total Engine Duration',
+    totalDriveDuration: 'Total Drive Duration',
+    engine: 'Engine',
+    driver: 'Driver',
+    eventLabel: 'Event',
+    operator: 'Operator',
+    routeMap: '',
+
+    startDatetime: 'Start',
+    endDatetime: 'End',
+    type: 'type',
+    duration: 'Duration',
+    operations: 'Operations',
+    datetime: 'Datetime',
+    maps: 'Maps'
   }
 }
