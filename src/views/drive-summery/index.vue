@@ -9,11 +9,11 @@
         :device-id="deviceId"
       />
     </el-row>
-    <h3>{{ deviceId }}の走行データ</h3>
+    <h3>{{ deviceId }}{{ $t('driveSummary.drivingData') }}</h3>
     <el-row>
       <data-table-drive :data="driveSummery" :device-id="deviceId" />
     </el-row>
-    <h3>{{ deviceId }}のイベント</h3>
+    <h3>{{ deviceId }}{{ $t('driveSummary.event') }}</h3>
     <el-row>
       <data-table-events :data="events" />
     </el-row>
@@ -55,7 +55,6 @@ export default {
     }
   },
   async mounted() {
-    console.log(this.deviceId, this.start, this.end)
     if (this.deviceId && this.start && this.end) {
       await this.fetchData()
       await this.getEventData()
@@ -89,7 +88,7 @@ export default {
           operatorSessionCount += drive.driver_data.length
         }
       })
-      this.header.headline = this.deviceId + 'の走行データ'
+      this.header.headline = this.deviceId + this.$t('driveSummary.drivingData')
       this.header.subtitle =
         '<p> ' +
         moment(this.start).format(timeFormat) +
@@ -97,11 +96,11 @@ export default {
         moment(this.end).format(timeFormat) +
         '</p><p>' +
         this.driveSummery.length +
-        '車両の走行データと ' +
+        ` ${this.$t('driveSummary.vehicleDrivingData')} ${this.$t('general.and')} ` +
         operatorSessionCount +
-        'オペレーターの走行データが見つかりました</p>' +
-        '<p>Total Engine Duration: ' + moment.duration(this.duration.engine, 'seconds').format('H:mm:ss') + '</p>' +
-        '<p>Total Drive Duration: ' + moment.duration(this.duration.drive, 'seconds').format('H:mm:ss') + '</p>'
+        ` ${this.$t('driveSummary.operatorDrivingData')} ${this.$t('driveSummary.discovered')}` +
+        `<p>${this.$t('driveSummary.totalEngineDuration')}: ` + moment.duration(this.duration.engine, 'seconds').format('H:mm:ss') + '</p>' +
+        `<p>${this.$t('driveSummary.totalDriveDuration')}: ` + moment.duration(this.duration.drive, 'seconds').format('H:mm:ss') + '</p>'
     }
   }
 }

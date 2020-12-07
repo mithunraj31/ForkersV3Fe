@@ -236,7 +236,8 @@ export default {
     TurnRight: '右に曲がる',
     clip: 'クリップ',
     default: 'デフォルト',
-    none: '無し'
+    none: '無し',
+    Acceleration: '加速'
   },
 
   device: {
@@ -246,7 +247,8 @@ export default {
     driverId: 'ドライバーID',
     drive: '概要',
     route: 'ルート',
-    video: 'ビデオ'
+    video: 'ビデオ',
+    device: 'デバイス'
   },
 
   general: {
@@ -258,7 +260,10 @@ export default {
     thisWeek: '今週',
     thisMonth: '今月',
     begin: '開始',
-    end: '終了'
+    end: '終了',
+    and: 'と',
+    video: 'ビデオ',
+    create: '作成'
   },
   maps: {
     status: {
@@ -281,9 +286,30 @@ export default {
     fromEnd: '最後から',
     customRange: 'カスタム日付時間範囲',
     timeRange: '時間範囲',
-    duration: '期限',
+    duration: '時間',
     datetime: '日付時刻',
     submitButton: '作成',
     clearButton: 'クリアー'
+  },
+  driveSummary: {
+    drivingData: 'の走行データ',
+    event: 'のイベント',
+    vehicleDrivingData: '車両の走行データ',
+    operatorDrivingData: 'オペレーターの走行データ',
+    discovered: 'が見つかりました',
+    totalEngineDuration: 'エンジン合計時間',
+    totalDriveDuration: 'ドライブ合計時間',
+    engine: 'エンジン',
+    driver: '運転者',
+    eventLabel: 'イベント',
+    operator: 'オペレーター',
+    routeMap: '路線図',
+    startDatetime: '開始',
+    endDatetime: '終了',
+    type: '種類',
+    duration: '時間',
+    operations: 'オペレーション',
+    datetime: '日付時刻',
+    maps: '地図'
   }
 }

@@ -5,15 +5,15 @@
         <el-checkbox
           v-model="engineCheck"
           @change="processData()"
-        >Engine</el-checkbox>
+        >{{ $t('driveSummary.engine') }}</el-checkbox>
         <el-checkbox
           v-model="driverCheck"
           @change="processData()"
-        >Driver</el-checkbox>
+        >{{ $t('driveSummary.driver') }}</el-checkbox>
         <el-checkbox
           v-model="eventCheck"
           @change="processData()"
-        >Events</el-checkbox>
+        >{{ $t('driveSummary.eventLabel') }}</el-checkbox>
       </el-col>
     </el-row>
     <div id="timeline-embed" style="width: 100%; height: 400px" />
@@ -59,7 +59,7 @@ export default {
         title: {
           text: {
             headline: '',
-            text: 'sdsd'
+            text: ''
           }
         },
         events: []
@@ -125,11 +125,11 @@ export default {
                 ? drive.driver_data.length.toString()
                 : '0'
               session['text'] = {
-                headline: '車両の走行データ',
+                headline: this.$t('driveSummary.vehicleDrivingData'), // '車両の走行データ',
                 text:
                   '<p>' +
                   drivers +
-                  'オペレーターの走行データが見つかりました</p>'
+                  `${this.$t('driveSummary.operatorDrivingData')} ${this.$t('driveSummary.discovered')}</p>`
               }
             }
             this.processedDriveData.events.push(session)
@@ -167,9 +167,9 @@ export default {
                 session['group'] = '走行'
                 const driverId = driver.driver_id
                 driveSession['text'] = {
-                  headline: 'オペレーターの走行データ',
+                  headline: this.$t('driveSummary.operatorDrivingData'),
                   text:
-                    '<p>オペレーター : ' +
+                    `<p>${this.$t('driveSummary.operator')} : ` +
                     driverId +
                     '</p>' +
                     ' <a style="color: #70FAFA " href="#/devices/' +
@@ -178,7 +178,7 @@ export default {
                     driver.drive_start_at +
                     '&end=' +
                     driver.drive_ended_at +
-                    '"><i class="fas fa-map-marked-alt"></i> Route Map</a> '
+                    '"><i class="fas fa-map-marked-alt"></i> ' + this.$t('driveSummary.routeMap') + '</a> '
                 }
                 this.processedDriveData.events.push(driveSession)
               })
@@ -205,32 +205,32 @@ export default {
           let icon = ''
           switch (event.type) {
             case 16:
-              eventType = 'Acceleration'
+              eventType = this.$t('type.Acceleration')// 'Acceleration'
               icon = '<i class="fas fa-shipping-fast"></i> '
               break
             case 17:
-              eventType = 'Deceleration'
+              eventType = this.$t('type.Deceleration') // 'Deceleration'
               icon = '<i class="fas fa-parking"></i> '
               // icon = '<i class="fas fa-car-crash"> '
               break
             case 14:
-              eventType = 'Button'
+              eventType = this.$t('type.Button') // 'Button'
               icon = '<i class="fas fa-hand-point-down"></i> '
               break
             case 20:
-              eventType = 'Impact'
+              eventType = this.$t('type.Impact')// 'Impact'
               icon = '<i class="fas fa-car-crash"> '
               break
             case 21:
-              eventType = 'Turn Left'
+              eventType = this.$t('type.TurnLeft')// 'Turn Left'
               icon = '<i class="fas fa-arrow-left"></i> '
               break
             case 22:
-              eventType = 'Turn Right'
+              eventType = this.$t('type.TurnRight') // 'Turn Right'
               icon = '<i class="fas fa-arrow-right"></i> '
               break
             case 23:
-              eventType = 'Clip'
+              eventType = this.$t('type.clip')// 'Clip'
               icon = '<i class="fas fa-video"></i> '
               break
             default:
@@ -243,16 +243,16 @@ export default {
           }
           eventSession['group'] = 'イベント'
           eventSession['text'] = {
-            headline: icon + eventType + ' イベント',
+            headline: icon + eventType + ` ${this.$t('driveSummary.eventLabel')}`,
             text:
-              '<p>デバイス :' +
+              `<p>${this.$t('device.device')} :` +
               event.device_id +
               '</p>' +
               '<p>' +
               icon +
               eventType +
-              ' イベント</p>' +
-              '<p>オペレーター :' +
+              ` ${this.$t('driveSummary.eventLabel')}</p>` +
+              `<p>${this.$t('driveSummary.operator')} :` +
               event.driver_id +
               '</p>'
           }
@@ -264,7 +264,6 @@ export default {
 
           this.processedDriveData.events.push(eventSession)
         })
-        console.log(this.processedDriveData.events)
       }
     }
   }
