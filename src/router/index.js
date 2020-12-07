@@ -79,10 +79,128 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/maps-leaf/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+        meta: { title: 'dashboard', icon: 'dashboard', affix: false }
       }
     ]
   },
+  {
+    path: '/devices',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/device-listings/index'),
+        name: 'DeviceListing',
+        meta: { title: 'DeviceListing', icon: 'list', affix: false }
+      },
+      {
+        path: ':deviceId/drive-summary',
+        component: () => import('@/views/drive-summery/index'),
+        name: 'DriveSummary',
+        meta: { title: 'Drive Summary', icon: 'documentation', affix: false },
+        hidden: true,
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      },
+      {
+        path: ':deviceId/drive-route',
+        component: () => import('@/views/map-route/index'),
+        name: 'DriveRoute',
+        hidden: true,
+        meta: { title: 'Drive Route', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
+    path: '/eventSummary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: { title: 'EventSummary', icon: 'el-icon-data-line', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: { title: 'EventDetail', noCache: true }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: { title: 'EventMap', noCache: true }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: { title: 'EventVideo', noCache: true }
+      }
+    ]
+  },
+
+  {
+    path: '/deviceListings',
+    component: Layout,
+    children: [
+
+    ]
+  },
+  {
+    path: '/video',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: ':deviceId/create',
+        component: () => import('@/views/on-demand-video/index'),
+        name: 'createVideo',
+        meta: { title: 'Create Video', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          eventId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
+    path: '/operator',
+    component: Layout,
+    children: [
+      {
+        path: ':operatorId/driveSummary',
+        component: () => import('@/views/operator-drive-summery'),
+        name: 'OperatorDriveSummery',
+        hidden: true,
+        meta: { title: 'Operator Drive Summary', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          operatorId: route.params.operatorId
+        })
+      }
+    ]
+  },
+
   {
     path: '/profile',
     component: Layout,

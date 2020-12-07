@@ -20,6 +20,16 @@ import './utils/error-log' // error log
 import * as filters from './filters' // global filters
 import 'leaflet/dist/leaflet.css'
 
+import VueVideoPlayer from 'vue-video-player'
+
+import 'video.js/dist/video-js.css'
+// import 'vue-video-player/src/custom-theme.css'
+
+Vue.use(VueVideoPlayer /* {
+  options: global default options,
+  events: global videojs events
+} */)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

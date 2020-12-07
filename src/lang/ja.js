@@ -29,6 +29,8 @@ export default {
     mixChart: 'Mixチャート',
     example: 'Example',
     nested: 'Nested Routes',
+    EventSummary: 'イベントの概要',
+    DeviceListing: 'デバイスリスト',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -170,7 +172,11 @@ export default {
     sidebarLogo: 'Sidebar Logo'
   },
   message: {
-    languageChanged: '言語が変更されました'
+    languageChanged: '言語が変更されました',
+    invalidDatetimeRange: '日時の範囲、期間は',
+    videoDuration: 'ビデオの長さは',
+    noVideo: 'ビデオはありません',
+    videoIsProcessing: 'ビデオは処理中'
   },
 
   user: {
@@ -182,8 +188,82 @@ export default {
     }
   },
 
+  event: {
+    eventId: 'イベントID',
+    deviceId: 'デバイスID',
+    type: 'タイプ',
+    video: 'ビデオ',
+    company: '会社',
+    driverId: 'ドライバーID',
+    latitude: '緯度',
+    longitude: '経度',
+    gx: 'gx',
+    gy: 'gy',
+    gz: 'gz',
+    roll: 'ロール',
+    pitch: 'ピッチ',
+    status: '状態',
+    direction: '方向',
+    speed: '速度',
+    videoId: 'ビデオID',
+    time: '時間',
+    username: 'ユーザー名',
+    title: '題名',
+    value: '値',
+    yaw: 'yaw',
+    deviceDetails: 'デバイスの詳細',
+    mapsView: 'マップビュー',
+    videoProcessing: 'まだビデオを処理していますしばらくお待ちください'
+
+  },
+
+  type: {
+    Manual: 'マニュアル',
+    Time: '時間',
+    Motion: 'モーション',
+    Speed: '速度',
+    Gsensor: 'Gセンサー',
+    Temperature: '温度',
+    Alaram: 'アララム',
+    Button: 'ボタン',
+    RFID: 'RFID',
+    Accelerate: '加速',
+    Deceleration: '減速',
+    TurnAngle: '角度',
+    TurnGyroscope: 'ターンジャイロスコープ',
+    Impact: '影響',
+    TurnLeft: '左折してください',
+    TurnRight: '右に曲がる',
+    clip: 'クリップ',
+    default: 'デフォルト',
+    none: '無し',
+    Acceleration: '加速'
+  },
+
+  device: {
+    deviceId: 'デバイスID',
+    type: 'タイプ',
+    userName: 'ユーザー',
+    driverId: 'ドライバーID',
+    drive: '概要',
+    route: 'ルート',
+    video: 'ビデオ',
+    device: 'デバイス'
+  },
+
   general: {
-    action: 'アクション'
+    action: 'アクション',
+    minutes: '分',
+    seconds: '秒',
+    thisHour: 'この時間',
+    toDay: '今日',
+    thisWeek: '今週',
+    thisMonth: '今月',
+    begin: '開始',
+    end: '終了',
+    and: 'と',
+    video: 'ビデオ',
+    create: '作成'
   },
   maps: {
     status: {
@@ -198,5 +278,38 @@ export default {
     },
     online: 'オンライン',
     offline: 'オフライン'
+  },
+
+  onDemandVideo: {
+    videoPeriod: 'ビデオ期間',
+    fromBegin: '最初から',
+    fromEnd: '最後から',
+    customRange: 'カスタム日付時間範囲',
+    timeRange: '時間範囲',
+    duration: '時間',
+    datetime: '日付時刻',
+    submitButton: '作成',
+    clearButton: 'クリアー'
+  },
+  driveSummary: {
+    drivingData: 'の走行データ',
+    event: 'のイベント',
+    vehicleDrivingData: '車両の走行データ',
+    operatorDrivingData: 'オペレーターの走行データ',
+    discovered: 'が見つかりました',
+    totalEngineDuration: 'エンジン合計時間',
+    totalDriveDuration: 'ドライブ合計時間',
+    engine: 'エンジン',
+    driver: '運転者',
+    eventLabel: 'イベント',
+    operator: 'オペレーター',
+    routeMap: '路線図',
+    startDatetime: '開始',
+    endDatetime: '終了',
+    type: '種類',
+    duration: '時間',
+    operations: 'オペレーション',
+    datetime: '日付時刻',
+    maps: '地図'
   }
 }

@@ -29,6 +29,8 @@ export default {
     mixChart: 'Mix Chart',
     example: 'Example',
     nested: 'Nested Routes',
+    EventSummary: 'Event Summary',
+    DeviceListing: 'Device Listings',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -170,7 +172,11 @@ export default {
     sidebarLogo: 'Sidebar Logo'
   },
   message: {
-    languageChanged: 'Language has been changed'
+    languageChanged: 'Language has been changed',
+    invalidDatetimeRange: 'Datetime range, Duration should be between',
+    videoDuration: 'Video duration should be between',
+    noVideo: 'No video',
+    videoIsProcessing: 'Video is processing'
   },
 
   user: {
@@ -182,8 +188,82 @@ export default {
     }
   },
 
+  event: {
+    eventId: 'Event ID',
+    deviceId: 'Device ID',
+    type: 'Type',
+    video: 'Video',
+    company: 'Company',
+    driverId: 'driverId',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    gx: 'gx',
+    gy: 'gy',
+    gz: 'gz',
+    roll: 'roll',
+    pitch: 'pitch',
+    status: 'status',
+    direction: 'direction',
+    speed: 'speed',
+    videoId: 'videoId',
+    time: 'time',
+    username: 'username',
+    title: 'title',
+    value: 'value',
+    yaw: 'yaw',
+    deviceDetails: 'Device Details',
+    mapsView: 'Maps View',
+    videoProcessing: 'still processing video please wait'
+
+  },
+
+  device: {
+    deviceId: 'Device ID',
+    type: 'Type',
+    userName: 'User',
+    driverId: 'Driver ID',
+    drive: 'Drive',
+    route: 'Route',
+    video: 'Video',
+    device: 'Device'
+  },
+
+  type: {
+    Manual: 'Manual',
+    Time: 'Time',
+    Motion: 'Motion',
+    Speed: 'Speed',
+    Gsensor: 'Gsensor',
+    Temperature: 'Temperature',
+    Alaram: 'Alaram',
+    Button: 'Button',
+    RFID: 'RFID',
+    Accelerate: 'Accelerate',
+    Deceleration: 'Deceleration',
+    TurnAngle: 'TurnAngle',
+    TurnGyroscope: 'TurnGyroscope',
+    Impact: 'Impact',
+    TurnLeft: 'Turn Left',
+    TurnRight: 'Turn Right',
+    clip: 'Clip',
+    default: 'default',
+    none: 'none',
+    Acceleration: 'Acceleration'
+  },
+
   general: {
-    action: 'Action'
+    action: 'Action',
+    minutes: 'Minutes',
+    seconds: 'Seconds',
+    thisHour: 'This hour',
+    toDay: 'Today',
+    thisWeek: 'This week',
+    thisMonth: 'This month',
+    begin: 'Begin',
+    end: 'End',
+    and: 'and',
+    video: 'Video',
+    create: 'Create'
   },
   maps: {
     status: {
@@ -198,5 +278,40 @@ export default {
     },
     online: 'Online',
     offline: 'Offline'
+  },
+
+  onDemandVideo: {
+    videoPeriod: 'Video period',
+    fromBegin: 'From begin',
+    fromEnd: 'From end',
+    customRange: 'Custom range',
+    timeRange: 'Time range',
+    duration: 'Duration',
+    datetime: 'Datetime',
+    submitButton: 'Create',
+    clearButton: 'Clear'
+  },
+
+  driveSummary: {
+    drivingData: '\'s Driving data',
+    event: '\'s Event',
+    vehicleDrivingData: 'Vehicle driving data',
+    operatorDrivingData: 'Operator driving data',
+    discovered: 'discovered',
+    totalEngineDuration: 'Total Engine Duration',
+    totalDriveDuration: 'Total Drive Duration',
+    engine: 'Engine',
+    driver: 'Driver',
+    eventLabel: 'Event',
+    operator: 'Operator',
+    routeMap: '',
+
+    startDatetime: 'Start',
+    endDatetime: 'End',
+    type: 'type',
+    duration: 'Duration',
+    operations: 'Operations',
+    datetime: 'Datetime',
+    maps: 'Maps'
   }
 }
