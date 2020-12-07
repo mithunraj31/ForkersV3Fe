@@ -11,7 +11,7 @@
       <el-table-column :label="this.$t('event.title')" prop="key" width="200">
         <template slot-scope="scope">
           <label>
-            {{ scope.row.key }}
+            {{ getTitleName(scope.row.key) }}
           </label>
         </template>
       </el-table-column>
@@ -25,99 +25,81 @@ import { fetchEventsById } from '@/api/event'
 export default {
   name: 'DeviceDetail',
   data() {
-    const deviceIdColumn = this.$t('event.deviceId')
-    const eventIdColumn = this.$t('event.eventId')
-    const typeColumn = this.$t('event.type')
-    const driverIdColumn = this.$t('event.driverId')
-    const latitudeColumn = this.$t('event.latitude')
-    const longitudeColumn = this.$t('event.longitude')
-    const gxColumn = this.$t('event.gx')
-    const gyColumn = this.$t('event.gy')
-    const gzColumn = this.$t('event.gz')
-    const rollColumn = this.$t('event.roll')
-    const pitchColumn = this.$t('event.pitch')
-    const yawColumn = this.$t('event.yaw')
-    const statusColumn = this.$t('event.status')
-    const directionColumn = this.$t('event.direction')
-    const speedColumn = this.$t('event.speed')
-    const videoIdColumn = this.$t('event.videoId')
-    const timeColumn = this.$t('event.time')
-    const usernameColumn = this.$t('event.username')
     return {
       events: null,
       detailLoading: false,
       mapEventsToDataTable(event) {
         return [
           {
-            key: deviceIdColumn,
+            key: 'deviceId',
             value: event.device_id
           },
           {
-            key: eventIdColumn,
+            key: 'eventId',
             value: event.event_id
           },
           {
-            key: driverIdColumn,
+            key: 'type',
             value: event.driver_id
           },
           {
-            key: typeColumn,
+            key: 'driverId',
             value: event.type
           },
           {
-            key: latitudeColumn,
+            key: 'latitude',
             value: event.latitude
           },
           {
-            key: longitudeColumn,
+            key: 'longitude',
             value: event.longitude
           },
           {
-            key: gxColumn,
+            key: 'gx',
             value: event.gx
           },
           {
-            key: gyColumn,
+            key: 'gy',
             value: event.gy
           },
           {
-            key: gzColumn,
+            key: 'gz',
             value: event.gz
           },
           {
-            key: rollColumn,
+            key: 'roll',
             value: event.roll
           },
           {
-            key: pitchColumn,
+            key: 'pitch',
             value: event.pitch
           },
           {
-            key: yawColumn,
+            key: 'yaw',
             value: event.yaw
           },
           {
-            key: statusColumn,
+            key: 'status',
             value: event.status
           },
           {
-            key: directionColumn,
+            key: 'direction',
             value: event.direction
           },
           {
-            key: speedColumn,
+            key: 'speed',
             value: event.speed
           },
           {
-            key: videoIdColumn,
+            key: 'videoId',
             value: event.video_id
           },
           {
-            key: timeColumn,
+            key: 'time',
             value: event.time
           },
           {
-            key: usernameColumn,
+            key: 'username',
             value: event.username
           }
         ]
@@ -137,6 +119,10 @@ export default {
       this.events = datas.map(this.mapEventsToDataTable)
       this.events = this.events[0]
       this.detailLoading = false
+    },
+
+    getTitleName(key) {
+      return this.$t(`event.${key}`)
     }
   }
 }

@@ -251,6 +251,11 @@ export default {
     Acceleration: 'Acceleration'
   },
 
+  video: {
+    available: 'Available',
+    noCamera: 'No Camera'
+  },
+
   general: {
     action: 'Action',
     minutes: 'Minutes',

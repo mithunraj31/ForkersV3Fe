@@ -240,6 +240,11 @@ export default {
     Acceleration: '加速'
   },
 
+  video: {
+    available: '利用可能なビデオ',
+    noCamera: 'カメラがない'
+  },
+
   device: {
     deviceId: 'デバイスID',
     type: 'タイプ',

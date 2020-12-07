@@ -9,10 +9,7 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column
-          :label="this.$t('event.eventId')"
-          prop="eventId"
-        >
+        <el-table-column :label="this.$t('event.eventId')" prop="eventId">
           <template slot-scope="scope">
             <label class="click" @click="eventClick(scope.row.eventId)">
               {{ scope.row.eventId }}
@@ -33,11 +30,14 @@
               @click="videoClick(scope.row.eventId)"
             >
               <i class="el-icon-video-camera-solid" />
-              <span>Available</span>
+              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}
+                {{ $t("video.available") }}</span>
             </div>
-            <div v-else class="unclick">
-              <i class="el-icon-video-camera-solid" />
-              <span>Processing</span>
+            <div v-else>
+              <i class="el - icon - video - camera - solid" />
+              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
+              <span v-if="scope.row.cameras == 0">
+                {{ $t("video.noCamera") }}</span>
             </div>
           </template>
         </el-table-column>
@@ -125,7 +125,7 @@ export default {
           case 20:
             return this.$t('type.Impact')
           case 21:
-            return this.$t('type.TurnLeft​')
+            return this.$t('type.TurnLeft')
           case 22:
             return this.$t('type.TurnRight')
           case 23:
@@ -155,7 +155,9 @@ export default {
         deviceId: event.device_id,
         type: event.type,
         video: event.video.converted_video_url,
-        company: event.username
+        company: event.username,
+        cameras: event.number_of_cameras,
+        videoUrl: event.video.video_urls.length
       }
     },
 
