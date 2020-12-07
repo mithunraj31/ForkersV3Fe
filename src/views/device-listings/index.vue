@@ -17,7 +17,7 @@
           </template>
         </el-table-column>
         <el-table-column :label="this.$t('device.userName')" prop="userName" />
-        <el-table-column :label="this.$t('general.action')" style="width=300%">
+        <el-table-column :label="this.$t('general.action')" width="300">
           <template slot-scope="scope">
             <el-dropdown>
               <el-button type="primary" class="device-summary-btn" size="mini">
@@ -57,9 +57,29 @@
                       range-separator="~"
                       :start-placeholder="$t('general.begin')"
                       :end-placeholder="$t('general.end')"
-                      align="right"
+                      align="middle"
                       value-format="yyyy-MM-dd HH:mm:ss"
                       @change="routeClick(routetimeRange, scope.row.deviceId)"
+                    />
+                  </div>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown>
+              <el-button size="mini" type="primary" plain class="video-btn">
+                {{ $t("device.video")
+                }}<i class="el-icon-arrow-down el-icon--right" />
+              </el-button>
+              <el-dropdown-menu slot="dropdown" size="mini">
+                <el-dropdown-item>
+                  <div class="block">
+                    <el-date-picker
+                      v-model="videotimeRange"
+                      type="date"
+                      :placeholder="$t('general.begin')"
+                      align="right"
+                      value-format="yyyy-MM-dd HH:mm:ss"
+                      @change="videoClick(videotimeRange, scope.row.deviceId)"
                     />
                   </div>
                 </el-dropdown-item>
@@ -81,6 +101,7 @@
 <script>
 import { fetchDevices } from '@/api/device'
 import Pagination from '@/components/Pagination'
+import moment from '@/utils/moment'
 export default {
   components: {
     Pagination
@@ -138,6 +159,7 @@ export default {
       },
       drivetimeRange: '',
       routetimeRange: '',
+      videotimeRange: '',
       start: '',
       end: ''
     }
@@ -179,6 +201,19 @@ export default {
       )
     },
 
+    videoClick(videotimeRange, deviceId) {
+      var timeFormat = 'YYYY-MM-DD HH:mm:ss'
+      this.start = videotimeRange
+      const date = new Date(videotimeRange)
+      date.setHours(23)
+      date.setMinutes(59)
+      date.setSeconds(59)
+      this.end = moment(date).format(timeFormat)
+      this.$router.push(
+        `/video/${deviceId}/create?start=${this.start}&end=${this.end}`
+      )
+    },
+
     async fetchListings() {
       let response = null
       this.loading = true
@@ -210,5 +245,9 @@ export default {
 
 .device-summary-btn {
   margin-right: 5px;
+}
+
+.video-btn {
+  margin-left: 5px;
 }
 </style>
