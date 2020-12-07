@@ -35,9 +35,11 @@
             </div>
             <div v-else>
               <i class="el - icon - video - camera - solid" />
-              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
               <span v-if="scope.row.cameras == 0">
                 {{ $t("video.noCamera") }}</span>
+              <span
+                v-else
+              >{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
             </div>
           </template>
         </el-table-column>

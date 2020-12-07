@@ -97,7 +97,7 @@ export const constantRoutes = [
         path: ':deviceId/drive-summary',
         component: () => import('@/views/drive-summery/index'),
         name: 'DriveSummary',
-        meta: { title: 'Drive Summary', icon: 'documentation', affix: false },
+        meta: { title: 'DriveSummary', icon: 'documentation', affix: false },
         hidden: true,
         props: route => ({
           start: route.query.start,
@@ -110,7 +110,7 @@ export const constantRoutes = [
         component: () => import('@/views/map-route/index'),
         name: 'DriveRoute',
         hidden: true,
-        meta: { title: 'Drive Route', icon: 'documentation', affix: false },
+        meta: { title: 'DriveRoute', icon: 'documentation', affix: false },
         props: route => ({
           start: route.query.start,
           end: route.query.end,
@@ -173,7 +173,7 @@ export const constantRoutes = [
         path: ':deviceId/create',
         component: () => import('@/views/on-demand-video/index'),
         name: 'createVideo',
-        meta: { title: 'Create Video', icon: 'documentation', affix: false },
+        meta: { title: 'CreateVideo', icon: 'documentation', affix: false },
         props: route => ({
           start: route.query.start,
           end: route.query.end,
@@ -191,7 +191,7 @@ export const constantRoutes = [
         component: () => import('@/views/operator-drive-summery'),
         name: 'OperatorDriveSummery',
         hidden: true,
-        meta: { title: 'Operator Drive Summary', icon: 'documentation', affix: false },
+        meta: { title: 'OperatorDriveSummary', icon: 'documentation', affix: false },
         props: route => ({
           start: route.query.start,
           end: route.query.end,
