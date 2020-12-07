@@ -75,11 +75,8 @@
                   <div class="block">
                     <el-date-picker
                       v-model="videotimeRange"
-                      type="datetimerange"
-                      :picker-options="pickerOptions"
-                      range-separator="~"
-                      :start-placeholder="$t('general.begin')"
-                      :end-placeholder="$t('general.end')"
+                      type="date"
+                      :placeholder="$t('general.begin')"
                       align="right"
                       value-format="yyyy-MM-dd HH:mm:ss"
                       @change="videoClick(videotimeRange, scope.row.deviceId)"
@@ -104,6 +101,7 @@
 <script>
 import { fetchDevices } from '@/api/device'
 import Pagination from '@/components/Pagination'
+import moment from '@/utils/moment'
 export default {
   components: {
     Pagination
@@ -204,8 +202,17 @@ export default {
     },
 
     videoClick(videotimeRange, deviceId) {
+      var timeFormat = 'YYYY-MM-DD HH:mm:ss'
+      this.start = videotimeRange
+      console.log(this.start)
+      const date = new Date(videotimeRange)
+      date.setHours(23)
+      date.setMinutes(59)
+      date.setSeconds(59)
+      this.end = moment(date).format(timeFormat)
+      console.log(this.end)
       this.$router.push(
-        `/video/${deviceId}/create?start=${videotimeRange[0]}&end=${videotimeRange[1]}`
+        `/video/${deviceId}/create?start=${this.start}&end=${this.end}`
       )
     },
 
