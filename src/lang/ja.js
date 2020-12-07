@@ -247,6 +247,7 @@ export default {
     driverId: 'ドライバーID',
     drive: '概要',
     route: 'ルート',
+    video: 'ビデオ',
     device: 'デバイス'
   },
 
