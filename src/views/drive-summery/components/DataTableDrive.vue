@@ -7,25 +7,25 @@
       default-expand-all
       :row-class-name="tableRowClassName"
     >
-      <el-table-column prop="start" label="Start" />
-      <el-table-column prop="end" label="End" />
-      <el-table-column prop="type" label="Type" />
-      <el-table-column prop="duration" label="Duration" />
-      <el-table-column prop="operator" label="Operator" />
-      <el-table-column label="Operations">
+      <el-table-column prop="start" :label="$t('driveSummary.startDatetime')" />
+      <el-table-column prop="end" :label="$t('driveSummary.endDatetime')" />
+      <el-table-column prop="type" :label="$t('driveSummary.type')" />
+      <el-table-column prop="duration" :label="$t('driveSummary.duration')" />
+      <el-table-column prop="operator" :label="$t('driveSummary.operations')" />
+      <el-table-column :label="$t('driveSummary.operator')">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="navigate(scope.row)"
-          >Map</el-button>
+          >{{ $t('driveSummary.maps') }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="Video">
+      <el-table-column :label="$t('general.video')">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="newVideo(scope.row)"
-          >make</el-button>
+          >{{ $t('general.create') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

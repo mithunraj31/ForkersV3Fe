@@ -7,15 +7,15 @@
       default-expand-all
       stripe
     >
-      <el-table-column prop="date" label="Date" />
-      <el-table-column label="Type">
+      <el-table-column prop="date" :label="$t('driveSummary.datetime')" />
+      <el-table-column :label="$t('driveSummary.type')">
         <template slot-scope="scope">
           <i :class="scope.row.icon" />
           <span style="margin-left: 10px">{{ scope.row.type }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="operator" label="Operator" />
-      <el-table-column label="Video">
+      <el-table-column prop="operator" :label="$t('driveSummary.operator')" />
+      <el-table-column :label="$t('general.video')">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.video"
@@ -29,7 +29,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="Map">
+      <el-table-column :label="$t('driveSummary.maps')">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.map"
@@ -39,7 +39,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="Event">
+      <el-table-column :label="$t('driveSummary.eventLabel')">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.map"
@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     processData() {
-      console.log(this.data)
       this.total = this.data.length
       var timeFormat = 'dddd, MMMM Do YYYY, H:mm:ss'
       moment.locale('ja')
@@ -124,31 +123,31 @@ export default {
           var icon = ''
           switch (eventSummery.type) {
             case 16:
-              eventType = 'Acceleration'
+              eventType = this.$t('type.Acceleration')// 'Acceleration'
               icon = 'fas fa-shipping-fast'
               break
             case 17:
-              eventType = 'Deceleration'
+              eventType = this.$t('type.Deceleration') // 'Deceleration'
               icon = 'fas fa-parking'
               break
             case 14:
-              eventType = 'Button'
+              eventType = this.$t('type.Button') // 'Button'
               icon = 'fas fa-hand-point-down'
               break
             case 20:
-              eventType = 'Impact'
+              eventType = this.$t('type.Impact')// 'Impact'
               icon = 'fas fa-car'
               break
             case 21:
-              eventType = 'Turn Left'
+              eventType = this.$t('type.TurnLeft')// 'Turn Left'
               icon = 'fas fa-arrow-left'
               break
             case 22:
-              eventType = 'Turn Right'
+              eventType = this.$t('type.TurnRight') // 'Turn Right'
               icon = 'fas fa-arrow-right'
               break
             case 23:
-              eventType = 'Clip'
+              eventType = this.$t('type.clip')// 'Clip'
               icon = 'fas fa-video'
               break
             default:
