@@ -1,13 +1,14 @@
 {
-  "name": "vue-element-admin",
+  "name": "forkers-v3",
   "version": "4.3.1",
-  "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "CRM application for Forkers v3",
+  "author": "mbel003@mbel.co.jp",
   "scripts": {
     "dev": "vue-cli-service serve",
     "lint": "eslint --ext .js,.vue src",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
+    "build:dev": "vue-cli-service build --mode development",
     "preview": "node build/index.js --preview",
     "new": "plop",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
