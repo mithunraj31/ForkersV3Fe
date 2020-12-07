@@ -248,6 +248,11 @@ export default {
     none: 'none'
   },
 
+  video: {
+    available: 'Available',
+    noCamera: 'No Camera'
+  },
+
   general: {
     action: 'Action',
     minutes: 'Minutes',

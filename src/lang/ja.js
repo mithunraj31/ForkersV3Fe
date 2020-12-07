@@ -239,6 +239,11 @@ export default {
     none: '無し'
   },
 
+  video: {
+    available: '利用可能なビデオ',
+    noCamera: 'カメラがない'
+  },
+
   device: {
     deviceId: 'デバイスID',
     type: 'タイプ',

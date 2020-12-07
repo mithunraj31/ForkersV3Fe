@@ -26,15 +26,18 @@
           <template slot-scope="scope">
             <div
               v-if="scope.row.video"
-              class="video-click"
+              class="click"
               @click="videoClick(scope.row.eventId)"
             >
               <i class="el-icon-video-camera-solid" />
-              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
+              <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}
+                {{ $t("video.available") }}</span>
             </div>
-            <div v-else class="unclick">
-              <i class="el-icon-video-camera-solid" />
+            <div v-else>
+              <i class="el - icon - video - camera - solid" />
               <span>{{ scope.row.videoUrl }}/{{ scope.row.cameras }}</span>
+              <span v-if="scope.row.cameras == 0">
+                {{ $t("video.noCamera") }}</span>
             </div>
           </template>
         </el-table-column>
@@ -122,7 +125,7 @@ export default {
           case 20:
             return this.$t('type.Impact')
           case 21:
-            return this.$t('type.TurnLeft​')
+            return this.$t('type.TurnLeft')
           case 22:
             return this.$t('type.TurnRight')
           case 23:
@@ -192,11 +195,6 @@ export default {
 .click {
   color: blue;
   cursor: pointer;
-}
-.video-click {
-  color: blue;
-  cursor: pointer;
-  font-size: 15px;
 }
 
 .box-card {
