@@ -204,13 +204,11 @@ export default {
     videoClick(videotimeRange, deviceId) {
       var timeFormat = 'YYYY-MM-DD HH:mm:ss'
       this.start = videotimeRange
-      console.log(this.start)
       const date = new Date(videotimeRange)
       date.setHours(23)
       date.setMinutes(59)
       date.setSeconds(59)
       this.end = moment(date).format(timeFormat)
-      console.log(this.end)
       this.$router.push(
         `/video/${deviceId}/create?start=${this.start}&end=${this.end}`
       )
