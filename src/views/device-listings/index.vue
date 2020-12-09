@@ -11,9 +11,10 @@
       >
         <el-table-column :label="this.$t('device.deviceId')" prop="deviceId" />
         <el-table-column :label="this.$t('device.driverId')" prop="driverId" />
-        <el-table-column :label="this.$t('device.type')" prop="type">
+        <el-table-column :label="this.$t('device.type')" prop="status">
           <template slot-scope="scope">
-            {{ scope.row.type }}
+            <span v-if="scope.row.status" class="online-status">{{ $t('maps.online') }}</span>
+            <span v-else>{{ $t('maps.offline') }}</span>
           </template>
         </el-table-column>
         <el-table-column :label="this.$t('device.userName')" prop="userName" />
@@ -180,10 +181,9 @@ export default {
     mapDatasToDataTable(device) {
       return {
         deviceId: device.device_id,
-        driverId: device.driver_id,
-        type: device.type,
-        status: device.status,
-        userName: device.user_name
+        driverId: device.latest_driver_id,
+        status: device.is_online === 1,
+        userName: device.stk_user
       }
     },
 
@@ -215,11 +215,11 @@ export default {
     },
 
     async fetchListings() {
-      let response = null
       this.loading = true
-      response = await fetchDevices()
-      const datas = response.data
-      this.devices = datas.map(this.mapDatasToDataTable)
+
+      const { data, total } = await fetchDevices(this.listQuery)
+      this.devices = data.map(this.mapDatasToDataTable)
+      this.total = total
       this.loading = false
       this.$router.push({
         query: this.listQuery
@@ -249,5 +249,9 @@ export default {
 
 .video-btn {
   margin-left: 5px;
+}
+
+.online-status {
+  color: #24AE21;
 }
 </style>

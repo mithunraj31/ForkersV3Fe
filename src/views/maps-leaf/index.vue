@@ -87,13 +87,15 @@ export default {
   methods: {
     async fetchData() {
       this.mapsLoading = true
-      const { data, meta } = await fetchDevices()
+      const { data } = await fetchDevices()
       const datafilter = data.filter(device => device.latitude !== 0)
 
       this.devices = datafilter
 
-      this.events.online = meta.online_count
-      this.events.total = meta.online_count + meta.offline_count
+      const online = data.filter(x => x.is_online === 1).length
+      const offline = data.filter(x => x.is_online !== 1).length
+      this.events.online = online
+      this.events.total = online + offline
       this.mapsLoading = false
     },
     async fetchSummary() {
