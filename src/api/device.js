@@ -1,8 +1,14 @@
 import request from '@/utils/request'
 
-export function fetchDevices() {
+export function fetchDevices(listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `perPage=${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = `perPage=1000`
+  }
   return request({
-    url: '/devices?perPage=10000',
+    url: `/devices?${params}`,
     method: 'get'
   })
 }
