@@ -45,8 +45,8 @@ export default {
 
 <style scoped>
 .video {
-  min-width: 704px;
-  min-height: 396px;
+  max-width: 704px;
+  max-height: 396px;
   width: auto;
 }
 </style>
