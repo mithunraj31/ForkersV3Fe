@@ -1,3 +1,5 @@
+import * as moment from 'moment-timezone'
+
 /**
  * Created by PanJiaChen on 16/11/18.
  */
@@ -354,4 +356,20 @@ export function removeClass(ele, cls) {
     const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
     ele.className = ele.className.replace(reg, ' ')
   }
+}
+
+export function convertStrUtcToLocalDatetime(datetime) {
+  const currentTimezone = moment.tz.guess()
+  const datetimeUtc = moment.utc(datetime)
+  return datetimeUtc.tz(currentTimezone).format('YYYY-MM-DD HH:mm:ss')
+}
+
+export function convertStrLocalDatetimeToUtc(datetime, format = 'YYYY-MM-DD HH:mm:ss') {
+  if (!datetime) {
+    return datetime
+  }
+
+  const currentTimezone = moment.tz.guess()
+  const localDatetime = moment.tz(datetime, format, currentTimezone)
+  return localDatetime.tz('UTC').format(format)
 }

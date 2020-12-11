@@ -88,6 +88,7 @@ export default {
     async fetchData() {
       this.mapsLoading = true
       const { data } = await fetchDevices()
+
       const datafilter = data.filter(device => device.latitude !== 0)
 
       this.devices = datafilter

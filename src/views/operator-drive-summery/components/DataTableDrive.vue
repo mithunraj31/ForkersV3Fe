@@ -55,6 +55,11 @@ export default {
       limit: 10
     }
   },
+  computed: {
+    currentLocale() {
+      return this.$store.state.app.language || 'en'
+    }
+  },
   watch: {
     data: function(newVal, OldVal) {
       this.processData()
@@ -67,7 +72,7 @@ export default {
     processData() {
       this.total = this.data.length
       var timeFormat = 'dddd, MMMM Do YYYY, H:mm:ss'
-      moment.locale('ja')
+      moment.locale(this.currentLocale)
       if (this.data && this.data.length > 0) {
         for (
           var i = (this.page - 1) * this.limit;
@@ -111,7 +116,7 @@ export default {
       }
     },
     tableRowClassName({ row }) {
-      if (row.type === '車両の走行データ') {
+      if (row.type === this.$t('driveSummary.vehicleDrivingData')) {
         return 'warning-row'
       } else {
         return 'success-row'

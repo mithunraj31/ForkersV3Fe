@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <el-table
       v-loading="detailLoading"
-      :data="events"
+      :data="event"
       border
       size="small"
       stripe
@@ -11,7 +11,7 @@
       <el-table-column :label="this.$t('event.title')" prop="key" width="200">
         <template slot-scope="scope">
           <label>
-            {{ getTitleName(scope.row.key) }}
+            {{ $t(`event.${scope.row.key}`) }}
           </label>
         </template>
       </el-table-column>
@@ -26,7 +26,7 @@ export default {
   name: 'DeviceDetail',
   data() {
     return {
-      events: null,
+      event: null,
       detailLoading: false,
       mapEventsToDataTable(event) {
         return [
@@ -40,11 +40,11 @@ export default {
           },
           {
             key: 'type',
-            value: event.driver_id
+            value: event.type
           },
           {
             key: 'driverId',
-            value: event.type
+            value: event.driver_id
           },
           {
             key: 'latitude',
@@ -107,22 +107,14 @@ export default {
     }
   },
   async mounted() {
-    await this.fetchListings()
+    await this.getEventDetail()
   },
   methods: {
-    async fetchListings() {
+    async getEventDetail() {
       this.detailLoading = true
-      let response = null
-      this.loading = true
-      response = await fetchEventsById(this.$route.params.eventId)
-      const datas = response.data
-      this.events = datas.map(this.mapEventsToDataTable)
-      this.events = this.events[0]
+      const { data } = await fetchEventsById(this.$route.params.eventId)
+      this.event = this.mapEventsToDataTable(data)
       this.detailLoading = false
-    },
-
-    getTitleName(key) {
-      return this.$t(`event.${key}`)
     }
   }
 }

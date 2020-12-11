@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-loading="videoLoading" style="height: 500px; width: 100%">
+    <div v-loading="videoLoading" class="video-player">
       <div v-if="video === null">
         <h3>{{ this.$t("event.videoProcessing") }}</h3>
       </div>
@@ -45,7 +45,8 @@ export default {
 
 <style scoped>
 .video {
-  max-height: 205px;
+  min-width: 704px;
+  min-height: 396px;
   width: auto;
 }
 </style>
