@@ -67,6 +67,11 @@ export default {
       limit: 10
     }
   },
+  computed: {
+    currentLocale() {
+      return this.$store.state.app.language || 'en'
+    }
+  },
   watch: {
     data: function(newVal, OldVal) {
       this.processData()
@@ -79,7 +84,7 @@ export default {
     processData() {
       this.total = this.data.length
       var timeFormat = 'dddd, MMMM Do YYYY, H:mm:ss'
-      moment.locale('ja')
+      moment.locale(this.currentLocale)
       if (this.data && this.data.length > 0) {
         for (
           var i = (this.page - 1) * this.limit;
@@ -105,7 +110,7 @@ export default {
               timeFormat
             )
             row.startDate = driveSummery.engine_started_at
-            row.type = '車両の走行データ'
+            row.type = this.$t('driveSummary.vehicleDrivingData')
             if (driveSummery.engine_stoped_at) {
               row.end = moment(driveSummery.engine_stoped_at).format(
                 timeFormat
@@ -135,7 +140,7 @@ export default {
                     timeFormat
                   )
                   child['startDate'] = driver.drive_start_at
-                  child['type'] = 'オペレーターの走行データ'
+                  child['type'] = this.$t('driveSummary.operatorDrivingData')
                   child['operator'] = driver.driver_id
                 }
                 if (driver.drive_ended_at) {
@@ -160,7 +165,7 @@ export default {
       }
     },
     tableRowClassName({ row }) {
-      if (row.type === '車両の走行データ') {
+      if (row.type === this.$t('driveSummary.vehicleDrivingData')) {
         return 'warning-row'
       } else {
         return 'success-row'

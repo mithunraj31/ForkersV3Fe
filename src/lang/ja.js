@@ -321,6 +321,7 @@ export default {
     duration: '時間',
     operations: 'オペレーション',
     datetime: '日付時刻',
-    maps: '地図'
+    maps: '地図',
+    running: '走行'
   }
 }

@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { convertStrUtcToLocalDatetime } from '@/utils'
 
 export function fetchEventSummary() {
   return request({
@@ -17,7 +18,19 @@ export function fetchEvents(query) {
 export function fetchEventsById(eventId) {
   return request({
     url: `/events/${eventId}`,
-    method: 'get'
+    method: 'get',
+    transformResponse: [(response) => {
+      const res = JSON.parse(response)
+      const { data } = res
+      if (!data || data.length !== 1) {
+        return res
+      }
+      const singleData = data[0]
+      const localDatetime = convertStrUtcToLocalDatetime(singleData.time)
+      singleData.time = localDatetime
+      res.data = singleData
+      return res
+    }]
   })
 }
 

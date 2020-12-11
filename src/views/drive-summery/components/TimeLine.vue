@@ -21,6 +21,8 @@
 </template>
 
 <script>
+
+import * as moment from 'moment'
 // import { TL } from "./timeline-lib";
 var _TL = require('./../../../utils/timeline-lib.js')
 var TL = _TL.TL
@@ -69,6 +71,11 @@ export default {
       eventCheck: true
     }
   },
+  computed: {
+    currentLocale() {
+      return this.$store.state.app.language || 'en'
+    }
+  },
   beforeCreate() {},
   async mounted() {
     this.processData()
@@ -81,7 +88,7 @@ export default {
       this.timeline = new TL.Timeline(
         'timeline-embed',
         this.processedDriveData,
-        { duration: 200, scale_factor: 2, language: 'ja', marker_width_min: 1 }
+        { duration: 200, scale_factor: 2, language: this.currentLocale, marker_width_min: 1 }
       )
     },
     processDriveData() {
@@ -97,30 +104,16 @@ export default {
           if (this.engineCheck) {
             // When engine session
             if (drive.engine_started_at) {
-              session['start_date'] = {
-                year: new Date(drive.engine_started_at).getFullYear(),
-                month: new Date(drive.engine_started_at).getMonth() + 1,
-                day: new Date(drive.engine_started_at).getDay() + 1,
-                hour: new Date(drive.engine_started_at).getHours(),
-                minute: new Date(drive.engine_started_at).getMinutes(),
-                second: new Date(drive.engine_started_at).getSeconds()
-              }
+              session['start_date'] = this.getTimelineDatetime(drive.engine_started_at)
               if (drive.engine_stoped_at) {
-                session['end_date'] = {
-                  year: new Date(drive.engine_stoped_at).getFullYear(),
-                  month: new Date(drive.engine_stoped_at).getMonth() + 1,
-                  day: new Date(drive.engine_stoped_at).getDay() + 1,
-                  hour: new Date(drive.engine_stoped_at).getHours(),
-                  minute: new Date(drive.engine_stoped_at).getMinutes(),
-                  second: new Date(drive.engine_stoped_at).getSeconds()
-                }
+                session['end_date'] = this.getTimelineDatetime(drive.engine_stoped_at)
               }
 
               session['isEngineSession'] = true
               session['background'] = {
                 color: '#324157'
               }
-              session['group'] = '走行'
+              session['group'] = this.$t('driveSummary.running')
               const drivers = drive.driver_data
                 ? drive.driver_data.length.toString()
                 : '0'
@@ -140,31 +133,17 @@ export default {
               drive.driver_data.forEach((driver) => {
                 const driveSession = {}
                 if (driver.drive_start_at) {
-                  driveSession['start_date'] = {
-                    year: new Date(driver.drive_start_at).getFullYear(),
-                    month: new Date(driver.drive_start_at).getMonth() + 1,
-                    day: new Date(driver.drive_start_at).getDay() + 1,
-                    hour: new Date(driver.drive_start_at).getHours(),
-                    minute: new Date(driver.drive_start_at).getMinutes(),
-                    second: new Date(driver.drive_start_at).getSeconds()
-                  }
+                  driveSession['start_date'] = this.getTimelineDatetime(driver.drive_start_at)
                 }
                 if (driver.drive_ended_at) {
-                  driveSession['end_date'] = {
-                    year: new Date(driver.drive_ended_at).getFullYear(),
-                    month: new Date(driver.drive_ended_at).getMonth() + 1,
-                    day: new Date(driver.drive_ended_at).getDay() + 1,
-                    hour: new Date(driver.drive_ended_at).getHours(),
-                    minute: new Date(driver.drive_ended_at).getMinutes(),
-                    second: new Date(driver.drive_ended_at).getSeconds()
-                  }
+                  driveSession['end_date'] = this.getTimelineDatetime(driver.drive_ended_at)
                 }
 
                 driveSession['isDriveSession'] = true
                 driveSession['background'] = {
                   color: '#206655'
                 }
-                session['group'] = '走行'
+                session['group'] = this.$t('driveSummary.running')
                 const driverId = driver.driver_id
                 driveSession['text'] = {
                   headline: this.$t('driveSummary.operatorDrivingData'),
@@ -192,15 +171,7 @@ export default {
       if (this.eventCheck && this.events && this.events.length > 0) {
         this.events.forEach((event) => {
           const eventSession = {}
-
-          eventSession['start_date'] = {
-            year: new Date(event.time).getFullYear(),
-            month: new Date(event.time).getMonth() + 1,
-            day: new Date(event.time).getDay() + 1,
-            hour: new Date(event.time).getHours(),
-            minute: new Date(event.time).getMinutes(),
-            second: new Date(event.time).getSeconds()
-          }
+          eventSession['start_date'] = this.getTimelineDatetime(event.time)
           let eventType = 'Unknown'
           let icon = ''
           switch (event.type) {
@@ -241,7 +212,7 @@ export default {
           eventSession['background'] = {
             color: '#d19d59'
           }
-          eventSession['group'] = 'イベント'
+          eventSession['group'] = this.$t('driveSummary.eventLabel')
           eventSession['text'] = {
             headline: icon + eventType + ` ${this.$t('driveSummary.eventLabel')}`,
             text:
@@ -261,9 +232,20 @@ export default {
               url: event.video.converted_video_url
             }
           }
-
           this.processedDriveData.events.push(eventSession)
         })
+      }
+    },
+
+    getTimelineDatetime(datetime) {
+      const dt = moment(datetime)
+      return {
+        year: dt.year(),
+        month: dt.month(),
+        day: dt.date(),
+        hour: dt.hour(),
+        minute: dt.minute(),
+        second: dt.second()
       }
     }
   }

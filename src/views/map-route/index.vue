@@ -82,10 +82,15 @@ export default {
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }
   },
+  computed: {
+    currentLocale() {
+      return this.$store.state.app.language || 'en'
+    }
+  },
   async mounted() {
     if (this.deviceId && this.start && this.end) {
       await this.fetchData()
-      moment.locale('ja')
+      moment.locale(this.currentLocale)
     }
   },
   methods: {
@@ -93,7 +98,6 @@ export default {
       this.loading = true
       const data = await fetchDriveRoute(this.deviceId, this.start, this.end)
       this.driveRoute = data.data
-      console.log(this.driveRoute)
       this.makePolyline()
       this.loading = false
     },

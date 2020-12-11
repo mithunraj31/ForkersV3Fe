@@ -49,6 +49,8 @@
 import * as moment from 'moment'
 import { makeVideo } from '@/api/video'
 
+const datetimeFormat = 'YYYY-MM-DD HH:mm:ss'
+
 export default {
   data() {
     return {
@@ -71,8 +73,8 @@ export default {
   computed: {
     durationAsSeconds() {
       if (this.form.resource === 3) {
-        const start = moment(`${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('h:mm:ss')}`)
-        const end = moment(`${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('h:mm:ss')}`)
+        const start = moment(`${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('HH:mm:ss')}`)
+        const end = moment(`${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('HH:mm:ss')}`)
         const timePickerDuration = moment.duration(end.diff(start))
         // this.form.duration = timePickerDuration.asMinutes()
         return timePickerDuration.asSeconds()
@@ -89,10 +91,10 @@ export default {
       return this.durationAsSeconds < 1 || this.durationAsSeconds > duration.asSeconds()
     },
     startDatetime() {
-      return moment(this.$route.query.start).format('YYYY-MM-DD hh:mm:ss')
+      return moment(this.$route.query.start).format(datetimeFormat)
     },
     endDatetime() {
-      return moment(this.$route.query.end).format('YYYY-MM-DD hh:mm:ss')
+      return moment(this.$route.query.end).format(datetimeFormat)
     }
   },
   watch: {
@@ -100,8 +102,8 @@ export default {
       deep: true,
       handler: function(newVal) {
         if (this.form.resource === 3) {
-          const start = moment(`${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('h:mm:ss')}`)
-          const end = moment(`${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('h:mm:ss')}`)
+          const start = moment(`${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('HH:mm:ss')}`)
+          const end = moment(`${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('HH:mm:ss')}`)
           const timePickerDuration = moment.duration(end.diff(start))
           this.form.duration = timePickerDuration.asMinutes()
         }
@@ -120,18 +122,19 @@ export default {
         const start = moment(this.$route.query.start)
         videoMaker = {
           beginDatetime: this.$route.query.start,
-          endDatetime: start.add(this.form.duration || 1, 'minutes').format('YYYY-MM-DD hh:mm:ss')
+          endDatetime: start.add(this.form.duration || 1, 'minutes').format(datetimeFormat)
         }
+        console.log(videoMaker)
       } else if (this.form.resource === 2) {
         const end = moment(this.$route.query.end)
         videoMaker = {
-          beginDatetime: end.add((this.form.duration * -1) || -1, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
+          beginDatetime: end.add((this.form.duration * -1) || -1, 'minutes').format(datetimeFormat),
           endDatetime: this.$route.query.end
         }
       } else if (this.form.resource === 3) {
         videoMaker = {
-          beginDatetime: `${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('h:mm:ss')}`,
-          endDatetime: `${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('h:mm:ss')}`
+          beginDatetime: `${moment(this.form.dateRange[0]).format('YYYY-MM-DD')} ${moment(this.form.startTime).format('HH:mm:ss')}`,
+          endDatetime: `${moment(this.form.dateRange[1]).format('YYYY-MM-DD')} ${moment(this.form.endTime).format('HH:mm:ss')}`
         }
       } else {
         throw new Error('Not implemented exception')

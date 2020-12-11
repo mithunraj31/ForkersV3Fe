@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import * as moment from 'moment'
+
 // import { TL } from "./timeline-lib";
 var _TL = require('./../../../utils/timeline-lib.js')
 var TL = _TL.TL
@@ -77,7 +79,7 @@ export default {
       this.timeline = new TL.Timeline(
         'timeline-embed',
         this.processedDriveData,
-        { duration: 200, scale_factor: 2, language: 'ja', marker_width_min: 1 }
+        { duration: 200, scale_factor: 2, language: this.currentLocale, marker_width_min: 1 }
       )
     },
     processDriveData() {
@@ -94,24 +96,10 @@ export default {
           if (this.driverCheck) {
             const driveSession = {}
             if (driver.drive_started_at) {
-              driveSession['start_date'] = {
-                year: new Date(driver.drive_started_at).getFullYear(),
-                month: new Date(driver.drive_started_at).getMonth() + 1,
-                day: new Date(driver.drive_started_at).getDay() + 1,
-                hour: new Date(driver.drive_started_at).getHours(),
-                minute: new Date(driver.drive_started_at).getMinutes(),
-                second: new Date(driver.drive_started_at).getSeconds()
-              }
+              driveSession['start_date'] = this.getTimelineDatetime(driver.drive_started_at)
             }
             if (driver.drive_stoped_at) {
-              driveSession['end_date'] = {
-                year: new Date(driver.drive_stoped_at).getFullYear(),
-                month: new Date(driver.drive_stoped_at).getMonth() + 1,
-                day: new Date(driver.drive_stoped_at).getDay() + 1,
-                hour: new Date(driver.drive_stoped_at).getHours(),
-                minute: new Date(driver.drive_stoped_at).getMinutes(),
-                second: new Date(driver.drive_stoped_at).getSeconds()
-              }
+              driveSession['end_date'] = this.getTimelineDatetime(driver.drive_stoped_at)
             }
 
             driveSession['isDriveSession'] = true
@@ -138,14 +126,7 @@ export default {
         this.events.forEach((event) => {
           const eventSession = {}
 
-          eventSession['start_date'] = {
-            year: new Date(event.time).getFullYear(),
-            month: new Date(event.time).getMonth() + 1,
-            day: new Date(event.time).getDay() + 1,
-            hour: new Date(event.time).getHours(),
-            minute: new Date(event.time).getMinutes(),
-            second: new Date(event.time).getSeconds()
-          }
+          eventSession['start_date'] = this.getTimelineDatetime(event.time)
           let eventType = 'Unknown'
           let icon = ''
           switch (event.type) {
@@ -204,6 +185,17 @@ export default {
 
           this.processedDriveData.events.push(eventSession)
         })
+      }
+    },
+    getTimelineDatetime(datetime) {
+      const dt = moment(datetime)
+      return {
+        year: dt.year(),
+        month: dt.month(),
+        day: dt.date(),
+        hour: dt.hour(),
+        minute: dt.minute(),
+        second: dt.second()
       }
     }
   }

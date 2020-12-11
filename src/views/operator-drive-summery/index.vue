@@ -51,9 +51,14 @@ export default {
       duration: 0
     }
   },
+  computed: {
+    currentLocale() {
+      return this.$store.state.app.language || 'en'
+    }
+  },
   async mounted() {
     if (this.operatorId && this.start && this.end) {
-      moment.locale('ja')
+      moment.locale(this.currentLocale)
       await this.fetchData()
       await this.getEventData()
     }
