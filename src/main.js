@@ -23,6 +23,8 @@ import 'leaflet/dist/leaflet.css'
 import VueVideoPlayer from 'vue-video-player'
 
 import 'video.js/dist/video-js.css'
+
+import { keycloakService } from '@/api/keycloak'
 // import 'vue-video-player/src/custom-theme.css'
 
 Vue.use(VueVideoPlayer /* {
@@ -55,10 +57,20 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-})
+keycloakService.init({ onLoad: 'login-required' })
+  .then((authenticated) => {
+    if (!authenticated) {
+      window.location.reload()
+    } else {
+      new Vue({
+        el: '#app',
+        router,
+        store,
+        i18n,
+        render: h => h(App)
+      })
+    }
+  }).catch((error) => {
+    console.log(error)
+  })
+
