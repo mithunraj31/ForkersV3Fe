@@ -120,7 +120,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/eventSummary',
+    path: '/event-summary',
     component: Layout,
     children: [
       {
@@ -197,6 +197,36 @@ export const constantRoutes = [
           end: route.query.end,
           operatorId: route.params.operatorId
         })
+      }
+    ]
+  },
+  {
+    path: '/drivers',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/driver-summary/index'),
+        name: 'Driver',
+        meta: {
+          title: 'DriverListing',
+          icon: 'el-icon-s-tools',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/driver-summary/new-driver/index'),
+        name: 'NewDriver',
+        hidden: true,
+        meta: { title: 'newDriver', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/driver-summary/edit-driver/index'),
+        name: 'EditDriver',
+        hidden: true,
+        meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
       }
     ]
   },

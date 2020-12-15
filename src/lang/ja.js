@@ -37,6 +37,9 @@ export default {
     DriveRoute: 'ライブルート',
     CreateVideo: 'ビデオの作成',
     DeviceListing: 'デバイスリスト',
+    DriverListing: 'ドライバーリスト',
+    newDriver: '新しいドライバー',
+    editDriver: 'ドライバーの編集',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -182,7 +185,16 @@ export default {
     invalidDatetimeRange: '日時の範囲、期間は',
     videoDuration: 'ビデオの長さは',
     noVideo: 'ビデオはありません',
-    videoIsProcessing: 'ビデオは処理中'
+    videoIsProcessing: 'ビデオは処理中',
+    driverIdRequired: 'DriverIdが必要です',
+    nameRequired: '名前は必須です',
+    dobRequired: 'DOBが必要です',
+    addressRequired: 'アドレスが必要です',
+    licenseNoRequired: 'ライセンス番号が必要です',
+    licenseReceivedDateRequired: 'ライセンスの受領日が必要です',
+    licenseRenewalDateRequired: 'ライセンスの有効期限が必要です',
+    licenseLocationRequired: 'ライセンスの場所が必要です',
+    phoneNumberRequired: '電話番号が必要です'
   },
 
   user: {
@@ -274,7 +286,12 @@ export default {
     end: '終了',
     and: 'と',
     video: 'ビデオ',
-    create: '作成'
+    create: '作成',
+    history: '作成',
+    edit: '編集',
+    delete: '削除',
+    save: '保存',
+    cancel: 'キャンセル'
   },
   maps: {
     status: {
@@ -323,5 +340,36 @@ export default {
     datetime: '日付時刻',
     maps: '地図',
     running: '走行'
+  },
+
+  driver: {
+    listings: {
+      id: 'ID',
+      driverId: 'ドライバーID',
+      age: '年齢',
+      name: '名前',
+      licenseNo: 'ライセンス番号',
+      licensevalidTill: 'ライセンス有効期限',
+      phoneNo: '電話番号'
+
+    },
+    new: {
+      title: 'ドライバーの追加'
+    },
+    edit: {
+      title: 'ドライバーの編集'
+    },
+    form: {
+      driverId: 'ドライバーID',
+      dob: 'DOB',
+      name: '名前',
+      licenseNo: 'ライセンス番号',
+      phoneNo: '電話番号',
+      address: 'アドレス',
+      licenseReceived: 'ライセンス受領日',
+      licenseRenewal: 'ライセンス有効期限',
+      licenseLocation: 'ライセンスの場所'
+    }
   }
+
 }

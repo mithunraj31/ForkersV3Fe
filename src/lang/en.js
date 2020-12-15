@@ -37,6 +37,9 @@ export default {
     DriveRoute: 'Drive Route',
     CreateVideo: 'Create Video',
     DeviceListing: 'Device Listings',
+    DriverListing: 'Driver Listings',
+    newDriver: 'New Driver',
+    editDriver: 'Edit Driver',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -182,7 +185,16 @@ export default {
     invalidDatetimeRange: 'Datetime range, Duration should be between',
     videoDuration: 'Video duration should be between',
     noVideo: 'No video',
-    videoIsProcessing: 'Video is processing'
+    videoIsProcessing: 'Video is processing',
+    driverIdRequired: 'DriverId is Required',
+    nameRequired: 'Name is Required',
+    dobRequired: 'DOB is Required',
+    addressRequired: 'Address is Required',
+    licenseNoRequired: 'License Number is Required',
+    licenseReceivedDateRequired: 'License ReceivedDate is Required',
+    licenseRenewalDateRequired: 'License ExpiryDate is Required',
+    licenseLocationRequired: 'License Location is Required',
+    phoneNumberRequired: 'Phone Number is Required'
   },
 
   user: {
@@ -274,7 +286,12 @@ export default {
     end: 'End',
     and: 'and',
     video: 'Video',
-    create: 'Create'
+    create: 'Create',
+    history: 'History',
+    edit: 'Edit',
+    delete: 'Delete',
+    save: 'Save',
+    cancel: 'Cancel'
   },
   maps: {
     status: {
@@ -325,5 +342,35 @@ export default {
     datetime: 'Datetime',
     maps: 'Maps',
     running: 'Running'
+  },
+
+  driver: {
+    listings: {
+      id: 'Id',
+      driverId: 'DriverId',
+      age: 'Age',
+      name: 'Name',
+      licenseNo: 'License Number',
+      licensevalidTill: 'License Valid Till',
+      phoneNo: 'Phone Number'
+
+    },
+    new: {
+      title: 'Add Driver'
+    },
+    edit: {
+      title: 'Edit Driver'
+    },
+    form: {
+      driverId: 'DriverId',
+      dob: 'DOB',
+      name: 'Name',
+      licenseNo: 'License Number',
+      phoneNo: 'Phone Number',
+      address: 'Address',
+      licenseLocation: 'License Location',
+      licenseReceived: 'License Received Date',
+      licenseRenewal: 'License Valid Till'
+    }
   }
 }
