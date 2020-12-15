@@ -22,18 +22,18 @@
             :label="this.$t('driver.listings.id')"
             width="35px"
           />
-          <el-table-column prop="driverId" :label="this.$t('driver.listings.driverId')">
+          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
-              <label class="click" @click="driverClick(scope.row.driverId)">
-                {{ scope.row.driverId }}
+              <label class="click" @click="driverClick(scope.row.operatorId)">
+                {{ scope.row.operatorId }}
               </label>
             </template>
           </el-table-column>
           <el-table-column prop="name" :label="this.$t('driver.listings.name')">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
-                <p>Name: {{ scope.row.name }}</p>
-                <p>Addr: {{ scope.row.address }}</p>
+                <p>{{ $t("driver.listings.name") }}: {{ scope.row.name }}</p>
+                <p>{{ $t("driver.form.address") }}: {{ scope.row.address }}</p>
                 <div slot="reference" class="name-wrapper">
                   <el-tag size="medium">{{ scope.row.name }}</el-tag>
                 </div>
@@ -43,7 +43,7 @@
           <el-table-column
             prop="dob"
             :label="this.$t('driver.listings.age')"
-            width="45px"
+            width="50px"
           >
             <template slot-scope="scope">
               {{ calculateAge(scope.row.dob) }}
@@ -60,15 +60,6 @@
           <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
-              <el-button
-                type="primary"
-                size="small"
-                @click.native.prevent="
-                  $router.push(`/operator/${scope.row.driverId}/driveSummary`)
-                "
-              >
-                {{ $t("general.history") }}
-              </el-button>
               <el-button
                 type="primary"
                 size="small"
@@ -111,7 +102,7 @@ export default {
     permission
   },
   props: {
-    driverId: {
+    operatorId: {
       type: Number,
       default() {
         return 0
@@ -160,7 +151,7 @@ export default {
     mapdriversToDataTable(driver) {
       return {
         id: driver.id,
-        driverId: driver.driver_id,
+        operatorId: driver.operator_id,
         name: driver.name,
         dob: driver.dob,
         address: driver.address,
@@ -182,8 +173,8 @@ export default {
         query: this.listQuery
       })
     },
-    driverClick(driverId) {
-      this.$router.push(`/operator/${driverId}/driveSummary`)
+    driverClick(operatorId) {
+      this.$router.push(`/operator/${operatorId}/driveSummary`)
     },
     onDeletedriverClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')

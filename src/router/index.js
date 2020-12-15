@@ -205,7 +205,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: () => import('@/views/driver-summary/index'),
         name: 'Driver',
         meta: {

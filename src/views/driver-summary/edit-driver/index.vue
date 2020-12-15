@@ -26,7 +26,7 @@ export default {
       const { data } = await fetchDriverById(+this.$route.params.id)
       this.driver = {
         id: +this.$route.params.id,
-        driverId: data.driver_id,
+        operatorId: data.operator_id,
         name: data.name,
         dob: data.dob,
         address: data.address,

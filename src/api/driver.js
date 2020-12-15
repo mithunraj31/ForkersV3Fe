@@ -2,21 +2,21 @@ import request from '@/utils/request'
 
 export function fetchDrivers(query) {
   return request({
-    url: `/drivers?perPage=${query.limit}&page=${query.page}`,
+    url: `/operators?perPage=${query.limit}&page=${query.page}`,
     method: 'get'
   })
 }
 
 export function fetchDriverById(id) {
   return request({
-    url: `/drivers/${id}`,
+    url: `/operators/${id}`,
     method: 'get'
   })
 }
 
 export function newDriver(driver) {
   const data = {
-    driver_id: driver.driverId,
+    operator_id: driver.operatorId,
     name: driver.name,
     dob: driver.dob,
     address: driver.address,
@@ -27,7 +27,7 @@ export function newDriver(driver) {
     phone_no: driver.phoneNo
   }
   return request({
-    url: `/drivers`,
+    url: `/operators`,
     method: 'post',
     data
   })
@@ -36,7 +36,7 @@ export function newDriver(driver) {
 export function editDriver(driver) {
   const data = {
     id: driver.id,
-    driver_id: driver.driverId,
+    operator_id: driver.operatorId,
     name: driver.name,
     dob: driver.dob,
     address: driver.address,
@@ -48,7 +48,7 @@ export function editDriver(driver) {
 
   }
   return request({
-    url: `/drivers/${data.id}`,
+    url: `/operators/${data.id}`,
     method: 'put',
     data
   })
@@ -56,7 +56,7 @@ export function editDriver(driver) {
 
 export function deleteDriver(id) {
   return request({
-    url: `/drivers/${id}`,
+    url: `/operators/${id}`,
     method: 'delete'
   })
 }

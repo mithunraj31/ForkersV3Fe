@@ -37,9 +37,9 @@ export default {
     DriveRoute: 'ライブルート',
     CreateVideo: 'ビデオの作成',
     DeviceListing: 'デバイスリスト',
-    DriverListing: 'ドライバーリスト',
-    newDriver: '新しいドライバー',
-    editDriver: 'ドライバーの編集',
+    DriverListing: 'オペレーターリスト',
+    newDriver: '新しいオペレーター',
+    editDriver: 'オペレーターの編集',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -186,15 +186,17 @@ export default {
     videoDuration: 'ビデオの長さは',
     noVideo: 'ビデオはありません',
     videoIsProcessing: 'ビデオは処理中',
-    driverIdRequired: 'DriverIdが必要です',
+    driverIdRequired: 'オペレーターIdが必要です',
     nameRequired: '名前は必須です',
     dobRequired: 'DOBが必要です',
     addressRequired: 'アドレスが必要です',
-    licenseNoRequired: 'ライセンス番号が必要です',
-    licenseReceivedDateRequired: 'ライセンスの受領日が必要です',
-    licenseRenewalDateRequired: 'ライセンスの有効期限が必要です',
-    licenseLocationRequired: 'ライセンスの場所が必要です',
-    phoneNumberRequired: '電話番号が必要です'
+    licenseNoRequired: '免許番号が必要です',
+    licenseReceivedDateRequired: '免許の受領日が必要です',
+    licenseRenewalDateRequired: '免許の有効期限が必要です',
+    licenseLocationRequired: '免許の場所が必要です',
+    phoneNumberRequired: '電話番号が必要です',
+    driverHasBeenCreated: '演算子が作成されました',
+    driverHasBeenEdited: '演算子が編集されました'
   },
 
   user: {
@@ -345,30 +347,30 @@ export default {
   driver: {
     listings: {
       id: 'ID',
-      driverId: 'ドライバーID',
+      driverId: 'オペレーターID',
       age: '年齢',
       name: '名前',
-      licenseNo: 'ライセンス番号',
-      licensevalidTill: 'ライセンス有効期限',
+      licenseNo: '免許番号',
+      licensevalidTill: '免許有効期限',
       phoneNo: '電話番号'
 
     },
     new: {
-      title: 'ドライバーの追加'
+      title: 'オペレーターの追加'
     },
     edit: {
-      title: 'ドライバーの編集'
+      title: 'オペレーターの編集'
     },
     form: {
-      driverId: 'ドライバーID',
+      driverId: 'オペレーターID',
       dob: 'DOB',
       name: '名前',
-      licenseNo: 'ライセンス番号',
+      licenseNo: '免許番号',
       phoneNo: '電話番号',
       address: 'アドレス',
-      licenseReceived: 'ライセンス受領日',
-      licenseRenewal: 'ライセンス有効期限',
-      licenseLocation: 'ライセンスの場所'
+      licenseReceived: '免許受領日',
+      licenseRenewal: '免許有効期限',
+      licenseLocation: '免許の場所'
     }
   }
 

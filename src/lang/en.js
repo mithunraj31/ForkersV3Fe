@@ -37,9 +37,9 @@ export default {
     DriveRoute: 'Drive Route',
     CreateVideo: 'Create Video',
     DeviceListing: 'Device Listings',
-    DriverListing: 'Driver Listings',
-    newDriver: 'New Driver',
-    editDriver: 'Edit Driver',
+    DriverListing: 'Operator Listings',
+    newDriver: 'New Operator',
+    editDriver: 'Edit Operator',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -186,7 +186,7 @@ export default {
     videoDuration: 'Video duration should be between',
     noVideo: 'No video',
     videoIsProcessing: 'Video is processing',
-    driverIdRequired: 'DriverId is Required',
+    driverIdRequired: 'OperatorId is Required',
     nameRequired: 'Name is Required',
     dobRequired: 'DOB is Required',
     addressRequired: 'Address is Required',
@@ -194,7 +194,10 @@ export default {
     licenseReceivedDateRequired: 'License ReceivedDate is Required',
     licenseRenewalDateRequired: 'License ExpiryDate is Required',
     licenseLocationRequired: 'License Location is Required',
-    phoneNumberRequired: 'Phone Number is Required'
+    phoneNumberRequired: 'Phone Number is Required',
+    driverHasBeenCreated: 'Operator is created',
+    driverHasBeenEdited: 'Operator has been edited'
+
   },
 
   user: {
@@ -347,7 +350,7 @@ export default {
   driver: {
     listings: {
       id: 'Id',
-      driverId: 'DriverId',
+      driverId: 'OperatorId',
       age: 'Age',
       name: 'Name',
       licenseNo: 'License Number',
@@ -356,13 +359,13 @@ export default {
 
     },
     new: {
-      title: 'Add Driver'
+      title: 'Add Operator'
     },
     edit: {
-      title: 'Edit Driver'
+      title: 'Edit Operator'
     },
     form: {
-      driverId: 'DriverId',
+      driverId: 'OperatorId',
       dob: 'DOB',
       name: 'Name',
       licenseNo: 'License Number',
