@@ -70,7 +70,8 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
     externalLink: 'External Link',
-    profile: 'Profile'
+    profile: 'Profile',
+    userListings: 'User listings'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -182,16 +183,35 @@ export default {
     invalidDatetimeRange: 'Datetime range, Duration should be between',
     videoDuration: 'Video duration should be between',
     noVideo: 'No video',
-    videoIsProcessing: 'Video is processing'
-  },
-
-  user: {
-    listings: {
-      userId: 'ID',
-      userName: 'Name',
-      userVehicle: 'Vehicle',
-      userRunning: 'Running'
-    }
+    videoIsProcessing: 'Video is processing',
+    userNameRequired: 'User Name is Required',
+    emailRequired: 'Email is Required',
+    roleRequired: 'Role is Required',
+    passwordRequired: 'Password is Required',
+    confirmPasswordRequired: 'Confirm Password is Required',
+    passwordMismatch: 'Confirm Password should be same as Password',
+    invalidLength: 'Password should be minimum 6 characters.',
+    emailNotValid: 'Enter a valid email',
+    emailAlreadyRegistered: 'Email Already Registered',
+    customerNameRequired: 'Customer Name Required',
+    customerDescriptionRequired: 'Customer Desceiption  Required',
+    deviceNameRequired: 'Device name is required',
+    serialNumberRequired: 'Serial number is required',
+    deviceHasBeenCreated: 'Device has been created',
+    somethingWentWrong: 'Something went wrong',
+    confirmDelete: 'Are you sure you want to delete {0}?',
+    deviceHasBeenDeleted: 'Device has been deleted',
+    deviceHasBeenEdited: 'Device has been edited',
+    userHasBeenCreated: 'User has been created',
+    userHasBeenDeleted: 'User has been deleted',
+    userHasBeenEdited: 'User has been edited',
+    customerHasBeenCreated: 'Customer has been created',
+    customerHasBeenDeleted: 'Customer has been deleted',
+    customerHasBeenEdited: 'Customer has been edited',
+    maintenanceInfoHasBeenCreated: 'Maintenance has been created',
+    maintenanceInfoHasBeenDeleted: 'Maintenance has been deleted',
+    maintenanceInfoHasBeenEdited: 'Maintenance has been edited',
+    descriptionRequired: 'Description is required'
   },
 
   event: {
@@ -274,7 +294,32 @@ export default {
     end: 'End',
     and: 'and',
     video: 'Video',
-    create: 'Create'
+    create: 'Create',
+    reset: 'Reset',
+    save: 'Save',
+    images: 'Images',
+    description: 'Description',
+    edit: 'Edit',
+    delete: 'Delete',
+    back: 'Return',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    warning: 'Warning',
+    id: 'ID',
+    history: 'History',
+    company: 'Company',
+    image: 'Image',
+    createdAt: 'Created at',
+    updatedAt: 'Updated at',
+    newest: 'Newest',
+    oldest: 'Oldest',
+    admin: 'Admin',
+    user: 'user',
+    readOnly: 'Read only',
+    all: 'All',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
+    clear: 'Clear'
   },
   maps: {
     status: {
@@ -325,5 +370,33 @@ export default {
     datetime: 'Datetime',
     maps: 'Maps',
     running: 'Running'
+  },
+
+  user: {
+    listings: {
+      userId: 'ID',
+      userName: 'Name',
+      userEmail: 'Email',
+      userRole: 'Role',
+      userUpdated: 'Last updated',
+      selectUser: 'Select user',
+      userVehicle: 'Vehicle',
+      userRunning: 'Running'
+    },
+    new: {
+      title: 'New User'
+    },
+    edit: {
+      title: 'Edit User'
+    },
+    form: {
+      firstName: 'First name',
+      lastName: 'Last name',
+      userEmail: 'Email',
+      userRole: 'Role',
+      userPassword: 'Password',
+      userConfirmPassword: 'Confirm',
+      changePassword: 'Change Password'
+    }
   }
 }

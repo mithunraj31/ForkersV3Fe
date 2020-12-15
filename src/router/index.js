@@ -50,11 +50,11 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/views/login/index'),
+  //   hidden: true
+  // },
   {
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
@@ -212,6 +212,33 @@ export const constantRoutes = [
         component: () => import('@/views/profile/index'),
         name: 'Profile',
         meta: { title: 'profile', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/users',
+    component: Layout,
+    redirect: '/users/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user/index'),
+        name: 'Users',
+        meta: { title: 'userListings', icon: 'user', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/user/new-user/index'),
+        name: 'NewUser',
+        hidden: true,
+        meta: { title: 'newUser', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/user/edit-user/index'),
+        name: 'EditUser',
+        hidden: true,
+        meta: { title: 'editUser', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editUserBreadcrumbTitle' }
       }
     ]
   }

@@ -23,10 +23,17 @@ export function logout() {
   })
 }
 
-export function fetchUsers(query) {
-  return request({
-    // url: `/users?perPage=${query.limit}&page=${query.page}`,
-    url: '/vue-element-admin/user/users',
-    method: 'get'
+export function fetchUsers() {
+  return new Promise((resolve, reject) => {
+    resolve({
+      data: [],
+      meta: { total: 0 }
+    })
+  })
+}
+
+export function deleteUser() {
+  return new Promise((resolve, reject) => {
+    resolve()
   })
 }
