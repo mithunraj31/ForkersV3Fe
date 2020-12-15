@@ -23,7 +23,20 @@
           <el-table-column
             prop="assignStatus"
             :label="this.$t('rfid.listings.assignStatus')"
-          />
+          >
+            <template slot-scope="scope">
+              <div
+                v-if="scope.row.assignStatus === 0"
+                class="click"
+                @click="videoClick(scope.row.eventId)"
+              >
+                {{ $t("rfid.listings.assigned") }}
+              </div>
+              <div v-else>
+                {{ $t("rfid.listings.notAssigned") }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
