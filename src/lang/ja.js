@@ -71,7 +71,10 @@ export default {
     i18n: '多言語',
     externalLink: '外部リンク',
     profile: 'プロフィール',
-    userListings: 'ユーザー'
+    userListings: 'ユーザー',
+    customerListings: '会社リスト',
+    newCustomer: '会社を追加',
+    editCustomer: '会社を編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -185,6 +188,8 @@ export default {
     noVideo: 'ビデオはありません',
     videoIsProcessing: 'ビデオは処理中',
     userNameRequired: 'ユーザー名が必要があります',
+    nameRequired: '名が必要があります',
+    stkUserRequired: 'STKユーザーが必要があります',
     emailRequired: 'メールが必要があります',
     roleRequired: '役割が必要があります',
     passwordRequired: 'パスワードが必要があります',
@@ -211,7 +216,8 @@ export default {
     maintenanceInfoHasBeenCreated: 'メンテナンス履歴が作成されました',
     maintenanceInfoHasBeenDeleted: 'メンテナンス履歴が削除されました',
     maintenanceInfoHasBeenEdited: 'メンテナンス履歴が編集されました',
-    descriptionRequired: '説明は必要があります'
+    descriptionRequired: '説明は必要があります',
+    customerBeenCreated: '会社が作成されました'
   },
 
   event: {
@@ -395,6 +401,29 @@ export default {
       userPassword: 'パスワード',
       userConfirmPassword: '確認',
       changePassword: 'パスワードを変更'
+    }
+  },
+
+  customer: {
+    new: {
+      title: '会社を追加'
+    },
+
+    edit: {
+      title: '会社を編集'
+    },
+
+    listings: {
+      id: '番号',
+      name: '名前',
+      stkUser: 'STKユーザー',
+      updated: '最終更新時刻'
+    },
+
+    form: {
+      name: '名前',
+      description: '説明',
+      stkUser: 'STKユーザー'
     }
   }
 }

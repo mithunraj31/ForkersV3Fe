@@ -238,11 +238,37 @@ export const constantRoutes = [
         component: () => import('@/views/user/edit-user/index'),
         name: 'EditUser',
         hidden: true,
-        meta: { title: 'editUser', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editUserBreadcrumbTitle' }
+        meta: { title: 'editUser', noCache: true, breadcrumbTitle: 'editUserBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/customers',
+    component: Layout,
+    redirect: '/customers/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer/index'),
+        name: 'Customers',
+        meta: { title: 'customerListings', icon: 'el-icon-school', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/customer/new-customer/index'),
+        name: 'NewCustomer',
+        hidden: true,
+        meta: { title: 'newCustomer', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/customer/edit-customer/index'),
+        name: 'EditCustomer',
+        hidden: true,
+        meta: { title: 'editCustomer', noCache: true, breadcrumbTitle: 'editCustomerBreadcrumbTitle' }
       }
     ]
   }
-
 ]
 
 // export const originalConstantRoutes = [

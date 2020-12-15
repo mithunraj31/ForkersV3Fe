@@ -71,7 +71,10 @@ export default {
     i18n: 'I18n',
     externalLink: 'External Link',
     profile: 'Profile',
-    userListings: 'User listings'
+    userListings: 'User listings',
+    customerListings: 'Company Listings',
+    newCustomer: 'New customer',
+    editCustomer: 'Edit customer'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -185,6 +188,8 @@ export default {
     noVideo: 'No video',
     videoIsProcessing: 'Video is processing',
     userNameRequired: 'User Name is Required',
+    nameRequired: 'Name is Required',
+    stkUserRequired: 'STK user is Required',
     emailRequired: 'Email is Required',
     roleRequired: 'Role is Required',
     passwordRequired: 'Password is Required',
@@ -397,6 +402,29 @@ export default {
       userPassword: 'Password',
       userConfirmPassword: 'Confirm',
       changePassword: 'Change Password'
+    }
+  },
+
+  customer: {
+    new: {
+      title: 'New company'
+    },
+
+    edit: {
+      title: 'Edit company'
+    },
+
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      stkUser: 'STK User',
+      updated: 'Last updated'
+    },
+
+    form: {
+      name: 'Name',
+      description: 'Description',
+      stkUser: 'STK user'
     }
   }
 }
