@@ -41,8 +41,8 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      setToken('admin-token')
-      commit('SET_TOKEN', keycloakService.idToken)
+      setToken(keycloakService.token)
+      commit('SET_TOKEN', keycloakService.token)
       commit('SET_ROLES', ['admin'])
       commit('SET_NAME', keycloakService.idTokenParsed.name)
       commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')

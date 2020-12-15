@@ -73,7 +73,11 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
     externalLink: 'External Link',
-    profile: 'Profile'
+    profile: 'Profile',
+    userListings: 'User listings',
+    customerListings: 'Company Listings',
+    newCustomer: 'New customer',
+    editCustomer: 'Edit customer'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -196,17 +200,36 @@ export default {
     licenseLocationRequired: 'License Location is Required',
     phoneNumberRequired: 'Phone Number is Required',
     driverHasBeenCreated: 'Operator is created',
-    driverHasBeenEdited: 'Operator has been edited'
-
-  },
-
-  user: {
-    listings: {
-      userId: 'ID',
-      userName: 'Name',
-      userVehicle: 'Vehicle',
-      userRunning: 'Running'
-    }
+    driverHasBeenEdited: 'Operator has been edited',
+    userNameRequired: 'User Name is Required',
+    stkUserRequired: 'STK user is Required',
+    emailRequired: 'Email is Required',
+    roleRequired: 'Role is Required',
+    passwordRequired: 'Password is Required',
+    confirmPasswordRequired: 'Confirm Password is Required',
+    passwordMismatch: 'Confirm Password should be same as Password',
+    invalidLength: 'Password should be minimum 6 characters.',
+    emailNotValid: 'Enter a valid email',
+    emailAlreadyRegistered: 'Email Already Registered',
+    customerNameRequired: 'Customer Name Required',
+    customerDescriptionRequired: 'Customer Desceiption  Required',
+    deviceNameRequired: 'Device name is required',
+    serialNumberRequired: 'Serial number is required',
+    deviceHasBeenCreated: 'Device has been created',
+    somethingWentWrong: 'Something went wrong',
+    confirmDelete: 'Are you sure you want to delete {0}?',
+    deviceHasBeenDeleted: 'Device has been deleted',
+    deviceHasBeenEdited: 'Device has been edited',
+    userHasBeenCreated: 'User has been created',
+    userHasBeenDeleted: 'User has been deleted',
+    userHasBeenEdited: 'User has been edited',
+    customerHasBeenCreated: 'Customer has been created',
+    customerHasBeenDeleted: 'Customer has been deleted',
+    customerHasBeenEdited: 'Customer has been edited',
+    maintenanceInfoHasBeenCreated: 'Maintenance has been created',
+    maintenanceInfoHasBeenDeleted: 'Maintenance has been deleted',
+    maintenanceInfoHasBeenEdited: 'Maintenance has been edited',
+    descriptionRequired: 'Description is required'
   },
 
   event: {
@@ -293,8 +316,28 @@ export default {
     history: 'History',
     edit: 'Edit',
     delete: 'Delete',
+    reset: 'Reset',
     save: 'Save',
-    cancel: 'Cancel'
+    images: 'Images',
+    description: 'Description',
+    back: 'Return',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    warning: 'Warning',
+    id: 'ID',
+    company: 'Company',
+    image: 'Image',
+    createdAt: 'Created at',
+    updatedAt: 'Updated at',
+    newest: 'Newest',
+    oldest: 'Oldest',
+    admin: 'Admin',
+    user: 'user',
+    readOnly: 'Read only',
+    all: 'All',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
+    clear: 'Clear'
   },
   maps: {
     status: {
@@ -374,6 +417,56 @@ export default {
       licenseLocation: 'License Location',
       licenseReceived: 'License Received Date',
       licenseRenewal: 'License Valid Till'
+    }
+  },
+  user: {
+    listings: {
+      userId: 'ID',
+      userName: 'Name',
+      userEmail: 'Email',
+      userRole: 'Role',
+      userUpdated: 'Last updated',
+      selectUser: 'Select user',
+      userVehicle: 'Vehicle',
+      userRunning: 'Running'
+    },
+    new: {
+      title: 'New User'
+    },
+    edit: {
+      title: 'Edit User'
+    },
+    form: {
+      firstName: 'First name',
+      lastName: 'Last name',
+      userEmail: 'Email',
+      userRole: 'Role',
+      userPassword: 'Password',
+      userConfirmPassword: 'Confirm',
+      changePassword: 'Change Password'
+    }
+  },
+
+  customer: {
+    new: {
+      title: 'New company'
+    },
+
+    edit: {
+      title: 'Edit company'
+    },
+
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      stkUser: 'STK User',
+      updated: 'Last updated'
+    },
+
+    form: {
+      name: 'Name',
+      description: 'Description',
+      stkUser: 'STK user'
     }
   }
 }

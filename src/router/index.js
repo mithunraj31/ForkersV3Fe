@@ -50,11 +50,11 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/views/login/index'),
+  //   hidden: true
+  // },
   {
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
@@ -244,8 +244,61 @@ export const constantRoutes = [
         meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
+  },
+  {
+    path: '/users',
+    component: Layout,
+    redirect: '/users/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user/index'),
+        name: 'Users',
+        meta: { title: 'userListings', icon: 'user', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/user/new-user/index'),
+        name: 'NewUser',
+        hidden: true,
+        meta: { title: 'newUser', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/user/edit-user/index'),
+        name: 'EditUser',
+        hidden: true,
+        meta: { title: 'editUser', noCache: true, breadcrumbTitle: 'editUserBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/customers',
+    component: Layout,
+    redirect: '/customers/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer/index'),
+        name: 'Customers',
+        meta: { title: 'customerListings', icon: 'el-icon-school', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/customer/new-customer/index'),
+        name: 'NewCustomer',
+        hidden: true,
+        meta: { title: 'newCustomer', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/customer/edit-customer/index'),
+        name: 'EditCustomer',
+        hidden: true,
+        meta: { title: 'editCustomer', noCache: true, breadcrumbTitle: 'editCustomerBreadcrumbTitle' }
+      }
+    ]
   }
-
 ]
 
 // export const originalConstantRoutes = [
