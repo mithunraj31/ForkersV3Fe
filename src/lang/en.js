@@ -40,6 +40,7 @@ export default {
     DriverListing: 'Operator Listings',
     newDriver: 'New Operator',
     editDriver: 'Edit Operator',
+    RfidListing: 'RFID Listings',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -196,7 +197,8 @@ export default {
     licenseLocationRequired: 'License Location is Required',
     phoneNumberRequired: 'Phone Number is Required',
     driverHasBeenCreated: 'Operator is created',
-    driverHasBeenEdited: 'Operator has been edited'
+    driverHasBeenEdited: 'Operator has been edited',
+    confirmDelete: 'Are you sure you want to delete {0}?'
 
   },
 
@@ -374,6 +376,24 @@ export default {
       licenseLocation: 'License Location',
       licenseReceived: 'License Received Date',
       licenseRenewal: 'License Valid Till'
+    }
+  },
+
+  rfid: {
+    listings: {
+      id: 'Id',
+      rfid: 'RFID',
+      createdBy: 'Created By',
+      assignStatus: 'Assign Status'
+    },
+    new: {
+      title: 'New RFID'
+    },
+    edit: {
+      title: 'Edit RFID'
+    },
+    form: {
+      rfid: 'RFID'
     }
   }
 }

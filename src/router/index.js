@@ -230,6 +230,36 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/rfid',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/rfid-summary/index'),
+        name: 'RFID',
+        meta: {
+          title: 'RfidListing',
+          icon: 'el-icon-s-shop',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/rfid-summary/new-rfid/index'),
+        name: 'NewRfid',
+        hidden: true,
+        meta: { title: 'newRfid', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/rfid-summary/edit-rfid/index'),
+        name: 'EditRfid',
+        hidden: true,
+        meta: { title: 'editRfid', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editRfidBreadcrumbTitle' }
+      }
+    ]
+  },
 
   {
     path: '/profile',

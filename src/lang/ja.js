@@ -40,6 +40,7 @@ export default {
     DriverListing: 'オペレーターリスト',
     newDriver: '新しいオペレーター',
     editDriver: 'オペレーターの編集',
+    RfidListing: 'RFIDリスト',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -196,7 +197,8 @@ export default {
     licenseLocationRequired: '免許の場所が必要です',
     phoneNumberRequired: '電話番号が必要です',
     driverHasBeenCreated: '演算子が作成されました',
-    driverHasBeenEdited: '演算子が編集されました'
+    driverHasBeenEdited: '演算子が編集されました',
+    confirmDelete: '「{0}」を削除してもよろしいでしょうか'
   },
 
   user: {
@@ -371,6 +373,23 @@ export default {
       licenseReceived: '免許受領日',
       licenseRenewal: '免許有効期限',
       licenseLocation: '免許の場所'
+    }
+  },
+  rfid: {
+    listings: {
+      id: 'ID',
+      rfid: 'RFID',
+      createdBy: '作成されたユーザー',
+      assignStatus: 'ステータスの割り当て'
+    },
+    new: {
+      title: '新しいRFID'
+    },
+    edit: {
+      title: 'RFIDを編集する'
+    },
+    form: {
+      rfid: 'RFID'
     }
   }
 
