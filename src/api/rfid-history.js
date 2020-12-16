@@ -7,9 +7,9 @@ export function fetchRfid(query) {
   })
 }
 
-export function findrfIdHistory(rfid) {
+export function findrfIdHistory(rfid, query) {
   return request({
-    url: `/rfid/history/${rfid}`,
+    url: `/rfid/history/${rfid}?perPage=${query.limit}&page=${query.page}`,
     method: 'get'
   })
 }

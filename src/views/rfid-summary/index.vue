@@ -18,7 +18,13 @@
           size="small"
         >
           <el-table-column prop="id" :label="this.$t('rfid.listings.id')" width="35px" />
-          <el-table-column prop="rfid" :label="this.$t('rfid.listings.rfid')" />
+          <el-table-column prop="rfid" :label="this.$t('rfid.listings.rfid')">
+            <template slot-scope="scope">
+              <div class="click" @click="rfidHistoryClick(scope.row.rfid)">
+                {{ scope.row.rfid }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="createdBy" :label="this.$t('rfid.listings.createdBy')" />
           <el-table-column
             prop="assignStatus"
@@ -188,8 +194,7 @@ export default {
       await this.fetchListings()
     },
     async rfidHistoryClick($rfid) {
-      console.log($rfid)
-      this.$router.push(`/operator/${$rfid}/driveSummary`)
+      this.$router.push(`/rfid/${$rfid}/history`)
     },
     async removeOperator($rfid) {
       await removeOperator($rfid)

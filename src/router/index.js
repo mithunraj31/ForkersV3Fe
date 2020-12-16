@@ -264,6 +264,13 @@ export const constantRoutes = [
         name: 'AssignOperator',
         hidden: true,
         meta: { title: 'assignOperator', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignOperatorBreadcrumbTitle' }
+      },
+      {
+        path: ':rfid/history',
+        component: () => import('@/views/rfid-summary/rfid-history/index'),
+        name: 'RfidHistory',
+        hidden: true,
+        meta: { title: 'rfidHistory', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'rfidHistoryBreadcrumbTitle' }
       }
     ]
   },
