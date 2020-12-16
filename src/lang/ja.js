@@ -76,7 +76,11 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '多言語',
     externalLink: '外部リンク',
-    profile: 'プロフィール'
+    profile: 'プロフィール',
+    userListings: 'ユーザー',
+    customerListings: '会社リスト',
+    newCustomer: '会社を追加',
+    editCustomer: '会社を編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -200,16 +204,36 @@ export default {
     phoneNumberRequired: '電話番号が必要です',
     driverHasBeenCreated: '演算子が作成されました',
     driverHasBeenEdited: '演算子が編集されました',
-    confirmDelete: '「{0}」を削除してもよろしいでしょうか'
-  },
-
-  user: {
-    listings: {
-      userId: 'ID',
-      userName: '会社名',
-      userVehicle: '車両',
-      userRunning: '走っている'
-    }
+    confirmDelete: '「{0}」を削除してもよろしいでしょうか',
+    userNameRequired: 'ユーザー名が必要があります',
+    stkUserRequired: 'STKユーザーが必要があります',
+    emailRequired: 'メールが必要があります',
+    roleRequired: '役割が必要があります',
+    passwordRequired: 'パスワードが必要があります',
+    confirmPasswordRequired: 'パスワードが必要であることを確認',
+    passwordMismatch: 'パスワードの確認はパスワードと同じである必要があります',
+    invalidLength: 'パスワードは6文字以上である必要があります。',
+    emailNotValid: '有効なメールアドレスを入力してください',
+    emailAlreadyRegistered: 'すでに登録されたメール',
+    customerNameRequired: '顧客名が必要',
+    customerDescriptionRequired: '顧客説明必須',
+    deviceNameRequired: 'デバイス名は必要があります',
+    serialNumberRequired: '通し番号は必要があります',
+    deviceHasBeenCreated: 'デバイスが作成されました',
+    somethingWentWrong: '何かがうまくいきませんでした',
+    deviceHasBeenDeleted: 'デバイスが削除されました',
+    deviceHasBeenEdited: 'デバイスが編集されました',
+    userHasBeenCreated: 'ユーザーが作成されました',
+    userHasBeenDeleted: 'ユーザーが削除されました',
+    userHasBeenEdited: 'ユーザーが編集されました',
+    customerHasBeenCreated: '顧客が作成されました',
+    customerHasBeenDeleted: '顧客が削除されました',
+    customerHasBeenEdited: '顧客が編集されました',
+    maintenanceInfoHasBeenCreated: 'メンテナンス履歴が作成されました',
+    maintenanceInfoHasBeenDeleted: 'メンテナンス履歴が削除されました',
+    maintenanceInfoHasBeenEdited: 'メンテナンス履歴が編集されました',
+    descriptionRequired: '説明は必要があります',
+    customerBeenCreated: '会社が作成されました'
   },
 
   event: {
@@ -297,7 +321,27 @@ export default {
     edit: '編集',
     delete: '削除',
     save: '保存',
-    cancel: 'キャンセル'
+    cancel: 'キャンセル',
+    reset: 'リセット',
+    images: '写真',
+    description: '説明',
+    back: '戻る',
+    confirm: '確認',
+    warning: '注意',
+    id: '番号',
+    company: '会社',
+    image: '写真',
+    createdAt: '作成日',
+    updatedAt: '編集日',
+    newest: '最新',
+    oldest: '最古',
+    admin: '管理者',
+    user: '一般のユーザー',
+    readOnly: '読み取り専用のユーザー',
+    all: 'すべて',
+    latitude: '緯度 (Lat)',
+    longitude: '経度 (Lng)',
+    clear: '入力をクリア'
   },
   maps: {
     status: {
@@ -396,6 +440,56 @@ export default {
     },
     form: {
       rfid: 'RFID'
+    }
+  },
+  user: {
+    listings: {
+      userId: '番号',
+      userName: '名',
+      userEmail: 'Eメール',
+      userRole: '役割',
+      userUpdated: '最終更新時刻',
+      selectUser: 'ユーザーを選択',
+      userVehicle: '車両',
+      userRunning: '走っている'
+    },
+    new: {
+      title: 'ユーザーを追加'
+    },
+    edit: {
+      title: 'ユーザーの編集'
+    },
+    form: {
+      firstName: '名前',
+      lastName: '名字',
+      userEmail: 'Eメール',
+      userRole: '役割',
+      userPassword: 'パスワード',
+      userConfirmPassword: '確認',
+      changePassword: 'パスワードを変更'
+    }
+  },
+
+  customer: {
+    new: {
+      title: '会社を追加'
+    },
+
+    edit: {
+      title: '会社を編集'
+    },
+
+    listings: {
+      id: '番号',
+      name: '名前',
+      stkUser: 'STKユーザー',
+      updated: '最終更新時刻'
+    },
+
+    form: {
+      name: '名前',
+      description: '説明',
+      stkUser: 'STKユーザー'
     }
   }
 
