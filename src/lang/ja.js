@@ -77,7 +77,10 @@ export default {
     userListings: 'ユーザー',
     customerListings: '会社リスト',
     newCustomer: '会社を追加',
-    editCustomer: '会社を編集'
+    editCustomer: '会社を編集',
+    roleListings: 'ロールリスト',
+    newRole: 'ロールを追加',
+    editRole: 'ロールを編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -230,7 +233,13 @@ export default {
     maintenanceInfoHasBeenDeleted: 'メンテナンス履歴が削除されました',
     maintenanceInfoHasBeenEdited: 'メンテナンス履歴が編集されました',
     descriptionRequired: '説明は必要があります',
-    customerBeenCreated: '会社が作成されました'
+    customerBeenCreated: '会社が作成されました',
+    roleHasBeenCreated: 'ロールが作成されました',
+    roleHasBeenDeleted: 'ロールが削除されました',
+    roleHasBeenEdited: 'ロールが編集されました',
+    groupHasBeenCreated: 'グループが作成されました',
+    groupHasBeenDeleted: 'グループが削除されました',
+    groupHasBeenEdited: 'グループが編集されました'
   },
 
   event: {
@@ -338,7 +347,10 @@ export default {
     all: 'すべて',
     latitude: '緯度 (Lat)',
     longitude: '経度 (Lng)',
-    clear: '入力をクリア'
+    add: '追加',
+    clear: '入力をクリア',
+    view: '見る',
+    select: '選択'
   },
   maps: {
     status: {
@@ -466,6 +478,37 @@ export default {
       name: '名前',
       description: '説明',
       stkUser: 'STKユーザー'
+    }
+  },
+
+  role: {
+    new: {
+      title: 'ロールを追加'
+    },
+
+    edit: {
+      title: 'ロールを追加'
+    },
+
+    listings: {
+      id: '番号',
+      name: 'ロール名',
+      resources: '許可',
+      updated: '最終更新時刻'
+    },
+
+    form: {
+      name: 'ロール名',
+      description: '説明',
+      companyListings: '会社リスト',
+      resources: '許可',
+      device: 'デバイス',
+      event: 'イベント',
+      operator: 'オペレーター',
+      user: 'ユーザー',
+      role: 'ロール',
+      group: 'グループ',
+      customer: '会社'
     }
   }
 

@@ -51,11 +51,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
-  },
-  {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
@@ -283,6 +278,33 @@ export const constantRoutes = [
         name: 'EditCustomer',
         hidden: true,
         meta: { title: 'editCustomer', noCache: true, breadcrumbTitle: 'editCustomerBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/roles',
+    component: Layout,
+    redirect: '/roles/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/role/index'),
+        name: 'Roles',
+        meta: { title: 'roleListings', icon: 'el-icon-school', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/role/new-role/index'),
+        name: 'NewRole',
+        hidden: true,
+        meta: { title: 'newRole', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/role/edit-role/index'),
+        name: 'EditRole',
+        hidden: true,
+        meta: { title: 'editRole', noCache: true, breadcrumbTitle: 'roleBreadcrumbTitle' }
       }
     ]
   }

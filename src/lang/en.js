@@ -75,9 +75,12 @@ export default {
     externalLink: 'External Link',
     profile: 'Profile',
     userListings: 'User listings',
-    customerListings: 'Company Listings',
+    customerListings: 'Company listings',
     newCustomer: 'New customer',
-    editCustomer: 'Edit customer'
+    editCustomer: 'Edit customer',
+    roleListings: 'Role listings',
+    newRole: 'New role',
+    editRole: 'Edit role'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -229,7 +232,13 @@ export default {
     maintenanceInfoHasBeenCreated: 'Maintenance has been created',
     maintenanceInfoHasBeenDeleted: 'Maintenance has been deleted',
     maintenanceInfoHasBeenEdited: 'Maintenance has been edited',
-    descriptionRequired: 'Description is required'
+    descriptionRequired: 'Description is required',
+    roleHasBeenCreated: 'Role has been created',
+    roleHasBeenDeleted: 'Role has been deleted',
+    roleHasBeenEdited: 'Role has been edited',
+    groupHasBeenCreated: 'Group has been created',
+    groupHasBeenDeleted: 'Group has been deleted',
+    groupHasBeenEdited: 'Group has been edited'
   },
 
   event: {
@@ -337,7 +346,10 @@ export default {
     all: 'All',
     latitude: 'Latitude',
     longitude: 'Longitude',
-    clear: 'Clear'
+    clear: 'Clear',
+    add: 'Add',
+    view: 'View'
+
   },
   maps: {
     status: {
@@ -467,6 +479,37 @@ export default {
       name: 'Name',
       description: 'Description',
       stkUser: 'STK user'
+    }
+  },
+
+  role: {
+    new: {
+      title: 'New role'
+    },
+
+    edit: {
+      title: 'Edit role'
+    },
+
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      resources: 'Resources',
+      updated: 'Last updated'
+    },
+
+    form: {
+      name: 'Name',
+      description: 'Description',
+      companyListings: 'Company listings',
+      resources: 'Resources',
+      device: 'Device',
+      event: 'Event',
+      operator: 'Operator',
+      user: 'User',
+      role: 'Role',
+      group: 'Group',
+      customer: 'Customer'
     }
   }
 }
