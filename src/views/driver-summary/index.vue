@@ -90,6 +90,7 @@
 
 <script>
 import { fetchDrivers, deleteDriver } from '@/api/driver'
+import moment from '@/utils/moment'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -192,13 +193,7 @@ export default {
       await this.fetchListings()
     },
     calculateAge(dob) {
-      const today = new Date()
-      const birthDate = new Date(dob)
-      var age = today.getFullYear() - birthDate.getFullYear()
-      const m = today.getMonth() - birthDate.getMonth()
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--
-      }
+      var age = moment().diff(dob, 'years')
       return age
     }
   }
