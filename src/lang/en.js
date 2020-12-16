@@ -37,7 +37,7 @@ export default {
     DriveRoute: 'Drive Route',
     CreateVideo: 'Create Video',
     DeviceListing: 'Device Listings',
-    DriverListing: 'Operator Listings',
+    OperatorListing: 'Operator Listings',
     newDriver: 'New Operator',
     editDriver: 'Edit Operator',
     menu1: 'Menu 1',

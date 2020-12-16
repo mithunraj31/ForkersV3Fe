@@ -37,7 +37,7 @@ export default {
     DriveRoute: 'ライブルート',
     CreateVideo: 'ビデオの作成',
     DeviceListing: 'デバイスリスト',
-    DriverListing: 'オペレーターリスト',
+    OperatorListing: 'オペレーターリスト',
     newDriver: '新しいオペレーター',
     editDriver: 'オペレーターの編集',
     menu1: 'メニュー１',

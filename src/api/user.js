@@ -1,34 +1,15 @@
 import request from '@/utils/request'
 
-export function login(data) {
+export function fetchUsers(listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = '?perPage=1000'
+  }
   return request({
-    url: '/vue-element-admin/user/login',
-    method: 'post',
-    data
-  })
-}
-
-export function getInfo(token) {
-  return request({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
-
-export function logout() {
-  return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
-  })
-}
-
-export function fetchUsers() {
-  return new Promise((resolve, reject) => {
-    resolve({
-      data: [],
-      meta: { total: 0 }
-    })
+    url: `/users${params}`,
+    method: 'get'
   })
 }
 

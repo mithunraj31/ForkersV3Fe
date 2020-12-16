@@ -101,13 +101,8 @@ export default {
       }
     },
     async fetchListings() {
-      let response = null
       this.loading = true
-      response = await fetchUsers(this.listQuery)
-      const {
-        data,
-        meta
-      } = response
+      const { data, meta } = await fetchUsers(this.listQuery)
       this.users = data.map(this.mapUsersToDataTable)
       this.total = meta.total
       this.loading = false
