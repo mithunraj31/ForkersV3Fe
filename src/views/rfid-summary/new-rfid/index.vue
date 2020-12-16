@@ -29,7 +29,7 @@ export default {
             message: this.$t('message.rfidDataHasBeenCreated'),
             type: 'success'
           })
-          this.$router.push('/rfidDatas')
+          this.$router.push('/rfid')
         })
         .catch(() => {
           this.loading = false

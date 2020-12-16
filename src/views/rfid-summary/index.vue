@@ -26,9 +26,9 @@
           >
             <template slot-scope="scope">
               <div
-                v-if="scope.row.assignStatus === 0"
+                v-if="scope.row.assignStatus === 1"
                 class="click"
-                @click="videoClick(scope.row.eventId)"
+                @click="rfidHistoryClick(scope.row.rfid)"
               >
                 {{ $t("rfid.listings.assigned") }}
               </div>
@@ -37,10 +37,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column :label="this.$t('general.action')">
+          <el-table-column :label="this.$t('general.action')" width="300px">
             <template slot-scope="scope">
               <el-button
                 type="primary"
+                plain
                 size="small"
                 @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
               >
@@ -48,10 +49,29 @@
               </el-button>
               <el-button
                 type="danger"
+                plain
                 size="small"
                 @click="onDeleterfidClicked(scope.row.id)"
               >
                 {{ $t("general.delete") }}
+              </el-button>
+              <el-button
+                v-if="scope.row.assignStatus === 1"
+                type="danger"
+                size="small"
+                @click="removeOperator(scope.row.rfid)"
+              >
+                {{ $t("rfid.listings.unMapOperator") }}
+              </el-button>
+              <el-button
+                v-if="scope.row.assignStatus === 0"
+                type="primary"
+                size="small"
+                @click.native.prevent="
+                  $router.push(`/rfid/${scope.row.rfid}/assign-operator`)
+                "
+              >
+                {{ $t("rfid.listings.mapOperator") }}
               </el-button>
             </template>
           </el-table-column>
@@ -69,16 +89,14 @@
 
 <script>
 import { fetchRfid, deleteRfid } from '@/api/rfid'
+import { removeOperator } from '@/api/rfid-history'
+
 import Pagination from '@/components/Pagination'
-import permission from '@/directive/permission/index.js'
 
 export default {
   name: 'RfidListings',
   components: {
     Pagination
-  },
-  directives: {
-    permission
   },
   props: {
     operatorId: {
@@ -168,6 +186,26 @@ export default {
     },
     async onPaged() {
       await this.fetchListings()
+    },
+    async rfidHistoryClick($rfid) {
+      console.log($rfid)
+      this.$router.push(`/operator/${$rfid}/driveSummary`)
+    },
+    async removeOperator($rfid) {
+      await removeOperator($rfid)
+        .then(() => {
+          this.$message({
+            message: this.$t('message.operatorIsRemoved'),
+            type: 'success'
+          })
+          this.fetchListings()
+        })
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.somethingWentWrong'),
+            type: 'danger'
+          })
+        })
     }
   }
 }

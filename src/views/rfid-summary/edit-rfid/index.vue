@@ -26,7 +26,8 @@ export default {
       const { data } = await fetchRfidById(+this.$route.params.id)
       this.rfidData = {
         id: +this.$route.params.id,
-        rfid: data.rfid
+        rfid: data.rfid,
+        assignStatus: data.assign_status
       }
     } catch (err) {
       this.$router.push('/404')

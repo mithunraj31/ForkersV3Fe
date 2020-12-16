@@ -41,6 +41,8 @@ export default {
     newDriver: '新しいオペレーター',
     editDriver: 'オペレーターの編集',
     RfidListing: 'RFIDリスト',
+    newRfid: '新しいRFID',
+    editRfid: 'RFIDの編集',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -380,7 +382,11 @@ export default {
       id: 'ID',
       rfid: 'RFID',
       createdBy: '作成されたユーザー',
-      assignStatus: 'ステータスの割り当て'
+      assignStatus: 'ステータスの割り当て',
+      notAssigned: '割り当てられていません',
+      assigned: 'オペレーター割り当て済み',
+      mapOperator: '演算子の割り当て',
+      unMapOperator: '演算子の削除'
     },
     new: {
       title: '新しいRFID'

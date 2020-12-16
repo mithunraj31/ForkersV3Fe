@@ -41,6 +41,8 @@ export default {
     newDriver: 'New Operator',
     editDriver: 'Edit Operator',
     RfidListing: 'RFID Listings',
+    newRfid: 'New RFID',
+    editRfid: 'Edit RFID',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -384,7 +386,11 @@ export default {
       id: 'Id',
       rfid: 'RFID',
       createdBy: 'Created By',
-      assignStatus: 'Assign Status'
+      assignStatus: 'Assign Status',
+      notAssigned: 'Not Assigned',
+      assigned: 'Operator Assigned',
+      mapOperator: 'Assign Operator',
+      unMapOperator: 'Remove Operator'
     },
     new: {
       title: 'New RFID'

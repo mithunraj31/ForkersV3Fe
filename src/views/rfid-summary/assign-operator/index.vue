@@ -1,33 +1,19 @@
 <template>
-  <div class="app-container">
+  <div v-loading="loading" class="app-container">
+    <h3>{{ this.$t("rfid.new.assignOperator") }}</h3>
     <el-row>
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
-            <el-input v-model="form.rfid" />
+            <el-input v-model="form.rfid" disabled />
+          </el-form-item>
+          <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
+            <el-input v-model="form.operatorId" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="this.onSubmit">{{
               this.$t("general.save")
             }}</el-button>
-            <el-button
-              v-if="form.assignStatus === 0"
-              type="primary"
-              size="small"
-              @click.native.prevent="
-                $router.push(`/rfid/${scope.row.rfid}/assign-operator`)
-              "
-            >
-              {{ $t("rfid.listings.mapOperator") }}
-            </el-button>
-            <el-button
-              v-if="form.assignStatus === 1"
-              type="danger"
-              size="small"
-              @click="onUnAssignrfidClicked(scope.row.rfid)"
-            >
-              {{ $t("rfid.listings.unMapOperator") }}
-            </el-button>
             <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
           </el-form-item>
         </el-form>
@@ -37,8 +23,10 @@
 </template>
 
 <script>
+import { assignOperator } from '@/api/rfid-history'
+
 export default {
-  name: 'RfidForm',
+  name: 'AssignRfid',
   props: {
     rfidData: {
       type: Object,
@@ -61,13 +49,22 @@ export default {
       }
     }
 
+    const validateOperatorId = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.driverIdRequired')))
+      } else {
+        callback()
+      }
+    }
+
     return {
       form: {
         id: 0,
-        rfid: '',
-        assignStatus: ''
+        rfid: +this.$route.params.rfid,
+        operatorId: ''
       },
       dialogVisible: false,
+      loading: false,
       formRules: {
         rfid: [
           {
@@ -75,24 +72,39 @@ export default {
             trigger: 'blur',
             validator: validaterfid
           }
+        ],
+        operatorId: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateOperatorId
+          }
         ]
       }
     }
   },
-  watch: {
-    rfidData: function(newDriver, oldDriver) {
-      this.form.id = newDriver.id
-      this.form.assignStatus = newDriver.assignStatus
-      this.form.rfid = newDriver.rfid
-    }
-  },
+
   methods: {
     onSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.$emit('onFormSubmit', {
-            ...this.form
-          })
+          this.loading = true
+          assignOperator(this.form)
+            .then((response) => {
+              this.loading = false
+              this.$message({
+                message: this.$t('message.operatorHasAssigned'),
+                type: 'success'
+              })
+              this.$router.push('/rfid')
+            })
+            .catch(() => {
+              this.loading = false
+              this.$message({
+                message: this.$t('message.somethingWentWrong'),
+                type: 'error'
+              })
+            })
         }
       })
     }
