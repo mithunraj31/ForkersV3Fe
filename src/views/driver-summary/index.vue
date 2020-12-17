@@ -17,7 +17,13 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column prop="id" :label="this.$t('driver.listings.id')" />
+          <el-table-column prop="id" :label="this.$t('driver.listings.id')">
+            <template slot-scope="scope">
+              <label class="click" @click="driverDetailClick(scope.row.id)">
+                {{ scope.row.id }}
+              </label>
+            </template>
+          </el-table-column>
           <el-table-column prop="name" :label="this.$t('driver.listings.name')">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
@@ -143,8 +149,8 @@ export default {
         query: this.listQuery
       })
     },
-    driverClick(id) {
-      this.$router.push(`/operator/${id}/driveSummary`)
+    driverDetailClick(id) {
+      this.$router.push(`/drivers/${id}/detail`)
     },
     onDeletedriverClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')

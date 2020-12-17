@@ -32,9 +32,9 @@
           >
             <template slot-scope="scope">
               <div
-                v-if="scope.row.currentOperatorId === 1"
+                v-if="scope.row.currentOperatorId !== 0"
                 class="click"
-                @click="rfidHistoryClick(scope.row.rfid)"
+                @click="driverDetailClick(scope.row.currentOperatorId)"
               >
                 {{ $t("rfid.listings.assigned") }}
               </div>
@@ -158,6 +158,9 @@ export default {
     },
     rfidClick(rfid) {
       this.$router.push(`/operator/${rfid}/driveSummary`)
+    },
+    driverDetailClick(id) {
+      this.$router.push(`/drivers/${id}/detail`)
     },
     onDeleterfidClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')

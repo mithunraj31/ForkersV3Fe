@@ -15,10 +15,13 @@
           style="width: auto"
         >
           <el-table-column prop="rfid" :label="this.$t('rfid.listings.rfid')" />
-          <el-table-column
-            prop="operatorId"
-            :label="this.$t('driver.listings.driverId')"
-          />
+          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
+            <template slot-scope="scope">
+              <label class="click" @click="driverDetailClick(scope.row.operatorId)">
+                {{ scope.row.operatorId }}
+              </label>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="assignedFrom"
             :label="this.$t('rfid.listings.assignedFrom')"
@@ -111,6 +114,9 @@ export default {
     },
     async onPaged() {
       await this.fetchListings()
+    },
+    driverDetailClick(id) {
+      this.$router.push(`/drivers/${id}/detail`)
     }
   }
 }

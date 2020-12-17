@@ -227,6 +227,13 @@ export const constantRoutes = [
         name: 'EditDriver',
         hidden: true,
         meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
+      },
+      {
+        path: ':id/detail',
+        component: () => import('@/views/driver-summary/driver-detail/index'),
+        name: 'DriverDetail',
+        hidden: true,
+        meta: { title: 'driverDetail', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'driverDetailBreadcrumbTitle' }
       }
     ]
   },
