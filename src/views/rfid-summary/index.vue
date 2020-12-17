@@ -27,12 +27,12 @@
           </el-table-column>
           <el-table-column prop="createdBy" :label="this.$t('rfid.listings.createdBy')" />
           <el-table-column
-            prop="assignStatus"
+            prop="currentOperatorId"
             :label="this.$t('rfid.listings.assignStatus')"
           >
             <template slot-scope="scope">
               <div
-                v-if="scope.row.assignStatus === 1"
+                v-if="scope.row.currentOperatorId === 1"
                 class="click"
                 @click="rfidHistoryClick(scope.row.rfid)"
               >
@@ -62,7 +62,7 @@
                 {{ $t("general.delete") }}
               </el-button>
               <el-button
-                v-if="scope.row.assignStatus === 1"
+                v-if="scope.row.currentOperatorId === 1"
                 type="danger"
                 size="small"
                 @click="removeOperator(scope.row.rfid)"
@@ -70,7 +70,7 @@
                 {{ $t("rfid.listings.unMapOperator") }}
               </el-button>
               <el-button
-                v-if="scope.row.assignStatus === 0"
+                v-if="scope.row.currentOperatorId === 0"
                 type="primary"
                 size="small"
                 @click.native.prevent="
@@ -141,7 +141,7 @@ export default {
         id: rfid.id,
         rfid: rfid.rfid,
         createdBy: rfid.createdBy,
-        assignStatus: rfid.assign_status
+        currentOperatorId: rfid.current_operator_id
       }
     },
     async fetchListings() {

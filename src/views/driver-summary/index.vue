@@ -17,18 +17,7 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column
-            prop="id"
-            :label="this.$t('driver.listings.id')"
-            width="35px"
-          />
-          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
-            <template slot-scope="scope">
-              <label class="click" @click="driverClick(scope.row.operatorId)">
-                {{ scope.row.operatorId }}
-              </label>
-            </template>
-          </el-table-column>
+          <el-table-column prop="id" :label="this.$t('driver.listings.id')" />
           <el-table-column prop="name" :label="this.$t('driver.listings.name')">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
@@ -99,7 +88,7 @@ export default {
     Pagination
   },
   props: {
-    operatorId: {
+    id: {
       type: Number,
       default() {
         return 0
@@ -133,7 +122,6 @@ export default {
     mapdriversToDataTable(driver) {
       return {
         id: driver.id,
-        operatorId: driver.operator_id,
         name: driver.name,
         dob: driver.dob,
         address: driver.address,
@@ -155,8 +143,8 @@ export default {
         query: this.listQuery
       })
     },
-    driverClick(operatorId) {
-      this.$router.push(`/operator/${operatorId}/driveSummary`)
+    driverClick(id) {
+      this.$router.push(`/operator/${id}/driveSummary`)
     },
     onDeletedriverClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')

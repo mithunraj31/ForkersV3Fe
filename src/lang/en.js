@@ -43,6 +43,7 @@ export default {
     RfidListing: 'RFID Listings',
     newRfid: 'New RFID',
     editRfid: 'Edit RFID',
+    rfidHistory: 'Rfid History',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -395,7 +396,7 @@ export default {
 
   driver: {
     listings: {
-      id: 'Id',
+      id: 'OperatorId',
       driverId: 'OperatorId',
       age: 'Age',
       name: 'Name',
@@ -432,10 +433,13 @@ export default {
       notAssigned: 'Not Assigned',
       assigned: 'Operator Assigned',
       mapOperator: 'Assign Operator',
-      unMapOperator: 'Remove Operator'
+      unMapOperator: 'Remove Operator',
+      assignedFrom: 'Start Date',
+      assignedTill: 'End Date'
     },
     new: {
-      title: 'New RFID'
+      title: 'New RFID',
+      operatorHistory: 'RFID Operator History'
     },
     edit: {
       title: 'Edit RFID'

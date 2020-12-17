@@ -25,7 +25,7 @@
           />
           <el-table-column
             prop="assignedTill"
-            :label="this.$t('driver.listings.assignedTill')"
+            :label="this.$t('rfid.listings.assignedTill')"
           >
             <template slot-scope="scope">
               <div v-if="scope.row.assignedTill === null">

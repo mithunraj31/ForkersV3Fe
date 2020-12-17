@@ -3,9 +3,6 @@
     <el-row>
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
-          <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
-            <el-input v-model="form.operatorId" />
-          </el-form-item>
           <el-form-item :label="this.$t('driver.form.name')" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
@@ -69,7 +66,6 @@ export default {
       default: () => {
         return {
           id: 0,
-          operatorId: '',
           name: '',
           dob: '',
           adress: '',
@@ -83,13 +79,6 @@ export default {
     }
   },
   data() {
-    const validateOperatorId = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.driverIdRequired')))
-      } else {
-        callback()
-      }
-    }
     const validateName = (rule, value, callback) => {
       if (!value) {
         callback(new Error(this.$t('message.nameRequired')))
@@ -149,7 +138,6 @@ export default {
     return {
       form: {
         id: 0,
-        operatorId: '',
         name: '',
         dob: '',
         address: '',
@@ -161,13 +149,6 @@ export default {
       },
       dialogVisible: false,
       formRules: {
-        operatorId: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateOperatorId
-          }
-        ],
         name: [
           {
             required: true,
@@ -230,7 +211,6 @@ export default {
   watch: {
     driver: function(newDriver, oldDriver) {
       this.form.id = newDriver.id
-      this.form.operatorId = newDriver.operatorId
       this.form.name = newDriver.name
       this.form.dob = newDriver.dob
       this.form.address = newDriver.address

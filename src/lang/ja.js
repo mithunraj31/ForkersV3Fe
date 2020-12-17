@@ -43,6 +43,7 @@ export default {
     RfidListing: 'RFIDリスト',
     newRfid: '新しいRFID',
     editRfid: 'RFIDの編集',
+    rfidHistory: 'RFIDの履歴',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -394,7 +395,7 @@ export default {
 
   driver: {
     listings: {
-      id: 'ID',
+      id: 'オペレーターID',
       driverId: 'オペレーターID',
       age: '年齢',
       name: '名前',
@@ -430,10 +431,13 @@ export default {
       notAssigned: '割り当てられていません',
       assigned: 'オペレーター割り当て済み',
       mapOperator: '演算子の割り当て',
-      unMapOperator: '演算子の削除'
+      unMapOperator: '演算子の削除',
+      assignedFrom: '開始日',
+      assignedTill: '終了日'
     },
     new: {
-      title: '新しいRFID'
+      title: '新しいRFID',
+      operatorHistory: 'RFIDのオペレーター履歴'
     },
     edit: {
       title: 'RFIDを編集する'
