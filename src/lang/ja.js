@@ -44,6 +44,8 @@ export default {
     newRfid: '新しいRFID',
     editRfid: 'RFIDの編集',
     rfidHistory: 'RFIDの履歴',
+    driverDetail: 'オペレーター情報',
+    assignOperator: '演算子の割り当て',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',

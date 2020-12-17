@@ -43,8 +43,30 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column :label="this.$t('general.action')" width="300px">
+          <el-table-column :label="this.$t('general.action')" width="400px">
             <template slot-scope="scope">
+              <el-dropdown>
+                <el-button type="info" class="device-summary-btn" size="mini">
+                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
+                </el-button>
+                <el-dropdown-menu slot="dropdown" size="mini">
+                  <el-dropdown-item>
+                    <div class="block">
+                      <el-date-picker
+                        v-model="drivetimeRange"
+                        type="datetimerange"
+                        :picker-options="pickerOptions"
+                        range-separator="~"
+                        :start-placeholder="$t('general.begin')"
+                        :end-placeholder="$t('general.end')"
+                        align="right"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        @change="driveClick(drivetimeRange, scope.row.rfid)"
+                      />
+                    </div>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
               <el-button
                 type="primary"
                 plain
@@ -121,7 +143,50 @@ export default {
         page: 1,
         limit: 10
       },
-      loading: false
+      loading: false,
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: this.$t('general.thisHour'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 1)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.toDay'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setHours(0)
+              start.setMinutes(0)
+              start.setSeconds(0)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.thisWeek'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.thisMonth'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      },
+      drivetimeRange: ''
     }
   },
 
@@ -161,6 +226,11 @@ export default {
     },
     driverDetailClick(id) {
       this.$router.push(`/drivers/${id}/detail`)
+    },
+    driveClick(drivetimeRange, rfid) {
+      this.$router.push(
+        `/operator/${rfid}/driveSummary?start=${drivetimeRange[0]}&end=${drivetimeRange[1]}`
+      )
     },
     onDeleterfidClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
@@ -231,5 +301,9 @@ export default {
 .click {
   color: blue;
   cursor: pointer;
+}
+
+.device-summary-btn {
+  margin-right: 5px;
 }
 </style>
