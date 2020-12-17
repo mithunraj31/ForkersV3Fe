@@ -27,7 +27,7 @@ export default {
       this.rfidData = {
         id: +this.$route.params.id,
         rfid: data.rfid,
-        assignStatus: data.assign_status
+        currentOperatorId: data.current_operator_id
       }
     } catch (err) {
       this.$router.push('/404')

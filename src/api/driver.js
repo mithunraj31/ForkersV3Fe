@@ -16,7 +16,6 @@ export function fetchDriverById(id) {
 
 export function newDriver(driver) {
   const data = {
-    operator_id: driver.operatorId,
     name: driver.name,
     dob: driver.dob,
     address: driver.address,

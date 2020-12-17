@@ -11,20 +11,18 @@
               this.$t("general.save")
             }}</el-button>
             <el-button
-              v-if="form.assignStatus === 0"
+              v-if="form.currentOperatorId === 0"
               type="primary"
               size="small"
-              @click.native.prevent="
-                $router.push(`/rfid/${scope.row.rfid}/assign-operator`)
-              "
+              @click.native.prevent="$router.push(`/rfid/${form.rfid}/assign-operator`)"
             >
               {{ $t("rfid.listings.mapOperator") }}
             </el-button>
             <el-button
-              v-if="form.assignStatus === 1"
+              v-if="form.currentOperatorId !== 0"
               type="danger"
               size="small"
-              @click="onUnAssignrfidClicked(scope.row.rfid)"
+              @click="removeOperator(form.rfid)"
             >
               {{ $t("rfid.listings.unMapOperator") }}
             </el-button>
@@ -37,6 +35,7 @@
 </template>
 
 <script>
+import { removeOperator } from '@/api/rfid-history'
 export default {
   name: 'RfidForm',
   props: {
@@ -46,7 +45,7 @@ export default {
         return {
           id: 0,
           rfid: '',
-          assignStatus: 0,
+          currentOperatorId: 0,
           createdBy: ''
         }
       }
@@ -65,7 +64,7 @@ export default {
       form: {
         id: 0,
         rfid: '',
-        assignStatus: ''
+        currentOperatorId: ''
       },
       dialogVisible: false,
       formRules: {
@@ -82,7 +81,7 @@ export default {
   watch: {
     rfidData: function(newDriver, oldDriver) {
       this.form.id = newDriver.id
-      this.form.assignStatus = newDriver.assignStatus
+      this.form.currentOperatorId = newDriver.currentOperatorId
       this.form.rfid = newDriver.rfid
     }
   },
@@ -95,6 +94,22 @@ export default {
           })
         }
       })
+    },
+    async removeOperator($rfid) {
+      await removeOperator($rfid)
+        .then(() => {
+          this.$message({
+            message: this.$t('message.operatorIdRemoved'),
+            type: 'success'
+          })
+          this.$router.push(`/rfid`)
+        })
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.somethingWentWrong'),
+            type: 'danger'
+          })
+        })
     }
   }
 }
