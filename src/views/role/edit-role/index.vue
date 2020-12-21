@@ -1,41 +1,35 @@
 <template>
   <div v-loading="loading" class="app-container">
-    <h3>{{ this.$t("user.edit.title") }}: {{ $route.params.id }}</h3>
-    <user-form :user="user" @onFormSubmit="onFormSubmit" />
+    <h3>{{ this.$t("role.edit.title") }}: {{ $route.params.id }}</h3>
+    <role-form :role="role" @onFormSubmit="onFormSubmit" />
   </div>
 </template>
 
 <script>
-import UserForm from '../components/UserForm'
-import {
-  fetchUserById,
-  editUser
-} from '@/api/user'
+import RoleForm from '../components/RoleForm'
+import { fetchRoleById, editRole } from '@/api/role'
 
 export default {
-  name: 'EditUser',
+  name: 'EditRole',
   components: {
-    UserForm
+    RoleForm
   },
   data() {
     return {
-      user: {},
+      role: {},
       loading: false
     }
   },
   async mounted() {
     this.loading = true
     try {
-      const { data } = await fetchUserById(+this.$route.params.id)
-
-      this.user = {
+      const { data } = await fetchRoleById(+this.$route.params.id)
+      this.role = {
         id: +this.$route.params.id,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        roleId: data.role_id,
-        customerId: data.customer_id,
-        username: data.username,
-        sysRole: data.sys_role
+        name: data.name,
+        description: data.description,
+        privileges: data.privileges,
+        customerId: data.customer.id
       }
     } catch (err) {
       this.$router.push('/404')
@@ -45,16 +39,14 @@ export default {
   methods: {
     onFormSubmit(form) {
       this.loading = true
-      // console.log(form)
-      // return
-      editUser(form)
+      editRole(form)
         .then(() => {
           this.loading = false
           this.$message({
-            message: this.$t('message.userHasBeenEdited'),
+            message: this.$t('message.roleHasBeenEdited'),
             type: 'success'
           })
-          this.$router.push('/users')
+          this.$router.push('/roles')
         })
         .catch(() => {
           this.loading = false

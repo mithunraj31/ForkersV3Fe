@@ -1,36 +1,31 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="24" class="new-user-button-section">
-        <el-button type="primary" @click="$router.push('/users/new')">{{
-          this.$t("user.new.title")
+      <el-col :span="24" class="new-role-button-section">
+        <el-button type="primary" @click="$router.push('/roles/new')">{{
+          this.$t("role.new.title")
         }}</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-table v-loading="loading" :data="users" border style="width: 100%">
-          <el-table-column prop="id" :label="this.$t('user.listings.userId')" width="50" />
-          <el-table-column prop="name" :label="this.$t('user.listings.userName')" />
-          <el-table-column prop="email" :label="this.$t('user.listings.userEmail')" />
-          <el-table-column prop="role" :label="this.$t('user.listings.userRole')">
-            <template slot-scope="scope">
-              {{ $t(`general.${scope.row.role}`) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="updated" :label="this.$t('user.listings.userUpdated')" />
+        <el-table v-loading="loading" :data="roles" border style="width: 100%">
+          <el-table-column prop="id" :label="this.$t('role.listings.id')" width="50" />
+          <el-table-column prop="name" :label="this.$t('role.listings.name')" />
+          <el-table-column prop="email" :label="this.$t('role.listings.resources')" />
+          <el-table-column prop="updated" :label="this.$t('role.listings.updated')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/users/${scope.row.id}/edit`)
+                  $router.push(`/roles/${scope.row.id}/edit`)
                 "
               >
                 {{ $t("general.edit") }}
               </el-button>
-              <el-button type="danger" size="small" @click="onDeleteUserClicked(scope.row.id)">
+              <el-button v-if="scope.row.role !== 'admin'" type="danger" size="small" @click="onDeleteRoleClicked(scope.row.id)">
                 {{ $t("general.delete") }}
               </el-button>
             </template>
@@ -44,28 +39,20 @@
 
 <script>
 import {
-  fetchUsers,
-  deleteUser
-} from '@/api/user'
+  fetchRoles,
+  deleteRole
+} from '@/api/role'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 
 export default {
-  name: 'UserListings',
+  name: 'RoleListings',
   components: {
     Pagination
   },
-  props: {
-    userId: {
-      type: Number,
-      default() {
-        return 0
-      }
-    }
-  },
   data() {
     return {
-      users: null,
+      roles: null,
       total: 0,
       listQuery: {
         page: 1,
@@ -86,30 +73,29 @@ export default {
     await this.fetchListings()
   },
   methods: {
-    mapUsersToDataTable(user) {
+    mapData(role) {
       return {
-        id: user.id,
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.username,
-        role: user.role.name,
-        updated: moment(user.updated_at || user.created_at).format('YYYY/MM/DD hh:mm')
+        id: role.id,
+        name: role.name,
+        resources: role.role,
+        updated: moment(role.updated_at || role.created_at).format('YYYY/MM/DD hh:mm')
       }
     },
     async fetchListings() {
       this.loading = true
-      const { data, meta } = await fetchUsers(this.listQuery)
-      this.users = data.map(this.mapUsersToDataTable)
+      const { data, meta } = await fetchRoles(null, this.listQuery)
+      this.roles = data.map(this.mapData)
       this.total = meta.total
       this.loading = false
       this.$router.push({
         query: this.listQuery
       })
     },
-    onDeleteUserClicked(id) {
+    onDeleteRoleClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
-        `${this.$t('user.listings.userId')}: ${id}`
+        `${this.$t('role.listings.id')}: ${id}`
       )
 
       this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
@@ -121,10 +107,10 @@ export default {
       })
     },
     deleteConfirmed(id) {
-      deleteUser(id)
+      deleteRole(id)
         .then(() => {
           this.$message({
-            message: this.$t('message.userHasBeenDeleted'),
+            message: this.$t('message.roleHasBeenDeleted'),
             type: 'success'
           })
           this.fetchListings()
@@ -148,7 +134,7 @@ export default {
     margin-bottom: 15px;
 }
 
-.new-user-button-section {
+.new-role-button-section {
     text-align: right;
 }
 </style>

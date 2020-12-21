@@ -1,38 +1,52 @@
 import request from '@/utils/request'
 
-export function getRoutes() {
+export function fetchRoles(customerId, listQuery) {
+  customerId = customerId || ''
+  let params = `?customer_id=${customerId}`
+  if (listQuery) {
+    params += `&perPage${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params += '&perPage=1000'
+  }
   return request({
-    url: '/vue-element-admin/routes',
+    url: `/roles${params}`,
     method: 'get'
   })
 }
 
-export function getRoles() {
+export function fetchRoleById(id) {
   return request({
-    url: '/vue-element-admin/roles',
+    url: `/roles/${id}`,
     method: 'get'
   })
 }
 
-export function addRole(data) {
+export function newRole(data) {
   return request({
-    url: '/vue-element-admin/role',
+    url: `/roles`,
     method: 'post',
-    data
+    data: {
+      ...data,
+      customer_id: data.customerId
+    }
   })
 }
 
-export function updateRole(id, data) {
+export function editRole(data) {
   return request({
-    url: `/vue-element-admin/role/${id}`,
+    url: `/roles/${data.id}`,
     method: 'put',
-    data
+    data: {
+      ...data,
+      customer_id: data.customerId
+    }
   })
 }
 
 export function deleteRole(id) {
   return request({
-    url: `/vue-element-admin/role/${id}`,
+    url: `/roles/${id}`,
     method: 'delete'
   })
 }
+

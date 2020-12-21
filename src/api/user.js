@@ -1,55 +1,65 @@
 import request from '@/utils/request'
 
-export function login(data) {
+export function fetchUsers(listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = '?perPage=1000'
+  }
   return request({
-    url: '/vue-element-admin/user/login',
+    url: `/users${params}`,
+    method: 'get'
+  })
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'delete'
+  })
+}
+
+export function fetchUserById(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'get'
+  })
+}
+
+// export function isEmailAlreadyRegistered() {
+
+// }
+
+export function newUser(data) {
+  return request({
+    url: `/users`,
     method: 'post',
-    data
+    data: {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      username: data.username,
+      customer_id: data.customerId,
+      role_id: data.roleId,
+      sys_role: data.sysRole,
+      password: data.password
+    }
   })
 }
 
-export function getInfo(token) {
+export function editUser(data) {
   return request({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
+    url: `/users/${data.id}`,
+    method: 'put',
+    data: {
+      id: data.id,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      username: data.username,
+      customer_id: data.customerId,
+      role_id: data.roleId,
+      sys_role: data.sysRole,
+      password: data.password
+    }
   })
-}
-
-export function logout() {
-  return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
-  })
-}
-
-export function fetchUsers() {
-  return new Promise((resolve, reject) => {
-    resolve({
-      data: [],
-      meta: { total: 0 }
-    })
-  })
-}
-
-export function deleteUser() {
-  return new Promise((resolve, reject) => {
-    resolve()
-  })
-}
-
-export function fetchUserById() {
-
-}
-
-export function isEmailAlreadyRegistered() {
-
-}
-
-export function newUser() {
-
-}
-
-export function editUser() {
-
 }

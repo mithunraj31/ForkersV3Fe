@@ -50,16 +50,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/login',
-  //   component: () => import('@/views/login/index'),
-  //   hidden: true
-  // },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
-  },
   {
     path: '/404',
     component: () => import('@/views/error-page/404'),
@@ -154,14 +144,6 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'EventVideo', noCache: true }
       }
-    ]
-  },
-
-  {
-    path: '/deviceListings',
-    component: Layout,
-    children: [
-
     ]
   },
   {
@@ -349,80 +331,62 @@ export const constantRoutes = [
         meta: { title: 'editCustomer', noCache: true, breadcrumbTitle: 'editCustomerBreadcrumbTitle' }
       }
     ]
+  },
+  {
+    path: '/roles',
+    component: Layout,
+    redirect: '/roles/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/role/index'),
+        name: 'Roles',
+        meta: { title: 'roleListings', icon: 'el-icon-school', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/role/new-role/index'),
+        name: 'NewRole',
+        hidden: true,
+        meta: { title: 'newRole', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/role/edit-role/index'),
+        name: 'EditRole',
+        hidden: true,
+        meta: { title: 'editRole', noCache: true, breadcrumbTitle: 'roleBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/groups',
+    component: Layout,
+    redirect: '/group/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer-group/index'),
+        name: 'Group',
+        meta: { title: 'groupListings', icon: 'el-icon-school', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/customer-group/new-customer-group/index'),
+        name: 'NewGroup',
+        hidden: true,
+        meta: { title: 'newGroup', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/customer-group/new-customer-group/index'),
+        name: 'EditGroup',
+        hidden: true,
+        meta: { title: 'editGroup', noCache: true, breadcrumbTitle: 'editGroupBreadcrumbTitle' }
+      }
+    ]
   }
 ]
-
-// export const originalConstantRoutes = [
-//   {
-//     path: '/redirect',
-//     component: Layout,
-//     hidden: true,
-//     children: [
-//       {
-//         path: '/redirect/:path(.*)',
-//         component: () => import('@/views/redirect/index')
-//       }
-//     ]
-//   },
-//   {
-//     path: '/login',
-//     component: () => import('@/views/login/index'),
-//     hidden: true
-//   },
-//   {
-//     path: '/auth-redirect',
-//     component: () => import('@/views/login/auth-redirect'),
-//     hidden: true
-//   },
-//   {
-//     path: '/404',
-//     component: () => import('@/views/error-page/404'),
-//     hidden: true
-//   },
-//   {
-//     path: '/401',
-//     component: () => import('@/views/error-page/401'),
-//     hidden: true
-//   },
-//   {
-//     path: '/',
-//     component: Layout,
-//     redirect: '/dashboard',
-//     children: [
-//       {
-//         path: 'dashboard',
-//         component: () => import('@/views/dashboard/index'),
-//         name: 'Dashboard',
-//         meta: { title: 'dashboard', icon: 'dashboard', affix: true }
-//       }
-//     ]
-//   },
-//   {
-//     path: '/documentation',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/documentation/index'),
-//         name: 'Documentation',
-//         meta: { title: 'documentation', icon: 'documentation', affix: true }
-//       }
-//     ]
-//   },
-//   {
-//     path: '/guide',
-//     component: Layout,
-//     redirect: '/guide/index',
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/guide/index'),
-//         name: 'Guide',
-//         meta: { title: 'guide', icon: 'guide', noCache: true }
-//       }
-//     ]
-//   },
-// ]
 
 /**
  * asyncRoutes

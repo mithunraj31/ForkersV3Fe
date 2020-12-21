@@ -1,41 +1,37 @@
 <template>
   <div v-loading="loading" class="app-container">
-    <h3>{{ this.$t("user.edit.title") }}: {{ $route.params.id }}</h3>
-    <user-form :user="user" @onFormSubmit="onFormSubmit" />
+    <h3>{{ this.$t("customer.edit.title") }}: {{ $route.params.id }}</h3>
+    <customer-form :customer="customer" @onFormSubmit="onFormSubmit" />
   </div>
 </template>
 
 <script>
-import UserForm from '../components/UserForm'
+import CustomerForm from '../components/CustomerForm'
 import {
-  fetchUserById,
-  editUser
-} from '@/api/user'
+  fetchCustomerById,
+  editCustomer
+} from '@/api/customer'
 
 export default {
-  name: 'EditUser',
+  name: 'EditCustomer',
   components: {
-    UserForm
+    CustomerForm
   },
   data() {
     return {
-      user: {},
+      customer: {},
       loading: false
     }
   },
   async mounted() {
     this.loading = true
     try {
-      const { data } = await fetchUserById(+this.$route.params.id)
-
-      this.user = {
+      const { data } = await fetchCustomerById(+this.$route.params.id)
+      this.customer = {
         id: +this.$route.params.id,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        roleId: data.role_id,
-        customerId: data.customer_id,
-        username: data.username,
-        sysRole: data.sys_role
+        name: data.name,
+        stkUser: data.stk_user,
+        description: data.description
       }
     } catch (err) {
       this.$router.push('/404')
@@ -45,16 +41,14 @@ export default {
   methods: {
     onFormSubmit(form) {
       this.loading = true
-      // console.log(form)
-      // return
-      editUser(form)
+      editCustomer(form)
         .then(() => {
           this.loading = false
           this.$message({
-            message: this.$t('message.userHasBeenEdited'),
+            message: this.$t('message.customerHasBeenEdited'),
             type: 'success'
           })
-          this.$router.push('/users')
+          this.$router.push('/customers')
         })
         .catch(() => {
           this.loading = false

@@ -1,22 +1,35 @@
 <template>
   <div class="app-container">
+    {{ form.sysRole }}
     <el-row>
       <el-col :span="12">
-        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
+        <el-form ref="form" :rules="formRules" :model="form" label-width="150px">
+          <el-form-item v-permission="[systemRole.ADMIN]" :label="$t('role.form.companyListings')">
+            <el-select v-model="form.customerId" :placeholder="$t('general.select')" @change="fetchCustomerRoles">
+              <el-option
+                v-for="item in customers"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item v-permission="[systemRole.ADMIN]" :label="$t('user.form.sysRole')">
+            <el-radio v-model="form.sysRole" :label="systemRole.USER" border>{{ $t('general.user') }}</el-radio>
+            <el-radio v-model="form.sysRole" :label="systemRole.ADMIN" border>{{ $t('general.admin') }}</el-radio>
+          </el-form-item>
           <el-form-item :label="$t('user.form.firstName')" prop="firstName">
             <el-input v-model="form.firstName" />
           </el-form-item>
           <el-form-item :label="$t('user.form.lastName')" prop="lastName">
             <el-input v-model="form.lastName" />
           </el-form-item>
-          <el-form-item :label="$t('user.form.userEmail')" prop="email">
-            <el-input v-model="form.email" />
+          <el-form-item :label="$t('user.form.userEmail')" prop="username">
+            <el-input v-model="form.username" />
           </el-form-item>
-          <el-form-item :label="$t('user.form.userRole')" prop="role">
-            <el-select v-model="form.role" :rules="formRules" filterable :placeholder="$t('user.form.userRole')">
-              <el-option :label="$t('general.admin')" value="admin" />
-              <el-option :label="$t('general.user')" value="user" />
-              <el-option :label="$t('general.readOnly')" value="read-only" />
+          <el-form-item v-if="!hasAdminPermission || form.customerId > 0" :label="$t('user.form.userRole')" prop="role">
+            <el-select v-model="form.roleId" :rules="formRules" filterable :placeholder="$t('user.form.userRole')">
+              <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
           <el-form-item v-if="!visible">
@@ -45,64 +58,53 @@
 </template>
 
 <script>
-import {
-  validEmail
-} from '@/utils/validate'
-import {
-  isEmailAlreadyRegistered
-} from '@/api/user'
+import { validEmail } from '@/utils/validate'
+import { fetchCustomers, fetchCustomerRolesByCustomerId } from '@/api/customer'
+import { fetchRoles } from '@/api/role'
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE } from '@/enums'
 
 export default {
   name: 'UserForm',
+  directives: { permission },
   props: {
     user: {
       type: Object,
       default: () => {
         return {
           id: 0,
-          name: '',
-          email: '',
-          role: 'user',
+          firstName: '',
+          lastName: '',
+          username: '',
+          roleId: 0,
           password: '',
-          confirmPassword: ''
+          confirmPassword: '',
+          customerId: '',
+          sysRole: SYSTEM_ROLE.USER
         }
       }
     }
   },
   data() {
-    // const validateName = (rule, value, callback) => {
-    //   if (!value) {
-    //     callback(new Error(this.$t('message.userNameRequired')))
-    //   } else {
-    //     callback()
-    //   }
-    // }
+    const validateFirstName = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.nameRequired')))
+      } else {
+        callback()
+      }
+    }
     const validateEmail = (rule, value, callback) => {
       if (!value) {
         callback(new Error(this.$t('message.emailRequired')))
       } else if (!validEmail(value)) {
         callback(new Error(this.$t('message.emailNotValid')))
-      } else if (
-        this.previousEmail === '' ||
-                (this.previousEmail !== '' && this.previousEmail !== value)
-      ) {
-        isEmailAlreadyRegistered(value)
-          .then((response) => {
-            if (response.is_exists) {
-              callback(new Error(this.$t('message.emailAlreadyRegistered')))
-            } else {
-              callback()
-            }
-          })
-          .catch(() => {
-            callback(new Error(this.$t('message.somethingWentWrong')))
-          })
       } else {
         callback()
       }
     }
     const validateRole = (rule, value, callback) => {
-      if (!value) {
+      if (value <= 0) {
         callback(new Error(this.$t('message.roleRequired')))
       } else {
         callback()
@@ -132,19 +134,24 @@ export default {
       previousEmail: '',
       form: {
         id: 0,
-        // name: '',
-        email: '',
-        role: '',
+        firstName: '',
+        lastName: '',
+        username: '',
+        roleId: 0,
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        customerId: '',
+        sysRole: SYSTEM_ROLE.USER
       },
       dialogVisible: false,
+      customers: [],
+      roles: [],
       formRules: {
-        // name: [{
-        //   required: true,
-        //   trigger: 'blur',
-        //   validator: validateName
-        // }],
+        firstName: [{
+          required: true,
+          trigger: 'blur',
+          validator: validateFirstName
+        }],
         email: [{
           required: true,
           trigger: 'blur',
@@ -168,17 +175,51 @@ export default {
       }
     }
   },
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    }
+  },
   watch: {
-    user: function(newUser, oldUser) {
+    user(newUser, oldUser) {
       this.form.id = newUser.id
-      // this.form.name = newUser.name
-      this.form.email = newUser.email
-      this.form.role = newUser.role
+      this.form.firstName = newUser.firstName
+      this.form.lastName = newUser.lastName
+      this.form.username = newUser.username
+      this.form.roleId = newUser.roleId
+      this.form.customerId = newUser.customerId
+      this.form.sysRole = newUser.sysRole
       this.visible = false
-      this.previousEmail = newUser.email
+      this.fetchRoles()
+    }
+  },
+  mounted() {
+    if (this.hasAdminPermission) {
+      this.fetchCustomerListings()
     }
   },
   methods: {
+    async fetchCustomerListings() {
+      const { data } = await fetchCustomers()
+      this.customers = data
+    },
+    async fetchRoles() {
+      const { data } = await fetchRoles()
+      this.roles = data
+      if (data && data.length >= 1) {
+        this.form.roleId = data[0].id
+      }
+    },
+    async fetchCustomerRoles() {
+      const { data } = await fetchCustomerRolesByCustomerId(this.form.customerId)
+      this.roles = data
+      if (data && data.length >= 1) {
+        this.form.roleId = data[0].id
+      }
+    },
     onSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {

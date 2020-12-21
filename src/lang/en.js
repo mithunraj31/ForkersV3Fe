@@ -37,7 +37,7 @@ export default {
     DriveRoute: 'Drive Route',
     CreateVideo: 'Create Video',
     DeviceListing: 'Device Listings',
-    DriverListing: 'Operator Listings',
+    OperatorListing: 'Operator Listings',
     newDriver: 'New Operator',
     editDriver: 'Edit Operator',
     RfidListing: 'RFID Listings',
@@ -81,9 +81,12 @@ export default {
     externalLink: 'External Link',
     profile: 'Profile',
     userListings: 'User listings',
-    customerListings: 'Company Listings',
+    customerListings: 'Company listings',
     newCustomer: 'New customer',
-    editCustomer: 'Edit customer'
+    editCustomer: 'Edit customer',
+    roleListings: 'Role listings',
+    newRole: 'New role',
+    editRole: 'Edit role'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -241,7 +244,13 @@ export default {
     operatorIsRemoved: 'Operator is Removed',
     rfidDataHasBeenCreated: 'RFID has been created',
     rfidDataHasBeenEdited: 'RFID has been edited',
-    driverIdNotFound: 'OperatorId Not Found'
+    driverIdNotFound: 'OperatorId Not Found',
+    roleHasBeenCreated: 'Role has been created',
+    roleHasBeenDeleted: 'Role has been deleted',
+    roleHasBeenEdited: 'Role has been edited',
+    groupHasBeenCreated: 'Group has been created',
+    groupHasBeenDeleted: 'Group has been deleted',
+    groupHasBeenEdited: 'Group has been edited'
   },
 
   event: {
@@ -344,12 +353,15 @@ export default {
     newest: 'Newest',
     oldest: 'Oldest',
     admin: 'Admin',
-    user: 'user',
+    user: 'User',
     readOnly: 'Read only',
     all: 'All',
     latitude: 'Latitude',
     longitude: 'Longitude',
-    clear: 'Clear'
+    clear: 'Clear',
+    add: 'Add',
+    view: 'View',
+    select: 'Select'
   },
   maps: {
     status: {
@@ -505,6 +517,37 @@ export default {
       name: 'Name',
       description: 'Description',
       stkUser: 'STK user'
+    }
+  },
+
+  role: {
+    new: {
+      title: 'New role'
+    },
+
+    edit: {
+      title: 'Edit role'
+    },
+
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      resources: 'Resources',
+      updated: 'Last updated'
+    },
+
+    form: {
+      name: 'Name',
+      description: 'Description',
+      companyListings: 'Company listings',
+      resources: 'Resources',
+      device: 'Device',
+      event: 'Event',
+      operator: 'Operator',
+      user: 'User',
+      role: 'Role',
+      group: 'Group',
+      customer: 'Customer'
     }
   }
 }

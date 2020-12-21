@@ -1,4 +1,3 @@
-// import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { keycloakService } from '@/api/keycloak'
@@ -43,7 +42,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       setToken(keycloakService.token)
       commit('SET_TOKEN', keycloakService.token)
-      commit('SET_ROLES', ['admin'])
+      commit('SET_ROLES', [keycloakService.idTokenParsed.sys_role])
       commit('SET_NAME', keycloakService.idTokenParsed.name)
       commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
       commit('SET_INTRODUCTION', keycloakService.idTokenParsed.email)
