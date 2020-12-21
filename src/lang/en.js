@@ -208,6 +208,7 @@ export default {
     driverHasBeenCreated: 'Operator is created',
     driverHasBeenEdited: 'Operator has been edited',
     confirmDelete: 'Are you sure you want to delete {0}?',
+    confirmRemove: 'Are you sure you want to remove Operator for RFID {0}?',
     userNameRequired: 'User Name is Required',
     stkUserRequired: 'STK user is Required',
     emailRequired: 'Email is Required',
@@ -235,7 +236,12 @@ export default {
     maintenanceInfoHasBeenCreated: 'Maintenance has been created',
     maintenanceInfoHasBeenDeleted: 'Maintenance has been deleted',
     maintenanceInfoHasBeenEdited: 'Maintenance has been edited',
-    descriptionRequired: 'Description is required'
+    descriptionRequired: 'Description is required',
+    operatorHasAssigned: 'Operator has been Assigned',
+    operatorIsRemoved: 'Operator is Removed',
+    rfidDataHasBeenCreated: 'RFID has been created',
+    rfidDataHasBeenEdited: 'RFID has been edited',
+    driverIdNotFound: 'OperatorId Not Found'
   },
 
   event: {
@@ -441,7 +447,8 @@ export default {
     },
     new: {
       title: 'New RFID',
-      operatorHistory: 'RFID Operator History'
+      operatorHistory: 'RFID Operator History',
+      assignOperator: 'Assign Operator'
     },
     edit: {
       title: 'Edit RFID'

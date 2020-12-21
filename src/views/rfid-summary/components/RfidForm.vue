@@ -2,7 +2,12 @@
   <div class="app-container">
     <el-row>
       <el-col :span="12">
-        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
+        <el-form
+          ref="form"
+          :rules="formRules"
+          :model="form"
+          label-width="120px"
+        >
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
             <el-input v-model="form.rfid" />
           </el-form-item>
@@ -14,7 +19,9 @@
               v-if="form.currentOperatorId === 0"
               type="primary"
               size="small"
-              @click.native.prevent="$router.push(`/rfid/${form.rfid}/assign-operator`)"
+              @click.native.prevent="
+                $router.push(`/rfid/${form.rfid}/assign-operator`)
+              "
             >
               {{ $t("rfid.listings.mapOperator") }}
             </el-button>
@@ -22,11 +29,13 @@
               v-if="form.currentOperatorId !== 0"
               type="danger"
               size="small"
-              @click="removeOperator(form.rfid)"
+              @click="removeOperatorClicked(form.rfid)"
             >
               {{ $t("rfid.listings.unMapOperator") }}
             </el-button>
-            <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
+            <el-button @click="$router.go(-1)">{{
+              this.$t("general.cancel")
+            }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -95,16 +104,33 @@ export default {
         }
       })
     },
-    async removeOperator($rfid) {
-      await removeOperator($rfid)
+    removeOperatorClicked($rfid) {
+      let deleteConfirmMessage = this.$t('message.confirmRemove')
+      deleteConfirmMessage = String.format(
+        deleteConfirmMessage,
+        `${this.$t('rfid.listings.rfid')}: ${$rfid}`
+      )
+
+      this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
+        confirmButtonText: this.$t('general.confirm'),
+        cancelButtonText: this.$t('general.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.removeOperatorConfirmed($rfid)
+      })
+    },
+    removeOperatorConfirmed($rfid) {
+      this.loading = true
+      removeOperator($rfid)
         .then(() => {
           this.$message({
-            message: this.$t('message.operatorIdRemoved'),
+            message: this.$t('message.operatorIsRemoved'),
             type: 'success'
           })
           this.$router.push(`/rfid`)
         })
         .catch(() => {
+          this.loading = false
           this.$message({
             message: this.$t('message.somethingWentWrong'),
             type: 'danger'

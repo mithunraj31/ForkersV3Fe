@@ -208,6 +208,7 @@ export default {
     driverHasBeenCreated: '演算子が作成されました',
     driverHasBeenEdited: '演算子が編集されました',
     confirmDelete: '「{0}」を削除してもよろしいでしょうか',
+    confirmRemove: 'RFID「{0}」Operatorを削除してもよろしいですか？',
     userNameRequired: 'ユーザー名が必要があります',
     stkUserRequired: 'STKユーザーが必要があります',
     emailRequired: 'メールが必要があります',
@@ -236,7 +237,12 @@ export default {
     maintenanceInfoHasBeenDeleted: 'メンテナンス履歴が削除されました',
     maintenanceInfoHasBeenEdited: 'メンテナンス履歴が編集されました',
     descriptionRequired: '説明は必要があります',
-    customerBeenCreated: '会社が作成されました'
+    customerBeenCreated: '会社が作成されました',
+    operatorHasAssigned: 'オペレーターが割り当てました',
+    operatorIsRemoved: '演算子が削除されました',
+    rfidDataHasBeenCreated: 'RFIDが作成されました',
+    rfidDataHasBeenEdited: 'RFIDが編集されました',
+    driverIdNotFound: 'OperatorIdが見つかりません'
   },
 
   event: {
@@ -439,7 +445,8 @@ export default {
     },
     new: {
       title: '新しいRFID',
-      operatorHistory: 'RFIDのオペレーター履歴'
+      operatorHistory: 'RFIDのオペレーター履歴',
+      assignOperator: '演算子の割り当て'
     },
     edit: {
       title: 'RFIDを編集する'

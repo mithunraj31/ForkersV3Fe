@@ -52,13 +52,18 @@
             prop="licenseRenewal"
             :label="this.$t('driver.listings.licensevalidTill')"
           />
-          <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
+          <el-table-column
+            prop="phoneNo"
+            :label="this.$t('driver.listings.phoneNo')"
+          />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
                 type="primary"
                 size="small"
-                @click.native.prevent="$router.push(`/drivers/${scope.row.id}/edit`)"
+                @click.native.prevent="
+                  $router.push(`/drivers/${scope.row.id}/edit`)
+                "
               >
                 {{ $t("general.edit") }}
               </el-button>
@@ -140,14 +145,18 @@ export default {
     async fetchListings() {
       let response = null
       this.loading = true
-      response = await fetchDrivers(this.listQuery)
-      const { data, total } = response
-      this.drivers = data.map(this.mapdriversToDataTable)
-      this.total = total
-      this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
+      try {
+        response = await fetchDrivers(this.listQuery)
+        const { data, total } = response
+        this.drivers = data.map(this.mapdriversToDataTable)
+        this.total = total
+        this.loading = false
+        this.$router.push({
+          query: this.listQuery
+        })
+      } catch (exception) {
+        this.loading = false
+      }
     },
     driverDetailClick(id) {
       this.$router.push(`/drivers/${id}/detail`)

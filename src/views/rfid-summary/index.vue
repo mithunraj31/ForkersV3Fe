@@ -84,10 +84,10 @@
                 {{ $t("general.delete") }}
               </el-button>
               <el-button
-                v-if="scope.row.currentOperatorId === 1"
+                v-if="scope.row.currentOperatorId !== 0"
                 type="danger"
                 size="small"
-                @click="removeOperator(scope.row.rfid)"
+                @click="removeOperatorClicked(scope.row.rfid)"
               >
                 {{ $t("rfid.listings.unMapOperator") }}
               </el-button>
@@ -212,14 +212,18 @@ export default {
     async fetchListings() {
       let response = null
       this.loading = true
-      response = await fetchRfid(this.listQuery)
-      const { data, total } = response
-      this.rfidDatas = data.map(this.mapRfidToDataTable)
-      this.total = total
-      this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
+      try {
+        response = await fetchRfid(this.listQuery)
+        const { data, total } = response
+        this.rfidDatas = data.map(this.mapRfidToDataTable)
+        this.total = total
+        this.loading = false
+        this.$router.push({
+          query: this.listQuery
+        })
+      } catch (exception) {
+        this.loading = false
+      }
     },
     rfidClick(rfid) {
       this.$router.push(`/operator/${rfid}/driveSummary`)
@@ -269,16 +273,34 @@ export default {
     async rfidHistoryClick($rfid) {
       this.$router.push(`/rfid/${$rfid}/history`)
     },
-    async removeOperator($rfid) {
-      await removeOperator($rfid)
+    removeOperatorClicked($rfid) {
+      let deleteConfirmMessage = this.$t('message.confirmRemove')
+      deleteConfirmMessage = String.format(
+        deleteConfirmMessage,
+        `${this.$t('rfid.listings.rfid')}: ${$rfid}`
+      )
+
+      this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
+        confirmButtonText: this.$t('general.confirm'),
+        cancelButtonText: this.$t('general.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.removeOperatorConfirmed($rfid)
+      })
+    },
+    removeOperatorConfirmed($rfid) {
+      this.loading = true
+      removeOperator($rfid)
         .then(() => {
           this.$message({
             message: this.$t('message.operatorIsRemoved'),
             type: 'success'
           })
           this.fetchListings()
+          this.loading = false
         })
         .catch(() => {
+          this.loading = false
           this.$message({
             message: this.$t('message.somethingWentWrong'),
             type: 'danger'

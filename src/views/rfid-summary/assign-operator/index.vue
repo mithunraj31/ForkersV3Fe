@@ -3,28 +3,18 @@
     <h3>{{ this.$t("rfid.new.assignOperator") }}</h3>
     <el-row>
       <el-col :span="12">
-        <el-form
-          ref="form"
-          :rules="formRules"
-          :model="form"
-          label-width="120px"
-        >
+        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
             <el-input v-model="form.rfid" disabled />
           </el-form-item>
-          <el-form-item
-            :label="this.$t('driver.form.driverId')"
-            prop="operatorId"
-          >
+          <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
             <el-input v-model="form.operatorId" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="this.onSubmit">{{
               this.$t("general.save")
             }}</el-button>
-            <el-button @click="$router.go(-1)">{{
-              this.$t("general.cancel")
-            }}</el-button>
+            <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
