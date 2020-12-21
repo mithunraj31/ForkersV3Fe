@@ -440,7 +440,8 @@ export default {
       address: 'Address',
       licenseLocation: 'License Location',
       licenseReceived: 'License Received Date',
-      licenseRenewal: 'License Valid Till'
+      licenseRenewal: 'License Valid Till',
+      operatorName: 'Operator Name'
     }
   },
 

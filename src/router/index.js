@@ -191,7 +191,7 @@ export const constantRoutes = [
         component: () => import('@/views/driver-summary/index'),
         name: 'Driver',
         meta: {
-          title: 'DriverListing',
+          title: 'OperatorListing',
           icon: 'el-icon-s-tools',
           noCache: true
         }

@@ -7,6 +7,13 @@ export function fetchDrivers(query) {
   })
 }
 
+export function fetchAllDrivers() {
+  return request({
+    url: `/operators/all/data`,
+    method: 'get'
+  })
+}
+
 export function fetchDriverById(id) {
   return request({
     url: `/operators/${id}`,

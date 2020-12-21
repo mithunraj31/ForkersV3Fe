@@ -43,7 +43,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column :label="this.$t('general.action')" width="400px">
+          <el-table-column :label="this.$t('general.action')" width="350px">
             <template slot-scope="scope">
               <el-dropdown>
                 <el-button type="info" class="device-summary-btn" size="mini">
@@ -68,22 +68,6 @@
                 </el-dropdown-menu>
               </el-dropdown>
               <el-button
-                type="primary"
-                plain
-                size="small"
-                @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
-              >
-                {{ $t("general.edit") }}
-              </el-button>
-              <el-button
-                type="danger"
-                plain
-                size="small"
-                @click="onDeleterfidClicked(scope.row.id)"
-              >
-                {{ $t("general.delete") }}
-              </el-button>
-              <el-button
                 v-if="scope.row.currentOperatorId !== 0"
                 type="danger"
                 size="small"
@@ -101,6 +85,20 @@
               >
                 {{ $t("rfid.listings.mapOperator") }}
               </el-button>
+              <el-button
+                type="primary"
+                plain
+                size="small"
+                icon="el-icon-edit"
+                @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
+              />
+              <el-button
+                type="danger"
+                plain
+                icon="el-icon-delete"
+                size="small"
+                @click="onDeleterfidClicked(scope.row.id)"
+              />
             </template>
           </el-table-column>
         </el-table>

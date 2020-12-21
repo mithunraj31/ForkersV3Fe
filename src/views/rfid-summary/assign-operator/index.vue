@@ -8,16 +8,29 @@
             <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
               <el-input v-model="form.rfid" disabled />
             </el-form-item>
-            <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
-              <el-input v-model="form.operatorId" />
+            <el-form-item :label="this.$t('driver.form.operatorName')" prop="name">
+              <el-autocomplete
+                v-model="selectedId"
+                popper-class="my-autocomplete"
+                :fetch-suggestions="querySearch"
+                :placeholder="$t('general.select')"
+                @select="handleSelect"
+              >
+                <template slot-scope="{ item }">
+                  <div class="value">
+                    {{ item.name }}
+                    <span class="link">{{ item.id }}</span>
+                  </div>
+                </template>
+              </el-autocomplete>
             </el-form-item>
           </el-col>
         </div>
         <div>
           <el-col :span="24">
             <el-col :span="12">
-              <el-form-item :label="this.$t('driver.form.name')" prop="name">
-                <el-input v-model="form.name" disabled />
+              <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
+                <el-input v-model="form.operatorId" disabled />
               </el-form-item>
             </el-col>
             <el-form-item :label="this.$t('driver.form.dob')" prop="dob">
@@ -70,11 +83,9 @@
             <el-col :span="24">
               <el-form-item>
                 <el-button type="primary" @click="this.onSubmit">{{
-                  this.$t("general.save")
+                  $t("general.save")
                 }}</el-button>
-                <el-button @click="$router.go(-1)">{{
-                  this.$t("general.cancel")
-                }}</el-button>
+                <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
               </el-form-item>
             </el-col>
           </el-col>
@@ -86,7 +97,7 @@
 
 <script>
 import { assignOperator } from '@/api/rfid-history'
-import { fetchDriverById } from '@/api/driver'
+import { fetchAllDrivers } from '@/api/driver'
 
 export default {
   name: 'AssignRfid',
@@ -105,7 +116,8 @@ export default {
           licenseReceived: '',
           licenseRenewal: '',
           licenseLocation: '',
-          phoneNo: ''
+          phoneNo: '',
+          opIds: []
         }
       }
     }
@@ -119,29 +131,9 @@ export default {
       }
     }
 
-    const validateOperatorId = (rule, value, callback) => {
+    const validateOperatorName = (rule, value, callback) => {
       if (!value) {
-        callback(new Error(this.$t('message.driverIdRequired')))
-      } else if (value) {
-        fetchDriverById(value)
-          .then((response) => {
-            if (!response) {
-              callback(new Error(this.$t('message.driverIdNotFound')))
-            } else {
-              this.form.name = response.data.name
-              this.form.dob = response.data.dob
-              this.form.address = response.data.address
-              this.form.licenseNo = response.data.license_no
-              this.form.licenseReceived = response.data.license_received_date
-              this.form.licenseRenewal = response.data.license_renewal_date
-              this.form.licenseLocation = response.data.license_location
-              this.form.phoneNo = response.data.phone_no
-              callback()
-            }
-          })
-          .catch(() => {
-            callback(new Error(this.$t('message.driverIdNotFound')))
-          })
+        callback(new Error(this.$t('message.nameRequired')))
       } else {
         callback()
       }
@@ -163,6 +155,7 @@ export default {
       },
       dialogVisible: false,
       loading: false,
+      selectedId: '',
       formRules: {
         rfid: [
           {
@@ -171,15 +164,18 @@ export default {
             validator: validaterfid
           }
         ],
-        operatorId: [
+        name: [
           {
             required: true,
-            trigger: 'change',
-            validator: validateOperatorId
+            trigger: 'blur',
+            validator: validateOperatorName
           }
         ]
       }
     }
+  },
+  mounted() {
+    this.fetchListings()
   },
 
   methods: {
@@ -205,9 +201,59 @@ export default {
             })
         }
       })
+    },
+    async fetchListings() {
+      let response = null
+      this.loading = true
+      try {
+        response = await fetchAllDrivers()
+        this.opIds = response
+        this.loading = false
+      } catch (exception) {
+        this.loading = false
+      }
+    },
+    querySearch(queryString, cb) {
+      var opIds = this.opIds
+      var results = queryString ? opIds.filter(this.createFilter(queryString)) : opIds
+      // call callback function to return suggestion objects
+      cb(results)
+    },
+    createFilter(queryString) {
+      return (opIds) => {
+        return opIds.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+    handleSelect(item) {
+      this.selectedId = item.name
+      this.form.operatorId = item.id
+      this.form.name = item.name
+      this.form.dob = item.dob
+      this.form.address = item.address
+      this.form.licenseNo = item.license_no
+      this.form.licenseReceived = item.license_received_date
+      this.form.licenseRenewal = item.license_renewal_date
+      this.form.licenseLocation = item.license_location
+      this.form.phoneNo = item.phone_no
     }
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.my-autocomplete {
+  li {
+    line-height: normal;
+    padding: 7px;
+
+    .value {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .link {
+      font-size: 12px;
+      color: #a18686;
+    }
+  }
+}
+</style>

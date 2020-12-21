@@ -439,7 +439,8 @@ export default {
       address: 'アドレス',
       licenseReceived: '免許受領日',
       licenseRenewal: '免許有効期限',
-      licenseLocation: '免許の場所'
+      licenseLocation: '免許の場所',
+      operatorName: '演算子名'
     }
   },
   rfid: {

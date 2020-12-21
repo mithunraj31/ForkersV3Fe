@@ -37,6 +37,34 @@
               {{ scope.row.assignedTill }}
             </template>
           </el-table-column>
+          <el-table-column :label="this.$t('general.action')">
+            <template slot-scope="scope">
+              <el-button
+                v-if="scope.row.assignedTill === null"
+                type="info"
+                size="small"
+                @click.native.prevent="
+                  $router.push(
+                    `/operator/${scope.row.rfid}/driveSummary?start=${scope.row.assignedFrom}&end=${today}`
+                  )
+                "
+              >
+                {{ $t("device.drive") }}
+              </el-button>
+              <el-button
+                v-if="scope.row.assignedTill !== null"
+                type="info"
+                size="small"
+                @click.native.prevent="
+                  $router.push(
+                    `/operator/${scope.row.rfid}/driveSummary?start=${scope.row.assignedFrom}&end=${scope.row.assignedTill}`
+                  )
+                "
+              >
+                {{ $t("device.drive") }}
+              </el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <pagination
           :total="total"
@@ -76,7 +104,8 @@ export default {
         page: 1,
         limit: 10
       },
-      loading: false
+      loading: false,
+      today: Date.now()
     }
   },
 
