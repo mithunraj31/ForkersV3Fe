@@ -27,11 +27,15 @@ export default {
     this.loading = true
     try {
       const { data } = await fetchUserById(+this.$route.params.id)
+
       this.user = {
         id: +this.$route.params.id,
-        name: data.name,
-        email: data.email,
-        role: data.role
+        firstName: data.first_name,
+        lastName: data.last_name,
+        roleId: data.role_id,
+        customerId: data.customer_id,
+        username: data.username,
+        sysRole: data.sys_role
       }
     } catch (err) {
       this.$router.push('/404')
@@ -41,6 +45,8 @@ export default {
   methods: {
     onFormSubmit(form) {
       this.loading = true
+      // console.log(form)
+      // return
       editUser(form)
         .then(() => {
           this.loading = false

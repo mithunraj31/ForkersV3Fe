@@ -341,15 +341,15 @@ export default {
     newest: 'Newest',
     oldest: 'Oldest',
     admin: 'Admin',
-    user: 'user',
+    user: 'User',
     readOnly: 'Read only',
     all: 'All',
     latitude: 'Latitude',
     longitude: 'Longitude',
     clear: 'Clear',
     add: 'Add',
-    view: 'View'
-
+    view: 'View',
+    select: 'Select'
   },
   maps: {
     status: {

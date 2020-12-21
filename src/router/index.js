@@ -307,6 +307,33 @@ export const constantRoutes = [
         meta: { title: 'editRole', noCache: true, breadcrumbTitle: 'roleBreadcrumbTitle' }
       }
     ]
+  },
+  {
+    path: '/groups',
+    component: Layout,
+    redirect: '/group/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer-group/index'),
+        name: 'Group',
+        meta: { title: 'groupListings', icon: 'el-icon-school', noCache: true }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/customer-group/new-customer-group/index'),
+        name: 'NewGroup',
+        hidden: true,
+        meta: { title: 'newGroup', noCache: false }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/customer-group/new-customer-group/index'),
+        name: 'EditGroup',
+        hidden: true,
+        meta: { title: 'editGroup', noCache: true, breadcrumbTitle: 'editGroupBreadcrumbTitle' }
+      }
+    ]
   }
 ]
 

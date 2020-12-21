@@ -7,3 +7,8 @@ export const RESOURCE_TYPE = Object.freeze({
   EVENT: 'event',
   OPERATOR: 'operator'
 })
+
+export const SYSTEM_ROLE = Object.freeze({
+  ADMIN: 'admin',
+  USER: 'user'
+})

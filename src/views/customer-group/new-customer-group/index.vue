@@ -1,12 +1,12 @@
 <template>
   <div v-loading="loading" class="app-container">
     <h3>{{ this.$t("customer.new.title") }}</h3>
-    <customer-form @onFormSubmit="onFormSubmit" />
+    <customer-group-form @onFormSubmit="onFormSubmit" />
   </div>
 </template>
 
 <script>
-import CustomerForm from '../components/CustomerForm'
+import CustomerGroupForm from '../components/CustomerGroupForm'
 import {
   newCustomer
 } from '@/api/customer'
@@ -14,7 +14,7 @@ import {
 export default {
   name: 'NewCustomer',
   components: {
-    CustomerForm
+    CustomerGroupForm
   },
   data() {
     return {

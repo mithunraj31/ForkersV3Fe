@@ -52,3 +52,21 @@ export function deleteCustomer(id) {
     method: 'delete'
   })
 }
+
+export function fetchCustomerRolesByCustomerId(id) {
+  return request({
+    url: `/customers/${id}/roles`,
+    method: 'get'
+  })
+}
+
+export function fetchCustomerGroups(id) {
+  return request({
+    url: `/customers/${id}/groups`,
+    method: 'get'
+  })
+}
+
+export function deleteCustomerGroup(customerId, groupId) {
+
+}

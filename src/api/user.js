@@ -13,24 +13,53 @@ export function fetchUsers(listQuery) {
   })
 }
 
-export function deleteUser() {
-  return new Promise((resolve, reject) => {
-    resolve()
+export function deleteUser(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'delete'
   })
 }
 
-export function fetchUserById() {
-
+export function fetchUserById(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'get'
+  })
 }
 
-export function isEmailAlreadyRegistered() {
+// export function isEmailAlreadyRegistered() {
 
+// }
+
+export function newUser(data) {
+  return request({
+    url: `/users`,
+    method: 'post',
+    data: {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      username: data.username,
+      customer_id: data.customerId,
+      role_id: data.roleId,
+      sys_role: data.sysRole,
+      password: data.password
+    }
+  })
 }
 
-export function newUser() {
-
-}
-
-export function editUser() {
-
+export function editUser(data) {
+  return request({
+    url: `/users/${data.id}`,
+    method: 'put',
+    data: {
+      id: data.id,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      username: data.username,
+      customer_id: data.customerId,
+      role_id: data.roleId,
+      sys_role: data.sysRole,
+      password: data.password
+    }
+  })
 }

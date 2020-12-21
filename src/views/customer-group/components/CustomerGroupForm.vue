@@ -3,14 +3,11 @@
     <el-row>
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
-          <el-form-item :label="$t('customer.form.name')" prop="name">
+          <el-form-item :label="$t('group.form.name')" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
-          <el-form-item :label="$t('customer.form.description')" prop="description">
+          <el-form-item :label="$t('group.form.description')" prop="description">
             <el-input v-model="form.description" type="textarea" />
-          </el-form-item>
-          <el-form-item :label="$t('customer.form.stkUser')" prop="stkUser">
-            <el-input v-model="form.stkUser" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">{{
@@ -28,16 +25,14 @@
 
 <script>
 export default {
-  name: 'UserForm',
+  name: 'CustomerGroupForm',
   props: {
-    customer: {
+    group: {
       type: Object,
       default: () => {
         return {
           id: 0,
-          name: '',
-          description: '',
-          stkUser: ''
+          name: ''
         }
       }
     }
@@ -46,14 +41,6 @@ export default {
     const validateName = (rule, value, callback) => {
       if (!value) {
         callback(new Error(this.$t('message.userNameRequired')))
-      } else {
-        callback()
-      }
-    }
-
-    const validateStkUser = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.stkUserRequired')))
       } else {
         callback()
       }
@@ -73,11 +60,6 @@ export default {
           required: true,
           trigger: 'blur',
           validator: validateName
-        }],
-        stkUser: [{
-          required: true,
-          trigger: 'blur',
-          validator: validateStkUser
         }]
       }
     }

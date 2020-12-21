@@ -30,7 +30,7 @@
               >
                 {{ $t("general.edit") }}
               </el-button>
-              <el-button v-if="scope.row.role !== 'admin'" type="danger" size="small" @click="onDeleteUserClicked(scope.row.id)">
+              <el-button type="danger" size="small" @click="onDeleteUserClicked(scope.row.id)">
                 {{ $t("general.delete") }}
               </el-button>
             </template>
@@ -49,15 +49,11 @@ import {
 } from '@/api/user'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
-import permission from '@/directive/permission/index.js'
 
 export default {
   name: 'UserListings',
   components: {
     Pagination
-  },
-  directives: {
-    permission
   },
   props: {
     userId: {
@@ -67,7 +63,6 @@ export default {
       }
     }
   },
-
   data() {
     return {
       users: null,
@@ -94,10 +89,10 @@ export default {
     mapUsersToDataTable(user) {
       return {
         id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        updated: moment(String(user.updated_at)).format('YYYY/MM/DD hh:mm')
+        name: `${user.first_name} ${user.last_name}`,
+        email: user.username,
+        role: user.role.name,
+        updated: moment(user.updated_at || user.created_at).format('YYYY/MM/DD hh:mm')
       }
     },
     async fetchListings() {

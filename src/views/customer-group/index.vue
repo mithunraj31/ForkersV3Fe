@@ -1,37 +1,53 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="24" class="new-customer-group-button-section">
-        <el-button type="primary" @click="$router.push('./groups/new')">{{
-          this.$t("customerGroup.new.title")
-        }}</el-button>
+      <el-col :span="12" class="new-customer-group-button-section">
+        <el-select
+          v-model="customerId"
+          v-permission="[systemRole.ADMIN]"
+          :placeholder="$t('general.select')"
+          @change="fetchCustomerGroups"
+        >
+          <el-option
+            v-for="item in customers"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button
+          v-if="customers.length > 0"
+          class="new-group-btn"
+          type="primary"
+          @click="newGroup"
+        >New group</el-button>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="24">
-        <el-table v-loading="loading" :data="group" border style="width: 100%">
-          <el-table-column prop="id" :label="this.$t('customerGroup.listings.id')" width="50" />
-          <el-table-column prop="name" :label="this.$t('customerGroup.listings.name')" />
-          <el-table-column prop="stkUser" :label="this.$t('customerGroup.listings.stkUser')" />
-          <el-table-column prop="updated" :label="this.$t('customerGroup.listings.updated')" />
-          <el-table-column :label="this.$t('general.action')">
-            <template slot-scope="scope">
+      <el-col :span="12">
+        <el-tree
+          v-loading="loading"
+          :data="groups"
+          node-key="id"
+          default-expand-all
+          :expand-on-click-node="false"
+        >
+          <span slot-scope="{ node, data }" class="custom-tree-node">
+            <span>{{ node.name }}</span>
+            <span>
+              <el-button type="text" size="mini" @click="() => append(data)">
+                Append
+              </el-button>
               <el-button
-                type="primary"
-                size="small"
-                @click.native.prevent="
-                  $router.push(`./groups/${scope.row.id}/edit`)
-                "
+                type="text"
+                size="mini"
+                @click="() => remove(node, data)"
               >
-                {{ $t("general.edit") }}
+                Delete
               </el-button>
-              <el-button type="danger" size="small" @click="onDeleteGroupClicked(scope.row.id)">
-                {{ $t("general.delete") }}
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="onPaged" />
+            </span>
+          </span>
+        </el-tree>
       </el-col>
     </el-row>
   </div>
@@ -40,41 +56,38 @@
 <script>
 import {
   fetchCustomerGroups,
-  deleteCustomerGroup
+  deleteCustomerGroup,
+  fetchCustomers
 } from '@/api/customer'
-import Pagination from '@/components/Pagination'
+import { newGroup } from '@/api/group'
 import moment from 'moment'
 import permission from '@/directive/permission/index.js'
+import { SYSTEM_ROLE } from '@/enums'
 
 export default {
   name: 'CustomerGroupListings',
-  components: {
-    Pagination
-  },
   directives: {
     permission
   },
   data() {
     return {
-      groups: null,
-      total: 0,
-      listQuery: {
-        page: 1,
-        limit: 10
-      },
-      loading: false
+      groups: [],
+      loading: false,
+      customerId: '',
+      customers: []
     }
   },
-
-  async created() {
-    this.listQuery = {
-      page: +(this.$route.query.page || this.listQuery.page),
-      limit: +(this.$route.query.limit || this.listQuery.limit)
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
     }
-    this.$router.push({
-      query: this.listQuery
-    })
-    await this.fetchListings()
+  },
+  async mounted() {
+    await this.fetchCustomers()
+    if (this.customers && this.customers.length > 0) {
+      this.customerId = this.customers[0].id
+      await this.fetchCustomerGroups()
+    }
   },
   methods: {
     mapData(data) {
@@ -85,17 +98,6 @@ export default {
         stkUser: data.stk_user,
         updated: datetime === 'Invalid date' ? '' : datetime
       }
-    },
-    async fetchListings() {
-      this.loading = true
-      const { data, meta } = await fetchCustomerGroups(this.listQuery)
-
-      this.groups = data.map(this.mapData)
-      this.total = meta.total
-      this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
     },
     onDeleteGroupClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
@@ -128,8 +130,39 @@ export default {
           })
         })
     },
-    async onPaged() {
-      await this.fetchListings()
+    async fetchCustomers() {
+      const { data } = await fetchCustomers()
+      this.customers = data
+    },
+    async fetchCustomerGroups() {
+      this.loading = true
+      const { data } = await fetchCustomerGroups(this.customerId)
+      this.groups = data
+      this.loading = false
+    },
+    append(data) {
+      const newChild = { name: this.$t('group.new.tile'), children: [] }
+      if (!data.children) {
+        this.$set(data, 'children', [])
+      }
+      data.children.push(newChild)
+    },
+
+    remove(node, data) {
+      const parent = node.parent
+      const children = parent.data.children || parent.data
+      const index = children.findIndex((d) => d.id === data.id)
+      children.splice(index, 1)
+    },
+
+    async newGroup() {
+      await newGroup({
+        name: this.$t('group.new.title'),
+        description: '',
+        customerId: this.customerId,
+        parentId: null
+      })
+      await this.fetchCustomerGroups()
     }
   }
 }
@@ -137,10 +170,18 @@ export default {
 
 <style lang="scss" scoped>
 .filter-section {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+.new-group-btn {
+  margin-left: 10px;
 }
 
-.new-customer-group-button-section {
-    text-align: right;
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
 }
 </style>
