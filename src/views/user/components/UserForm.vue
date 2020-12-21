@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    {{ form.sysRole }}
     <el-row>
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="150px">

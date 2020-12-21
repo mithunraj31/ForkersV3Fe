@@ -13,7 +13,7 @@
             <el-button type="primary" @click="onSubmit">{{
               $t("general.save")
             }}</el-button>
-            <el-button @click="$router.go(-1)">{{
+            <el-button @click="onCancel">{{
               $t("general.cancel")
             }}</el-button>
           </el-form-item>
@@ -32,7 +32,8 @@ export default {
       default: () => {
         return {
           id: 0,
-          name: ''
+          name: '',
+          description: ''
         }
       }
     }
@@ -40,7 +41,7 @@ export default {
   data() {
     const validateName = (rule, value, callback) => {
       if (!value) {
-        callback(new Error(this.$t('message.userNameRequired')))
+        callback(new Error(this.$t('message.nameRequired')))
       } else {
         callback()
       }
@@ -51,8 +52,7 @@ export default {
       form: {
         id: 0,
         name: '',
-        description: '',
-        stkUser: ''
+        description: ''
       },
       dialogVisible: false,
       formRules: {
@@ -65,11 +65,10 @@ export default {
     }
   },
   watch: {
-    customer: function(newCustomer, oldCustomer) {
-      this.form.id = newCustomer.id
-      this.form.name = newCustomer.name
-      this.form.description = newCustomer.description
-      this.form.stkUser = newCustomer.stkUser
+    group: function(newGroup, oldCustomer) {
+      this.form.id = newGroup.id
+      this.form.name = newGroup.name
+      this.form.description = newGroup.description
     }
   },
   methods: {
@@ -81,6 +80,9 @@ export default {
           })
         }
       })
+    },
+    onCancel() {
+      this.$emit('onCancel')
     }
   }
 }
