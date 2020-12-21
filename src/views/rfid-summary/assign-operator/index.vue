@@ -10,6 +10,50 @@
           <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
             <el-input v-model="form.operatorId" />
           </el-form-item>
+          <div v-if="form.operatorId">
+            <el-form-item :label="this.$t('driver.form.name')" prop="name">
+              <el-input v-model="form.name" />
+            </el-form-item>
+            <el-form-item :label="this.$t('driver.form.dob')" prop="dob">
+              <template>
+                <el-date-picker v-model="form.dob" type="date" />
+              </template>
+            </el-form-item>
+            <el-form-item :label="this.$t('driver.form.address')" prop="address">
+              <el-input v-model="form.address" />
+            </el-form-item>
+            <el-form-item :label="this.$t('driver.form.licenseNo')" prop="licenseNo">
+              <el-input v-model="form.licenseNo" />
+            </el-form-item>
+
+            <el-form-item
+              :label="this.$t('driver.form.licenseReceived')"
+              prop="licenseReceived"
+            >
+              <template>
+                <el-date-picker v-model="form.licenseReceived" type="date" />
+              </template>
+            </el-form-item>
+
+            <el-form-item
+              :label="this.$t('driver.form.licenseRenewal')"
+              prop="licenseRenewal"
+            >
+              <template>
+                <el-date-picker v-model="form.licenseRenewal" type="date" />
+              </template>
+            </el-form-item>
+
+            <el-form-item
+              :label="this.$t('driver.form.licenseLocation')"
+              prop="licenseLocation"
+            >
+              <el-input v-model="form.licenseLocation" />
+            </el-form-item>
+            <el-form-item :label="this.$t('driver.form.phoneNo')" prop="phoneNo">
+              <el-input v-model="form.phoneNo" />
+            </el-form-item>
+          </div>
           <el-form-item>
             <el-button type="primary" @click="this.onSubmit">{{
               this.$t("general.save")
