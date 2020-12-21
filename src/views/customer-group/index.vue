@@ -19,35 +19,56 @@
           v-if="customers.length > 0"
           class="new-group-btn"
           type="primary"
-          @click="newGroup"
-        >New group</el-button>
+          @click="newGroup(null)"
+        >{{ $t('group.new.title') }}</el-button>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="12">
-        <el-tree
-          v-loading="loading"
-          :data="groups"
-          node-key="id"
-          default-expand-all
-          :expand-on-click-node="false"
-        >
-          <span slot-scope="{ node, data }" class="custom-tree-node">
-            <span>{{ node.name }}</span>
-            <span>
-              <el-button type="text" size="mini" @click="() => append(data)">
-                Append
-              </el-button>
-              <el-button
-                type="text"
-                size="mini"
-                @click="() => remove(node, data)"
-              >
-                Delete
-              </el-button>
+      <el-col :span="8">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <el-input
+              v-model="filterText"
+              :placeholder="$t('group.filterPlaceholder')"
+            />
+          </div>
+          <el-tree
+            ref="tree"
+            v-loading="loading"
+            :data="groups"
+            node-key="id"
+            default-expand-all
+            :expand-on-click-node="false"
+            draggable
+            :filter-node-method="filterNode"
+            @node-drop="handleDrop"
+          >
+            <span slot-scope="{ node, data }" class="custom-tree-node">
+              <span @click="onGroupClicked(data.id)">{{ data.name }}</span>
+              <span>
+                <el-button type="text" size="mini" @click="newGroup(data.id)">
+                  {{ $t('group.append') }}
+                </el-button>
+                <el-button
+                  :disabled="node.childNodes.length > 0"
+                  type="text"
+                  size="mini"
+                  @click="removeGroup(data.id)"
+                >
+                  {{ $t('group.delete') }}
+                </el-button>
+              </span>
             </span>
-          </span>
-        </el-tree>
+          </el-tree>
+        </el-card>
+      </el-col>
+      <el-col v-if="groupId" :span="14" :offset="1">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>{{ $t('group.id') }}: {{ groupId }}</span>
+          </div>
+          <customer-group-form :group="groupData" @onFormSubmit="onSubmit" @onCancel="onClear" />
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -56,56 +77,82 @@
 <script>
 import {
   fetchCustomerGroups,
-  deleteCustomerGroup,
   fetchCustomers
 } from '@/api/customer'
-import { newGroup } from '@/api/group'
-import moment from 'moment'
+import { deleteGroup, newGroup, fetchGroupById, fetchGroups, editGroup } from '@/api/group'
 import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
 import { SYSTEM_ROLE } from '@/enums'
+import CustomerGroupForm from './components/CustomerGroupForm'
 
 export default {
   name: 'CustomerGroupListings',
   directives: {
     permission
   },
+  components: {
+    CustomerGroupForm
+  },
   data() {
     return {
       groups: [],
       loading: false,
       customerId: '',
-      customers: []
+      customers: [],
+      groupId: '',
+      groupData: {},
+      formLoading: false,
+      filterText: ''
     }
   },
   computed: {
     systemRole() {
       return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    }
+  },
+  watch: {
+    filterText(val) {
+      this.$refs.tree.filter(val)
     }
   },
   async mounted() {
-    await this.fetchCustomers()
-    if (this.customers && this.customers.length > 0) {
-      this.customerId = this.customers[0].id
+    if (this.hasAdminPermission) {
+      await this.fetchCustomers()
+      if (this.customers && this.customers.length > 0) {
+        this.customerId = this.customers[0].id
+        await this.fetchCustomerGroups()
+      }
+    } else {
       await this.fetchCustomerGroups()
     }
   },
   methods: {
-    mapData(data) {
-      const datetime = moment(data.updated_at).format('YYYY/MM/DD hh:mm')
-      return {
-        id: data.id,
-        name: data.name,
-        stkUser: data.stk_user,
-        updated: datetime === 'Invalid date' ? '' : datetime
-      }
+    async fetchCustomers() {
+      const { data } = await fetchCustomers()
+      this.customers = data
     },
-    onDeleteGroupClicked(id) {
+    async fetchCustomerGroups() {
+      this.loading = true
+      this.groupId = ''
+      if (this.hasAdminPermission) {
+        const { data } = await fetchCustomerGroups(this.customerId)
+        this.groups = data
+      } else {
+        const { data } = await fetchGroups()
+        this.groups = data
+      }
+      this.loading = false
+    },
+
+    removeGroup(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
-        `${this.$t('user.listings.userId')}: ${id}`
+        `${this.$t('group.id')}: ${id}`
       )
-
       this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
         confirmButtonText: this.$t('general.confirm'),
         cancelButtonText: this.$t('general.cancel'),
@@ -115,13 +162,13 @@ export default {
       })
     },
     deleteConfirmed(id) {
-      deleteCustomerGroup(id)
-        .then(() => {
+      deleteGroup(id)
+        .then(async() => {
           this.$message({
-            message: this.$t('message.customerGroupHasBeenDeleted'),
+            message: this.$t('message.groupHasBeenDeleted'),
             type: 'success'
           })
-          this.fetchListings()
+          await this.fetchCustomerGroups()
         })
         .catch(() => {
           this.$message({
@@ -130,39 +177,49 @@ export default {
           })
         })
     },
-    async fetchCustomers() {
-      const { data } = await fetchCustomers()
-      this.customers = data
-    },
-    async fetchCustomerGroups() {
-      this.loading = true
-      const { data } = await fetchCustomerGroups(this.customerId)
-      this.groups = data
-      this.loading = false
-    },
-    append(data) {
-      const newChild = { name: this.$t('group.new.tile'), children: [] }
-      if (!data.children) {
-        this.$set(data, 'children', [])
-      }
-      data.children.push(newChild)
-    },
-
-    remove(node, data) {
-      const parent = node.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex((d) => d.id === data.id)
-      children.splice(index, 1)
-    },
-
-    async newGroup() {
+    async newGroup(parentId = null) {
       await newGroup({
-        name: this.$t('group.new.title'),
+        name: this.$t('group.newest'),
         description: '',
         customerId: this.customerId,
-        parentId: null
+        parentId
       })
+
+      setTimeout(this.fetchCustomerGroups, 500)
+    },
+    async handleDrop(draggingNode, dropNode) {
+      const group = {
+        id: draggingNode.data.id,
+        name: draggingNode.data.name,
+        description: draggingNode.data.description,
+        customerId: draggingNode.data.customer_id,
+        parentId: dropNode.data.id
+      }
+      await this.onSubmit(group)
+    },
+    async onGroupClicked(id) {
+      this.groupId = id
+      this.formLoading = true
+      const { data } = await fetchGroupById(this.groupId)
+      this.groupData = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        customerId: data.customer_id,
+        parentId: data.fetchCustomerGroupsparent_id
+      }
+      this.formLoading = false
+    },
+    async onSubmit(form) {
+      await editGroup(form)
       await this.fetchCustomerGroups()
+    },
+    async onClear() {
+      await this.fetchCustomerGroups()
+    },
+    filterNode(value, data) {
+      if (!value) return true
+      return data.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     }
   }
 }

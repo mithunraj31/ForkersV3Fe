@@ -80,7 +80,10 @@ export default {
     editCustomer: '会社を編集',
     roleListings: 'ロールリスト',
     newRole: 'ロールを追加',
-    editRole: 'ロールを編集'
+    editRole: 'ロールを編集',
+    groupManagement: 'グループを管理',
+    newUser: 'ユーザーを追加',
+    editUser: 'ユーザーを編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -510,6 +513,21 @@ export default {
       group: 'グループ',
       customer: '会社'
     }
+  },
+
+  group: {
+    id: 'グループ番号',
+    new: {
+      title: 'グループを追加'
+    },
+    newest: '新グループ',
+    form: {
+      name: 'グループ名',
+      description: '説明'
+    },
+    filterPlaceholder: 'グループ名で検索',
+    append: '追加',
+    delete: '削除'
   }
 
 }

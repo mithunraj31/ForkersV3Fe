@@ -80,7 +80,10 @@ export default {
     editCustomer: 'Edit customer',
     roleListings: 'Role listings',
     newRole: 'New role',
-    editRole: 'Edit role'
+    editRole: 'Edit role',
+    groupManagement: 'Group Manangement',
+    newUser: 'New user',
+    editUser: 'Edit User'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -511,5 +514,20 @@ export default {
       group: 'Group',
       customer: 'Customer'
     }
+  },
+
+  group: {
+    id: 'Group ID',
+    new: {
+      title: 'New group'
+    },
+    newest: 'Newest group',
+    form: {
+      name: 'Group name',
+      description: 'description'
+    },
+    filterPlaceholder: 'Search by group name',
+    append: 'Append',
+    delete: 'Delete'
   }
 }
