@@ -2,9 +2,11 @@
   <div class="app-container">
     <el-row class="filter-section">
       <el-col :span="24" class="new-rfid-button-section">
-        <el-button type="primary" @click="$router.push('/rfid/new')">{{
-          this.$t("rfid.new.title")
-        }}</el-button>
+        <el-button
+          v-permission="[systemRole.ADMIN, rfidPrivilege.ADD]"
+          type="primary"
+          @click="$router.push('/rfid/new')"
+        >{{ this.$t("rfid.new.title") }}</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -86,15 +88,19 @@
                 {{ $t("rfid.listings.mapOperator") }}
               </el-button>
               <el-button
+                v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
                 type="primary"
                 plain
+                circle
                 size="small"
                 icon="el-icon-edit"
                 @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
               />
               <el-button
+                v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
                 type="danger"
                 plain
+                circle
                 icon="el-icon-delete"
                 size="small"
                 @click="onDeleterfidClicked(scope.row.id)"
@@ -116,14 +122,16 @@
 <script>
 import { fetchRfid, deleteRfid } from '@/api/rfid'
 import { removeOperator } from '@/api/rfid-history'
-
 import Pagination from '@/components/Pagination'
-
+import permission from '@/directive/permission'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE, RFID_PRIVILAGE } from '@/enums'
 export default {
   name: 'RfidListings',
   components: {
     Pagination
   },
+  directives: { permission },
   props: {
     operatorId: {
       type: Number,
@@ -132,7 +140,6 @@ export default {
       }
     }
   },
-
   data() {
     return {
       rfidDatas: null,
@@ -185,6 +192,18 @@ export default {
         ]
       },
       drivetimeRange: ''
+    }
+  },
+
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    rfidPrivilege() {
+      return RFID_PRIVILAGE
     }
   },
 

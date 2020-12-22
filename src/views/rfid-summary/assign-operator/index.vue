@@ -14,6 +14,7 @@
                 popper-class="my-autocomplete"
                 :fetch-suggestions="querySearch"
                 :placeholder="$t('general.select')"
+                @change="handleSelect"
                 @select="handleSelect"
               >
                 <template slot-scope="{ item }">
@@ -168,6 +169,11 @@ export default {
           {
             required: true,
             trigger: 'blur',
+            validator: validateOperatorName
+          },
+          {
+            required: true,
+            trigger: 'change',
             validator: validateOperatorName
           }
         ]

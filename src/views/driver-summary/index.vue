@@ -2,9 +2,11 @@
   <div class="app-container">
     <el-row class="filter-section">
       <el-col :span="24" class="new-driver-button-section">
-        <el-button type="primary" @click="$router.push('/drivers/new')">{{
-          this.$t("driver.new.title")
-        }}</el-button>
+        <el-button
+          v-permission="[systemRole.ADMIN, driverPrivilege.ADD]"
+          type="primary"
+          @click="$router.push('/drivers/new')"
+        >{{ this.$t("driver.new.title") }}</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -17,7 +19,7 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column prop="id" :label="this.$t('driver.listings.id')">
+          <el-table-column prop="id" :label="this.$t('driver.listings.id')" width="90px">
             <template slot-scope="scope">
               <label class="click" @click="driverDetailClick(scope.row.id)">
                 {{ scope.row.id }}
@@ -52,28 +54,65 @@
             prop="licenseRenewal"
             :label="this.$t('driver.listings.licensevalidTill')"
           />
-          <el-table-column
-            prop="phoneNo"
-            :label="this.$t('driver.listings.phoneNo')"
-          />
-          <el-table-column :label="this.$t('general.action')">
+          <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
+          <el-table-column :label="this.$t('general.action')" width="350px">
             <template slot-scope="scope">
+              <el-dropdown>
+                <el-button type="info" class="device-summary-btn" size="small">
+                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
+                </el-button>
+                <el-dropdown-menu slot="dropdown" size="mini">
+                  <el-dropdown-item>
+                    <div class="block">
+                      <el-date-picker
+                        v-model="drivetimeRange"
+                        type="datetimerange"
+                        :picker-options="pickerOptions"
+                        range-separator="~"
+                        :start-placeholder="$t('general.begin')"
+                        :end-placeholder="$t('general.end')"
+                        align="right"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        @change="driveClick(drivetimeRange, scope.row.rfid)"
+                      />
+                    </div>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
               <el-button
+                v-if="scope.row.rfid !== 0"
+                type="danger"
+                size="small"
+                @click="removeOperatorClicked(scope.row.rfid)"
+              >
+                {{ $t("rfid.listings.unMapRFID") }}
+              </el-button>
+              <el-button
+                v-if="scope.row.rfid === 0"
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/drivers/${scope.row.id}/edit`)
+                  $router.push(`/rfid/${scope.row.rfid}/assign-operator`)
                 "
               >
-                {{ $t("general.edit") }}
+                {{ $t("rfid.listings.mapRFID") }}
               </el-button>
               <el-button
-                type="danger"
+                v-permission="[systemRole.ADMIN, driverPrivilege.EDIT]"
+                type="primary"
+                circle
                 size="small"
+                icon="el-icon-edit"
+                @click.native.prevent="$router.push(`/drivers/${scope.row.id}/edit`)"
+              />
+              <el-button
+                v-permission="[systemRole.ADMIN, driverPrivilege.DELETE]"
+                type="danger"
+                circle
+                size="small"
+                icon="el-icon-delete"
                 @click="onDeletedriverClicked(scope.row.id)"
-              >
-                {{ $t("general.delete") }}
-              </el-button>
+              />
             </template>
           </el-table-column>
         </el-table>
@@ -92,9 +131,13 @@
 import { fetchDrivers, deleteDriver } from '@/api/driver'
 import moment from '@/utils/moment'
 import Pagination from '@/components/Pagination'
+import permission from '@/directive/permission'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE, DRIVER_PRIVILAGE } from '@/enums'
 
 export default {
   name: 'DriverListings',
+  directives: { permission },
   components: {
     Pagination
   },
@@ -115,10 +158,64 @@ export default {
         page: 1,
         limit: 10
       },
-      loading: false
+      loading: false,
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: this.$t('general.thisHour'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 1)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.toDay'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setHours(0)
+              start.setMinutes(0)
+              start.setSeconds(0)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.thisWeek'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.thisMonth'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      },
+      drivetimeRange: ''
     }
   },
 
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    driverPrivilege() {
+      return DRIVER_PRIVILAGE
+    }
+  },
   async created() {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
@@ -141,6 +238,11 @@ export default {
         licenseLocation: driver.license_location,
         phoneNo: driver.phone_no
       }
+    },
+    driveClick(drivetimeRange, rfid) {
+      this.$router.push(
+        `/operator/${rfid}/driveSummary?start=${drivetimeRange[0]}&end=${drivetimeRange[1]}`
+      )
     },
     async fetchListings() {
       let response = null
@@ -204,6 +306,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.device-summary-btn {
+  margin-right: 5px;
+}
 .filter-section {
   margin-bottom: 15px;
 }
