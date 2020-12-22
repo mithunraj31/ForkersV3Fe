@@ -66,3 +66,22 @@ export function deleteDriver(id) {
     method: 'delete'
   })
 }
+
+export function removeRFID(id) {
+  return request({
+    url: `/operators/${id}/rfid/`,
+    method: 'delete'
+  })
+}
+
+export function assignRfid(ids) {
+  const data = {
+    rfid: ids.rfid,
+    id: ids.id
+  }
+  return request({
+    url: `/operators/assign`,
+    method: 'post',
+    data
+  })
+}

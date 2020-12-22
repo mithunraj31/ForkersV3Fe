@@ -55,6 +55,20 @@
             :label="this.$t('driver.listings.licensevalidTill')"
           />
           <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
+          <el-table-column prop="rfid" :label="this.$t('driver.listings.rfid')">
+            <template slot-scope="scope">
+              <div
+                v-if="scope.row.rfid !== null"
+                class="click"
+                @click="rfidHistoryClick(scope.row.rfid)"
+              >
+                {{ scope.row.rfid }}
+              </div>
+              <div v-else>
+                {{ $t("rfid.listings.notAssigned") }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column :label="this.$t('general.action')" width="350px">
             <template slot-scope="scope">
               <el-dropdown>
@@ -80,22 +94,22 @@
                 </el-dropdown-menu>
               </el-dropdown>
               <el-button
-                v-if="scope.row.rfid !== 0"
+                v-if="scope.row.rfid !== null"
                 type="danger"
                 size="small"
-                @click="removeOperatorClicked(scope.row.rfid)"
+                @click="removeRFIDClicked(scope.row.id)"
               >
-                {{ $t("rfid.listings.unMapRFID") }}
+                {{ $t("driver.listings.unMapRFID") }}
               </el-button>
               <el-button
-                v-if="scope.row.rfid === 0"
+                v-if="scope.row.rfid === null"
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/rfid/${scope.row.rfid}/assign-operator`)
+                  $router.push(`/drivers/${scope.row.id}/assign-rfid`)
                 "
               >
-                {{ $t("rfid.listings.mapRFID") }}
+                {{ $t("driver.listings.mapRFID") }}
               </el-button>
               <el-button
                 v-permission="[systemRole.ADMIN, driverPrivilege.EDIT]"
@@ -128,7 +142,7 @@
 </template>
 
 <script>
-import { fetchDrivers, deleteDriver } from '@/api/driver'
+import { fetchDrivers, deleteDriver, removeRFID } from '@/api/driver'
 import moment from '@/utils/moment'
 import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
@@ -236,8 +250,12 @@ export default {
         licenseNo: driver.license_no,
         licenseRenewal: driver.license_renewal_date,
         licenseLocation: driver.license_location,
-        phoneNo: driver.phone_no
+        phoneNo: driver.phone_no,
+        rfid: driver.rfid
       }
+    },
+    async rfidHistoryClick($rfid) {
+      this.$router.push(`/rfid/${$rfid}/history`)
     },
     driveClick(drivetimeRange, rfid) {
       this.$router.push(
@@ -300,6 +318,41 @@ export default {
     calculateAge(dob) {
       var age = moment().diff(dob, 'years')
       return age
+    },
+
+    removeRFIDClicked($id) {
+      let deleteConfirmMessage = this.$t('message.confirmRemove')
+      deleteConfirmMessage = String.format(
+        deleteConfirmMessage,
+        `${this.$t('driver.listings.id')}: ${$id}`
+      )
+
+      this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
+        confirmButtonText: this.$t('general.confirm'),
+        cancelButtonText: this.$t('general.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.removeRFIDConfirmed($id)
+      })
+    },
+    removeRFIDConfirmed($id) {
+      this.loading = true
+      removeRFID($id)
+        .then(() => {
+          this.$message({
+            message: this.$t('message.rfidIsRemoved'),
+            type: 'success'
+          })
+          this.fetchListings()
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = false
+          this.$message({
+            message: this.$t('message.somethingWentWrong'),
+            type: 'danger'
+          })
+        })
     }
   }
 }

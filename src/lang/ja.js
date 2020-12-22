@@ -254,7 +254,10 @@ export default {
     roleHasBeenEdited: 'ロールが編集されました',
     groupHasBeenCreated: 'グループが作成されました',
     groupHasBeenDeleted: 'グループが削除されました',
-    groupHasBeenEdited: 'グループが編集されました'
+    groupHasBeenEdited: 'グループが編集されました',
+    rfidHasAssigned: 'RFIDが割り当てました',
+    rfidIsRemoved: 'RFIDが削除されました',
+    rfidRequired: 'RFIDは必要があります'
   },
 
   event: {
@@ -424,11 +427,15 @@ export default {
       name: '名前',
       licenseNo: '免許番号',
       licensevalidTill: '免許有効期限',
-      phoneNo: '電話番号'
+      phoneNo: '電話番号',
+      rfid: 'RFID',
+      unMapRFID: 'RFIDを削除',
+      mapRFID: 'RFIDの割り当て'
 
     },
     new: {
-      title: 'オペレーターの追加'
+      title: 'オペレーターの追加',
+      assignRfid: 'RFIDの割り当て'
     },
     edit: {
       title: 'オペレーターの編集'

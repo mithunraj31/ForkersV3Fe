@@ -216,6 +216,13 @@ export const constantRoutes = [
         name: 'DriverDetail',
         hidden: true,
         meta: { title: 'driverDetail', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'driverDetailBreadcrumbTitle' }
+      },
+      {
+        path: ':id/assign-rfid',
+        component: () => import('@/views/driver-summary/assign-rfid/index'),
+        name: 'AssignRFID',
+        hidden: true,
+        meta: { title: 'assignRFID', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignRFIDBreadcrumbTitle' }
       }
     ]
   },

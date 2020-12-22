@@ -253,7 +253,10 @@ export default {
     roleHasBeenEdited: 'Role has been edited',
     groupHasBeenCreated: 'Group has been created',
     groupHasBeenDeleted: 'Group has been deleted',
-    groupHasBeenEdited: 'Group has been edited'
+    groupHasBeenEdited: 'Group has been edited',
+    rfidHasAssigned: 'RFID has been Assigned',
+    rfidIsRemoved: 'RFID is Removed',
+    rfidRequired: 'RFID is Required'
   },
 
   event: {
@@ -425,11 +428,15 @@ export default {
       name: 'Name',
       licenseNo: 'License Number',
       licensevalidTill: 'License Valid Till',
-      phoneNo: 'Phone Number'
+      phoneNo: 'Phone Number',
+      rfid: 'RFID',
+      unMapRFID: 'Remove RFID',
+      mapRFID: 'Assign RFID'
 
     },
     new: {
-      title: 'Add Operator'
+      title: 'Add Operator',
+      assignRfid: 'Assign RFID'
     },
     edit: {
       title: 'Edit Operator'

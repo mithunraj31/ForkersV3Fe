@@ -2,12 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :span="12">
-        <el-form
-          ref="form"
-          :rules="formRules"
-          :model="form"
-          label-width="120px"
-        >
+        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
             <el-input v-model="form.rfid" />
           </el-form-item>
@@ -19,9 +14,7 @@
               v-if="form.currentOperatorId === 0"
               type="primary"
               size="small"
-              @click.native.prevent="
-                $router.push(`/rfid/${form.rfid}/assign-operator`)
-              "
+              @click.native.prevent="$router.push(`/rfid/${form.rfid}/assign-operator`)"
             >
               {{ $t("rfid.listings.mapOperator") }}
             </el-button>
@@ -33,9 +26,7 @@
             >
               {{ $t("rfid.listings.unMapOperator") }}
             </el-button>
-            <el-button @click="$router.go(-1)">{{
-              this.$t("general.cancel")
-            }}</el-button>
+            <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
