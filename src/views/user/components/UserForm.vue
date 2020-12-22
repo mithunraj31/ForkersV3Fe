@@ -4,7 +4,7 @@
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="150px">
           <el-form-item v-permission="[systemRole.ADMIN]" :label="$t('role.form.companyListings')">
-            <el-select v-model="form.customerId" :placeholder="$t('general.select')" @change="fetchCustomerRoles">
+            <el-select v-model="form.customerId" :placeholder="$t('general.select')" @change="onCustomerChanged">
               <el-option
                 v-for="item in customers"
                 :key="item.id"
@@ -24,12 +24,49 @@
             <el-input v-model="form.lastName" />
           </el-form-item>
           <el-form-item :label="$t('user.form.userEmail')" prop="username">
-            <el-input v-model="form.username" />
+            <el-input v-model="form.username" :disabled="form.id != 0" />
           </el-form-item>
           <el-form-item v-if="!hasAdminPermission || form.customerId > 0" :label="$t('user.form.userRole')" prop="role">
             <el-select v-model="form.roleId" :rules="formRules" filterable :placeholder="$t('user.form.userRole')">
               <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('user.form.groups')">
+            <el-collapse accordion>
+              <el-collapse-item name="groupListings">
+                <template slot="title">
+                  <span v-if="form.groupIds != null && form.groupIds.length > 0">
+                    <el-tag
+                      v-for="tag in selectedGroups"
+                      :key="tag.id"
+                      class="group-tag"
+                      closable
+                      type="info"
+                      @close="removeGroup(tag.id)"
+                    >
+                      {{ tag.name }}
+                    </el-tag>
+                  </span>
+                  <span v-else>{{ $t('user.form.pleaseSelectUserGroup') }}</span>
+                </template>
+                <el-tree
+                  ref="tree"
+                  :data="groups"
+                  node-key="id"
+                  default-expand-all
+                  :expand-on-click-node="false"
+                >
+                  <span slot-scope="{ data }" class="custom-tree-node">
+                    <span>{{ data.name }}</span>
+                    <span>
+                      <el-button type="text" size="mini" :disabled="isContainsSelectedGroups(data.id)" @click="onSelectGroup(data)">
+                        {{ $t('general.select') }}
+                      </el-button>
+                    </span>
+                  </span>
+                </el-tree>
+              </el-collapse-item>
+            </el-collapse>
           </el-form-item>
           <el-form-item v-if="!visible">
             <el-button type="primary" @click="visible = true">{{
@@ -58,11 +95,13 @@
 
 <script>
 import { validEmail } from '@/utils/validate'
-import { fetchCustomers, fetchCustomerRolesByCustomerId } from '@/api/customer'
+import { fetchCustomers, fetchCustomerRoles, fetchCustomerGroups } from '@/api/customer'
 import { fetchRoles } from '@/api/role'
 import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
 import { SYSTEM_ROLE } from '@/enums'
+import { fetchGroups } from '@/api/group'
+import { findNestedObjectById } from '@/utils'
 
 export default {
   name: 'UserForm',
@@ -76,11 +115,12 @@ export default {
           firstName: '',
           lastName: '',
           username: '',
-          roleId: 0,
+          roleId: '',
           password: '',
           confirmPassword: '',
           customerId: '',
-          sysRole: SYSTEM_ROLE.USER
+          sysRole: SYSTEM_ROLE.USER,
+          groupIds: []
         }
       }
     }
@@ -131,20 +171,23 @@ export default {
     return {
       visible: true,
       previousEmail: '',
+      groups: [],
       form: {
         id: 0,
         firstName: '',
         lastName: '',
         username: '',
-        roleId: 0,
+        roleId: '',
         password: '',
         confirmPassword: '',
         customerId: '',
-        sysRole: SYSTEM_ROLE.USER
+        sysRole: SYSTEM_ROLE.USER,
+        groupIds: []
       },
       dialogVisible: false,
       customers: [],
       roles: [],
+      selectedGroups: [],
       formRules: {
         firstName: [{
           required: true,
@@ -191,9 +234,14 @@ export default {
       this.form.roleId = newUser.roleId
       this.form.customerId = newUser.customerId
       this.form.sysRole = newUser.sysRole
+      this.form.groupIds = newUser.groupIds
+
       this.visible = false
-      this.fetchRoles()
+      this.onCustomerChanged()
     }
+  },
+  created() {
+    this.onCustomerChanged()
   },
   mounted() {
     if (this.hasAdminPermission) {
@@ -206,18 +254,39 @@ export default {
       this.customers = data
     },
     async fetchRoles() {
-      const { data } = await fetchRoles()
-      this.roles = data
-      if (data && data.length >= 1) {
-        this.form.roleId = data[0].id
+      if (this.hasAdminPermission && this.form.customerId) {
+        const { data } = await fetchCustomerRoles(this.form.customerId)
+        this.roles = data
+      } else if (!this.hasAdminPermission) {
+        const { data } = await fetchRoles()
+        this.roles = data
+        if (data && data.length > 0) {
+          this.form.customerId = data[0].customer_id
+        }
       }
     },
-    async fetchCustomerRoles() {
-      const { data } = await fetchCustomerRolesByCustomerId(this.form.customerId)
-      this.roles = data
-      if (data && data.length >= 1) {
-        this.form.roleId = data[0].id
+    async fetchGroups() {
+      if (this.hasAdminPermission && this.form.customerId) {
+        const { data } = await fetchCustomerGroups(this.form.customerId)
+        this.groups = data
+      } else if (!this.hasAdminPermission) {
+        const { data } = await fetchGroups()
+        this.groups = data
+        if (data && data.length > 0) {
+          this.form.customerId = data[0].customer_id
+        }
       }
+
+      this.selectedGroups = this.form.groupIds.map(x => {
+        let result = null
+        for (const obj of this.groups) {
+          result = findNestedObjectById(obj, x)
+          if (result) {
+            break
+          }
+        }
+        return result
+      }).filter(x => x != null)
     },
     onSubmit() {
       this.$refs.form.validate((valid) => {
@@ -227,10 +296,44 @@ export default {
           })
         }
       })
+    },
+    async onCustomerChanged() {
+      await this.fetchRoles()
+      await this.fetchGroups()
+    },
+    onSelectGroup(data) {
+      if (!this.form.groupIds.some(id => id === data.id)) {
+        this.selectedGroups.push(data)
+        this.form.groupIds.push(data.id)
+      }
+    },
+    isContainsSelectedGroups(groupId) {
+      return this.form.groupIds.some(id => id === groupId)
+    },
+    removeGroup(groupId) {
+      this.selectedGroups = this.selectedGroups.filter(x => x.id !== groupId)
+      this.form.groupIds = this.form.groupIds.filter(id => id !== groupId)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+
+.el-collapse-item__header {
+  height: 0 auto;
+}
+
+.group-tag {
+  margin-right: 2px;
+}
 </style>

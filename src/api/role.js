@@ -22,13 +22,14 @@ export function fetchRoleById(id) {
 }
 
 export function newRole(data) {
+  const body = data
+  if (body.customerId) {
+    body.customer_id = data.customerId
+  }
   return request({
     url: `/roles`,
     method: 'post',
-    data: {
-      ...data,
-      customer_id: data.customerId
-    }
+    data: body
   })
 }
 
@@ -36,10 +37,7 @@ export function editRole(data) {
   return request({
     url: `/roles/${data.id}`,
     method: 'put',
-    data: {
-      ...data,
-      customer_id: data.customerId
-    }
+    data
   })
 }
 

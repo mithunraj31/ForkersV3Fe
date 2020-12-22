@@ -16,7 +16,7 @@
           />
         </el-select>
         <el-button
-          v-if="customers.length > 0"
+          v-permission="[systemRole.ADMIN, groupPrivilege.ADD]"
           class="new-group-btn"
           type="primary"
           @click="newGroup(null)"
@@ -46,11 +46,16 @@
             <span slot-scope="{ node, data }" class="custom-tree-node">
               <span @click="onGroupClicked(data.id)">{{ data.name }}</span>
               <span>
-                <el-button type="text" size="mini" @click="newGroup(data.id)">
+                <el-button
+                  :disabled="!checkPermission([systemRole.ADMIN, groupPrivilege.ADD])"
+                  type="text"
+                  size="mini"
+                  @click="newGroup(data.id)"
+                >
                   {{ $t('group.append') }}
                 </el-button>
                 <el-button
-                  :disabled="node.childNodes.length > 0"
+                  :disabled="node.childNodes.length > 0 || !checkPermission([systemRole.ADMIN, groupPrivilege.DELETE])"
                   type="text"
                   size="mini"
                   @click="removeGroup(data.id)"
@@ -82,7 +87,7 @@ import {
 import { deleteGroup, newGroup, fetchGroupById, fetchGroups, editGroup } from '@/api/group'
 import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
-import { SYSTEM_ROLE } from '@/enums'
+import { SYSTEM_ROLE, GROUP_PRIVILEGE } from '@/enums'
 import CustomerGroupForm from './components/CustomerGroupForm'
 
 export default {
@@ -111,6 +116,9 @@ export default {
     },
     hasAdminPermission() {
       return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    groupPrivilege() {
+      return GROUP_PRIVILEGE
     }
   },
   watch: {
@@ -130,6 +138,7 @@ export default {
     }
   },
   methods: {
+    checkPermission,
     async fetchCustomers() {
       const { data } = await fetchCustomers()
       this.customers = data

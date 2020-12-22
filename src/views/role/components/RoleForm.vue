@@ -46,8 +46,10 @@
 
 <script>
 import { fetchCustomers } from '@/api/customer'
-import { RESOURCE_TYPE } from '@/enums'
-import permission from '@/directive/permission/index.js'
+import { RESOURCE_TYPE, SYSTEM_ROLE } from '@/enums'
+import permission from '@/directive/permission'
+import checkPermission from '@/utils/permission'
+
 export default {
   name: 'RoleForm',
   directives: { permission },
@@ -120,6 +122,9 @@ export default {
           delete: this.resources[type].includes('delete')
         }
       })
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
     }
   },
   watch: {
@@ -151,8 +156,10 @@ export default {
     }
   },
   async mounted() {
-    const { data } = await fetchCustomers()
-    this.customers = data
+    if (this.hasAdminPermission) {
+      const { data } = await fetchCustomers()
+      this.customers = data
+    }
   },
   methods: {
     onSubmit() {

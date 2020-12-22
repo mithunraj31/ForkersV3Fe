@@ -35,7 +35,8 @@ export default {
         roleId: data.role_id,
         customerId: data.customer_id,
         username: data.username,
-        sysRole: data.sys_role
+        sysRole: data.sys_role,
+        groupIds: data.user_groups.map(x => x.group_id)
       }
     } catch (err) {
       this.$router.push('/404')
@@ -45,8 +46,6 @@ export default {
   methods: {
     onFormSubmit(form) {
       this.loading = true
-      // console.log(form)
-      // return
       editUser(form)
         .then(() => {
           this.loading = false

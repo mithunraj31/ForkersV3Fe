@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="filter-section">
       <el-col :span="24" class="new-role-button-section">
-        <el-button type="primary" @click="$router.push('/roles/new')">{{
+        <el-button v-permission="[systemRole.ADMIN, rolePrivilege.ADD]" type="primary" @click="$router.push('/roles/new')">{{
           this.$t("role.new.title")
         }}</el-button>
       </el-col>
@@ -12,11 +12,11 @@
         <el-table v-loading="loading" :data="roles" border style="width: 100%">
           <el-table-column prop="id" :label="this.$t('role.listings.id')" width="50" />
           <el-table-column prop="name" :label="this.$t('role.listings.name')" />
-          <el-table-column prop="email" :label="this.$t('role.listings.resources')" />
           <el-table-column prop="updated" :label="this.$t('role.listings.updated')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
+                v-permission="[systemRole.ADMIN, rolePrivilege.EDIT]"
                 type="primary"
                 size="small"
                 @click.native.prevent="
@@ -25,7 +25,12 @@
               >
                 {{ $t("general.edit") }}
               </el-button>
-              <el-button v-if="scope.row.role !== 'admin'" type="danger" size="small" @click="onDeleteRoleClicked(scope.row.id)">
+              <el-button
+                v-permission="[systemRole.ADMIN, rolePrivilege.DELETE]"
+                type="danger"
+                size="small"
+                @click="onDeleteRoleClicked(scope.row.id)"
+              >
                 {{ $t("general.delete") }}
               </el-button>
             </template>
@@ -44,12 +49,15 @@ import {
 } from '@/api/role'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
+import permission from '@/directive/permission'
+import { SYSTEM_ROLE, ROLE_PRIVILEGE } from '@/enums'
 
 export default {
   name: 'RoleListings',
   components: {
     Pagination
   },
+  directives: { permission },
   data() {
     return {
       roles: null,
@@ -61,7 +69,14 @@ export default {
       loading: false
     }
   },
-
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    rolePrivilege() {
+      return ROLE_PRIVILEGE
+    }
+  },
   async created() {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),

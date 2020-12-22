@@ -53,7 +53,7 @@ export function deleteCustomer(id) {
   })
 }
 
-export function fetchCustomerRolesByCustomerId(id) {
+export function fetchCustomerRoles(id) {
   return request({
     url: `/customers/${id}/roles`,
     method: 'get'
@@ -67,6 +67,16 @@ export function fetchCustomerGroups(id) {
   })
 }
 
-export function deleteCustomerGroup(customerId, groupId) {
+export function fetchCustomerUsers(id, listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage=${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = `?perPage=${1000}`
+  }
 
+  return request({
+    url: `/customers/${id}/users${params}`,
+    method: 'get'
+  })
 }

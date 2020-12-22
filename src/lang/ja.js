@@ -441,8 +441,7 @@ export default {
       userRole: '役割',
       userUpdated: '最終更新時刻',
       selectUser: 'ユーザーを選択',
-      userVehicle: '車両',
-      userRunning: '走っている'
+      total: '全ユーザー数'
     },
     new: {
       title: 'ユーザーを追加'
@@ -457,7 +456,10 @@ export default {
       userRole: '役割',
       userPassword: 'パスワード',
       userConfirmPassword: '確認',
-      changePassword: 'パスワードを変更'
+      changePassword: 'パスワードを変更',
+      sysRole: 'システムロール',
+      groups: 'グループ',
+      pleaseSelectUserGroup: 'グループを選択'
     }
   },
 

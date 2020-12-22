@@ -27,10 +27,6 @@ export function fetchUserById(id) {
   })
 }
 
-// export function isEmailAlreadyRegistered() {
-
-// }
-
 export function newUser(data) {
   return request({
     url: `/users`,
@@ -42,7 +38,8 @@ export function newUser(data) {
       customer_id: data.customerId,
       role_id: data.roleId,
       sys_role: data.sysRole,
-      password: data.password
+      password: data.password,
+      groups: data.groupIds
     }
   })
 }
@@ -55,11 +52,12 @@ export function editUser(data) {
       id: data.id,
       first_name: data.firstName,
       last_name: data.lastName,
-      username: data.username,
+      // username: data.username,
       customer_id: data.customerId,
       role_id: data.roleId,
       sys_role: data.sysRole,
-      password: data.password
+      password: data.password,
+      groups: data.groupIds
     }
   })
 }

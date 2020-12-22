@@ -10,7 +10,11 @@
             <el-input v-model="form.description" type="textarea" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">{{
+            <el-button
+              v-permission="[systemRole.ADMIN, groupPrivilege.EDIT]"
+              type="primary"
+              @click="onSubmit"
+            >{{
               $t("general.save")
             }}</el-button>
             <el-button @click="onCancel">{{
@@ -24,8 +28,15 @@
 </template>
 
 <script>
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE, GROUP_PRIVILEGE } from '@/enums'
+
 export default {
   name: 'CustomerGroupForm',
+  directives: {
+    permission
+  },
   props: {
     group: {
       type: Object,
@@ -62,6 +73,17 @@ export default {
           validator: validateName
         }]
       }
+    }
+  },
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    groupPrivilege() {
+      return GROUP_PRIVILEGE
     }
   },
   watch: {

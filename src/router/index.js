@@ -1,5 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {
+  SYSTEM_ROLE,
+  GROUP_PRIVILEGE,
+  USER_PRIVILEGE,
+  ROLE_PRIVILEGE
+} from '@/enums'
 
 Vue.use(Router)
 
@@ -226,6 +232,54 @@ export const constantRoutes = [
         meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+  {
+    path: '/customers',
+    component: Layout,
+    redirect: '/customers/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer/index'),
+        name: 'Customers',
+        meta: {
+          title: 'customerListings',
+          icon: 'el-icon-school',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/customer/new-customer/index'),
+        name: 'NewCustomer',
+        hidden: true,
+        meta: {
+          title: 'newCustomer',
+          noCache: false,
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/customer/edit-customer/index'),
+        name: 'EditCustomer',
+        hidden: true,
+        meta: {
+          title: 'editCustomer',
+          noCache: true,
+          breadcrumbTitle: 'editCustomerBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
+      }
+    ]
   },
   {
     path: '/users',
@@ -236,51 +290,39 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/user/index'),
         name: 'Users',
-        meta: { title: 'userListings', icon: 'user', noCache: true }
+        meta: {
+          title: 'userListings',
+          icon: 'user',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.VIEW]
+        }
       },
       {
         path: 'new',
         component: () => import('@/views/user/new-user/index'),
         name: 'NewUser',
         hidden: true,
-        meta: { title: 'newUser', noCache: false }
+        meta: {
+          title: 'newUser',
+          noCache: false,
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.ADD]
+        }
       },
       {
         path: ':id/edit',
         component: () => import('@/views/user/edit-user/index'),
         name: 'EditUser',
         hidden: true,
-        meta: { title: 'editUser', noCache: true, breadcrumbTitle: 'editUserBreadcrumbTitle' }
+        meta: {
+          title: 'editUser',
+          noCache: true,
+          breadcrumbTitle: 'editUserBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.EDIT]
+        }
       }
     ]
   },
-  {
-    path: '/customers',
-    component: Layout,
-    redirect: '/customers/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/customer/index'),
-        name: 'Customers',
-        meta: { title: 'customerListings', icon: 'el-icon-school', noCache: true }
-      },
-      {
-        path: 'new',
-        component: () => import('@/views/customer/new-customer/index'),
-        name: 'NewCustomer',
-        hidden: true,
-        meta: { title: 'newCustomer', noCache: false }
-      },
-      {
-        path: ':id/edit',
-        component: () => import('@/views/customer/edit-customer/index'),
-        name: 'EditCustomer',
-        hidden: true,
-        meta: { title: 'editCustomer', noCache: true, breadcrumbTitle: 'editCustomerBreadcrumbTitle' }
-      }
-    ]
-  },
+
   {
     path: '/roles',
     component: Layout,
@@ -290,21 +332,35 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/role/index'),
         name: 'Roles',
-        meta: { title: 'roleListings', icon: 'el-icon-s-cooperation', noCache: true }
+        meta: {
+          title: 'roleListings',
+          icon: 'el-icon-s-cooperation',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.VIEW]
+        }
       },
       {
         path: 'new',
         component: () => import('@/views/role/new-role/index'),
         name: 'NewRole',
         hidden: true,
-        meta: { title: 'newRole', noCache: false }
+        meta: {
+          title: 'newRole',
+          noCache: false,
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.ADD]
+        }
       },
       {
         path: ':id/edit',
         component: () => import('@/views/role/edit-role/index'),
         name: 'EditRole',
         hidden: true,
-        meta: { title: 'editRole', noCache: true, breadcrumbTitle: 'roleBreadcrumbTitle' }
+        meta: {
+          title: 'editRole',
+          noCache: true,
+          breadcrumbTitle: 'roleBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.EDIT]
+        }
       }
     ]
   },
@@ -317,17 +373,16 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/customer-group/index'),
         name: 'Group',
-        meta: { title: 'groupManagement', icon: 'peoples', noCache: true }
+        meta: {
+          title: 'groupManagement',
+          icon: 'peoples',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.VIEW, GROUP_PRIVILEGE.ADD, GROUP_PRIVILEGE.EDIT, GROUP_PRIVILEGE.DELETE]
+        }
       }
     ]
   }
 ]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = []
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support

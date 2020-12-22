@@ -442,8 +442,7 @@ export default {
       userRole: 'Role',
       userUpdated: 'Last updated',
       selectUser: 'Select user',
-      userVehicle: 'Vehicle',
-      userRunning: 'Running'
+      total: 'Total'
     },
     new: {
       title: 'New User'
@@ -458,7 +457,10 @@ export default {
       userRole: 'Role',
       userPassword: 'Password',
       userConfirmPassword: 'Confirm',
-      changePassword: 'Change Password'
+      changePassword: 'Change Password',
+      sysRole: 'System role',
+      groups: 'Groups',
+      pleaseSelectUserGroup: 'Please select group'
     }
   },
 

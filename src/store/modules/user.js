@@ -1,6 +1,7 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { keycloakService } from '@/api/keycloak'
+import { SYSTEM_ROLE } from '@/enums'
 
 const state = {
   token: getToken(),
@@ -41,13 +42,22 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       setToken(keycloakService.token)
+      const roles = [keycloakService.idTokenParsed.sys_role]
+      if (keycloakService.idTokenParsed.sys_role !== SYSTEM_ROLE.ADMIN &&
+        keycloakService.idTokenParsed.privileges &&
+        keycloakService.idTokenParsed.privileges.length > 0) {
+        for (let i = 0; i < keycloakService.idTokenParsed.privileges.length; i++) {
+          roles.push(keycloakService.idTokenParsed.privileges[i])
+        }
+      }
+
       commit('SET_TOKEN', keycloakService.token)
-      commit('SET_ROLES', [keycloakService.idTokenParsed.sys_role])
+      commit('SET_ROLES', roles)
       commit('SET_NAME', keycloakService.idTokenParsed.name)
       commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
       commit('SET_INTRODUCTION', keycloakService.idTokenParsed.email)
       resolve({
-        roles: ['admin'],
+        roles: roles,
         introduction: keycloakService.idTokenParsed.emails,
         avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
         name: keycloakService.idTokenParsed.name

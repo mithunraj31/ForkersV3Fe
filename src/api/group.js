@@ -1,15 +1,18 @@
 import request from '@/utils/request'
 
 export function newGroup(data) {
+  const body = {
+    name: data.name,
+    description: data.description,
+    parent_id: data.parentId
+  }
+  if (data.customerId) {
+    body.customer_id = data.customerId
+  }
   return request({
     url: '/groups',
     method: 'post',
-    data: {
-      customer_id: data.customerId,
-      name: data.name,
-      description: data.description,
-      parent_id: data.parentId
-    }
+    data: body
   })
 }
 
@@ -35,15 +38,18 @@ export function fetchGroups() {
 }
 
 export function editGroup(data) {
+  const body = {
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    parent_id: data.parentId
+  }
+  if (data.customerId) {
+    body.customer_id = data.customerId
+  }
   return request({
     url: `/groups/${data.id}`,
     method: 'put',
-    data: {
-      id: data.id,
-      customer_id: data.customerId,
-      name: data.name,
-      description: data.description,
-      parent_id: data.parentId
-    }
+    data: body
   })
 }
