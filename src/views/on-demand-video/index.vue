@@ -150,7 +150,7 @@ export default {
         })
         await (new Promise(resolve => setTimeout(resolve, 5000)))
         this.loading = false
-        this.$router.push(`/eventSummary/${data.eventId}/event-detail`)
+        this.$router.push(`/event-summary/${data.eventId}/event-detail`)
       } catch (error) {
         this.$message({
           message: this.$t('message.noVideo'),

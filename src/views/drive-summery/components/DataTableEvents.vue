@@ -187,17 +187,17 @@ export default {
     },
     navigateToMap(data) {
       this.$router.push({
-        path: '/eventSummary/' + data.id + '/event-map'
+        path: '/event-summary/' + data.id + '/event-map'
       })
     },
     navigateToVideo(data) {
       this.$router.push({
-        path: '/eventSummary/' + data.id + '/event-video'
+        path: '/event-summary/' + data.id + '/event-video'
       })
     },
     navigateToEvent(data) {
       this.$router.push({
-        path: '/eventSummary/' + data.id + '/event-detail'
+        path: '/event-summary/' + data.id + '/event-detail'
       })
     }
   }

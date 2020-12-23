@@ -191,6 +191,7 @@ export const constantRoutes = [
   {
     path: '/drivers',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: '',

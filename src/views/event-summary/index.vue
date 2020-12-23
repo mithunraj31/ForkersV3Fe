@@ -165,12 +165,12 @@ export default {
 
     eventClick(eventId) {
       localStorage.setItem('Tab', 'first')
-      this.$router.push(`/eventSummary/${eventId}/event-detail`)
+      this.$router.push(`/event-summary/${eventId}/event-detail`)
     },
 
     videoClick(eventId) {
       localStorage.setItem('Tab', 'third')
-      this.$router.push(`/eventSummary/${eventId}/event-detail`)
+      this.$router.push(`/event-summary/${eventId}/event-detail`)
     },
 
     async fetchListings() {
