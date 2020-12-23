@@ -4,7 +4,10 @@ import {
   SYSTEM_ROLE,
   GROUP_PRIVILEGE,
   USER_PRIVILEGE,
-  ROLE_PRIVILEGE
+  ROLE_PRIVILEGE,
+  DEVICE_PRIVILEGE,
+  VEHICLE_PRIVILEGE,
+  EVENT_PRIVILEGE
 } from '@/enums'
 
 Vue.use(Router)
@@ -80,79 +83,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/devices',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/device-listings/index'),
-        name: 'DeviceListing',
-        meta: { title: 'DeviceListing', icon: 'list', affix: false }
-      },
-      {
-        path: ':deviceId/drive-summary',
-        component: () => import('@/views/drive-summery/index'),
-        name: 'DriveSummary',
-        meta: { title: 'DriveSummary', icon: 'documentation', affix: false },
-        hidden: true,
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          deviceId: route.params.deviceId
-        })
-      },
-      {
-        path: ':deviceId/drive-route',
-        component: () => import('@/views/map-route/index'),
-        name: 'DriveRoute',
-        hidden: true,
-        meta: { title: 'DriveRoute', icon: 'documentation', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          deviceId: route.params.deviceId
-        })
-      }
-    ]
-  },
-  {
-    path: '/event-summary',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/event-summary/index'),
-        name: 'EventSummary',
-        meta: { title: 'EventSummary', icon: 'el-icon-data-line', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end
-        })
-      },
-      {
-        path: ':eventId/event-detail',
-        component: () => import('@/views/event-summary/event-detail-container/index'),
-        name: ':eventId',
-        hidden: true,
-        meta: { title: 'EventDetail', noCache: true }
-      },
-      {
-        path: ':eventId/event-map',
-        component: () => import('@/views/event-summary/event-map/DeviceMap'),
-        name: 'EventMap',
-        hidden: true,
-        meta: { title: 'EventMap', noCache: true }
-      },
-      {
-        path: ':eventId/event-video',
-        component: () => import('@/views/event-summary/event-video/index'),
-        name: 'EventVideo',
-        hidden: true,
-        meta: { title: 'EventVideo', noCache: true }
-      }
-    ]
-  },
-  {
     path: '/video',
     component: Layout,
     hidden: true,
@@ -208,7 +138,7 @@ export const constantRoutes = [
         component: () => import('@/views/driver-summary/new-driver/index'),
         name: 'NewDriver',
         hidden: true,
-        meta: { title: 'newDriver', noCache: false }
+        meta: { title: 'newDriver', noCache: true }
       },
       {
         path: ':id/edit',
@@ -242,6 +172,111 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/devices',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/device-listings/index'),
+        name: 'DeviceListing',
+        meta: {
+          title: 'DeviceListing',
+          icon: 'list',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':deviceId/drive-summary',
+        component: () => import('@/views/drive-summery/index'),
+        name: 'DriveSummary',
+        meta: {
+          title: 'DriveSummary',
+          icon: 'documentation',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        },
+        hidden: true,
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      },
+      {
+        path: ':deviceId/drive-route',
+        component: () => import('@/views/map-route/index'),
+        name: 'DriveRoute',
+        hidden: true,
+        meta: {
+          title: 'DriveRoute',
+          icon: 'documentation',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
+    path: '/event-summary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: {
+          title: 'EventSummary',
+          icon: 'el-icon-data-line',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: {
+          title: 'EventDetail',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: {
+          title: 'EventMap',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: {
+          title: 'EventVideo',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      }
+    ]
+  },
+  {
     path: '/customers',
     component: Layout,
     redirect: '/customers/index',
@@ -264,7 +299,7 @@ export const asyncRoutes = [
         hidden: true,
         meta: {
           title: 'newCustomer',
-          noCache: false,
+          noCache: true,
           roles: [SYSTEM_ROLE.ADMIN]
         }
       },
@@ -305,7 +340,7 @@ export const asyncRoutes = [
         hidden: true,
         meta: {
           title: 'newUser',
-          noCache: false,
+          noCache: true,
           roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.ADD]
         }
       },
@@ -347,7 +382,7 @@ export const asyncRoutes = [
         hidden: true,
         meta: {
           title: 'newRole',
-          noCache: false,
+          noCache: true,
           roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.ADD]
         }
       },

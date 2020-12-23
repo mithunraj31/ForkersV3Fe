@@ -6,7 +6,6 @@
         :data="devices"
         border
         size="small"
-        stripe
         style="width: 100%"
       >
         <el-table-column :label="this.$t('device.deviceId')" prop="deviceId" />
@@ -233,9 +232,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+$--color-primary: #005D74;
 .click {
-  color: blue;
+  color: $--color-primary;
   cursor: pointer;
 }
 

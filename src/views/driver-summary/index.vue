@@ -12,7 +12,6 @@
         <el-table
           v-loading="loading"
           :data="drivers"
-          stripe
           border
           style="width: auto"
           size="small"
@@ -215,6 +214,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$--color-primary: #005D74;
 .filter-section {
   margin-bottom: 15px;
 }
@@ -224,7 +224,7 @@ export default {
 }
 
 .click {
-  color: blue;
+  color: $--color-primary;
   cursor: pointer;
 }
 </style>

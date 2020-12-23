@@ -1,15 +1,14 @@
 import request from '@/utils/request'
 
-export function fetchRoles(customerId, listQuery) {
-  customerId = customerId || ''
-  let params = `?customer_id=${customerId}`
+export function fetchRoles(listQuery) {
+  let params = ''
   if (listQuery) {
-    params += `&perPage${listQuery.limit}&page=${listQuery.page}`
+    params = `perPage${listQuery.limit}&page=${listQuery.page}`
   } else {
-    params += '&perPage=1000'
+    params = 'perPage=1000'
   }
   return request({
-    url: `/roles${params}`,
+    url: `/roles?${params}`,
     method: 'get'
   })
 }

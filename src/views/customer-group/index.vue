@@ -47,6 +47,13 @@
               <span @click="onGroupClicked(data.id)">{{ data.name }}</span>
               <span>
                 <el-button
+                  type="text"
+                  size="mini"
+                  @click="onGroupClicked(data.id)"
+                >
+                  {{ $t('general.view') }}
+                </el-button>
+                <el-button
                   :disabled="!checkPermission([systemRole.ADMIN, groupPrivilege.ADD])"
                   type="text"
                   size="mini"

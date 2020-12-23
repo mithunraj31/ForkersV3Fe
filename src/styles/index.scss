@@ -191,3 +191,17 @@ aside {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+table {
+  &.el-table__header {
+    thead {
+      tr {
+        th {
+          background-color: #009FB9;
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+}
+

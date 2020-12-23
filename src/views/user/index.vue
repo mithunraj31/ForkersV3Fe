@@ -140,7 +140,7 @@ export default {
       this.loading = true
       let response = null
       if (this.hasAdminPermission && this.customerId) {
-        response = await fetchCustomerUsers(this.customerId)
+        response = await fetchCustomerUsers(this.customerId, this.listQuery)
       } else {
         response = await fetchUsers(this.listQuery)
       }

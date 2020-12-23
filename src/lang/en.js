@@ -514,7 +514,8 @@ export default {
       user: 'User',
       role: 'Role',
       group: 'Group',
-      customer: 'Customer'
+      customer: 'Customer',
+      vehicle: 'Vehicle'
     }
   },
 

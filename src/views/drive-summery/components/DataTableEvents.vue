@@ -6,6 +6,7 @@
       row-key="id"
       default-expand-all
       stripe
+      border
     >
       <el-table-column prop="date" :label="$t('driveSummary.datetime')" />
       <el-table-column :label="$t('driveSummary.type')">

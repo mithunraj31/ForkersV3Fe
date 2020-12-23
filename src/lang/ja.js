@@ -352,7 +352,7 @@ export default {
     longitude: '経度 (Lng)',
     add: '追加',
     clear: '入力をクリア',
-    view: '見る',
+    view: '覧',
     select: '選択'
   },
   maps: {
@@ -513,7 +513,8 @@ export default {
       user: 'ユーザー',
       role: 'ロール',
       group: 'グループ',
-      customer: '会社'
+      customer: '会社',
+      vehicle: '車両'
     }
   },
 

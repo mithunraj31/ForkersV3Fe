@@ -12,12 +12,13 @@
           <el-form-item>
             <el-button
               v-permission="[systemRole.ADMIN, groupPrivilege.EDIT]"
+              size="mini"
               type="primary"
               @click="onSubmit"
             >{{
               $t("general.save")
             }}</el-button>
-            <el-button @click="onCancel">{{
+            <el-button size="mini" @click="onCancel">{{
               $t("general.cancel")
             }}</el-button>
           </el-form-item>
