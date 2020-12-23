@@ -5,7 +5,6 @@
       :data="event"
       border
       size="small"
-      stripe
       style="width: 100%"
     >
       <el-table-column :label="this.$t('event.title')" prop="key" width="200">

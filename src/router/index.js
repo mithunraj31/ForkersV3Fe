@@ -1,5 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {
+  SYSTEM_ROLE,
+  GROUP_PRIVILEGE,
+  USER_PRIVILEGE,
+  ROLE_PRIVILEGE,
+  DEVICE_PRIVILEGE,
+  VEHICLE_PRIVILEGE,
+  EVENT_PRIVILEGE
+} from '@/enums'
 
 Vue.use(Router)
 
@@ -51,16 +60,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
-  },
-  {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
@@ -81,87 +80,6 @@ export const constantRoutes = [
         name: 'Dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', affix: false }
       }
-    ]
-  },
-  {
-    path: '/devices',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/device-listings/index'),
-        name: 'DeviceListing',
-        meta: { title: 'DeviceListing', icon: 'list', affix: false }
-      },
-      {
-        path: ':deviceId/drive-summary',
-        component: () => import('@/views/drive-summery/index'),
-        name: 'DriveSummary',
-        meta: { title: 'DriveSummary', icon: 'documentation', affix: false },
-        hidden: true,
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          deviceId: route.params.deviceId
-        })
-      },
-      {
-        path: ':deviceId/drive-route',
-        component: () => import('@/views/map-route/index'),
-        name: 'DriveRoute',
-        hidden: true,
-        meta: { title: 'DriveRoute', icon: 'documentation', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          deviceId: route.params.deviceId
-        })
-      }
-    ]
-  },
-  {
-    path: '/eventSummary',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/event-summary/index'),
-        name: 'EventSummary',
-        meta: { title: 'EventSummary', icon: 'el-icon-data-line', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end
-        })
-      },
-      {
-        path: ':eventId/event-detail',
-        component: () => import('@/views/event-summary/event-detail-container/index'),
-        name: ':eventId',
-        hidden: true,
-        meta: { title: 'EventDetail', noCache: true }
-      },
-      {
-        path: ':eventId/event-map',
-        component: () => import('@/views/event-summary/event-map/DeviceMap'),
-        name: 'EventMap',
-        hidden: true,
-        meta: { title: 'EventMap', noCache: true }
-      },
-      {
-        path: ':eventId/event-video',
-        component: () => import('@/views/event-summary/event-video/index'),
-        name: 'EventVideo',
-        hidden: true,
-        meta: { title: 'EventVideo', noCache: true }
-      }
-    ]
-  },
-
-  {
-    path: '/deviceListings',
-    component: Layout,
-    children: [
-
     ]
   },
   {
@@ -200,6 +118,37 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/drivers',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/driver-summary/index'),
+        name: 'Driver',
+        meta: {
+          title: 'DriverListing',
+          icon: 'el-icon-s-tools',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/driver-summary/new-driver/index'),
+        name: 'NewDriver',
+        hidden: true,
+        meta: { title: 'newDriver', noCache: true }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/driver-summary/edit-driver/index'),
+        name: 'EditDriver',
+        hidden: true,
+        meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
+      }
+    ]
+  },
 
   {
     path: '/profile',
@@ -215,358 +164,261 @@ export const constantRoutes = [
       }
     ]
   }
-
 ]
-
-// export const originalConstantRoutes = [
-//   {
-//     path: '/redirect',
-//     component: Layout,
-//     hidden: true,
-//     children: [
-//       {
-//         path: '/redirect/:path(.*)',
-//         component: () => import('@/views/redirect/index')
-//       }
-//     ]
-//   },
-//   {
-//     path: '/login',
-//     component: () => import('@/views/login/index'),
-//     hidden: true
-//   },
-//   {
-//     path: '/auth-redirect',
-//     component: () => import('@/views/login/auth-redirect'),
-//     hidden: true
-//   },
-//   {
-//     path: '/404',
-//     component: () => import('@/views/error-page/404'),
-//     hidden: true
-//   },
-//   {
-//     path: '/401',
-//     component: () => import('@/views/error-page/401'),
-//     hidden: true
-//   },
-//   {
-//     path: '/',
-//     component: Layout,
-//     redirect: '/dashboard',
-//     children: [
-//       {
-//         path: 'dashboard',
-//         component: () => import('@/views/dashboard/index'),
-//         name: 'Dashboard',
-//         meta: { title: 'dashboard', icon: 'dashboard', affix: true }
-//       }
-//     ]
-//   },
-//   {
-//     path: '/documentation',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/documentation/index'),
-//         name: 'Documentation',
-//         meta: { title: 'documentation', icon: 'documentation', affix: true }
-//       }
-//     ]
-//   },
-//   {
-//     path: '/guide',
-//     component: Layout,
-//     redirect: '/guide/index',
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/guide/index'),
-//         name: 'Guide',
-//         meta: { title: 'guide', icon: 'guide', noCache: true }
-//       }
-//     ]
-//   },
-// ]
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = []
+export const asyncRoutes = [
+  {
+    path: '/devices',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/device-listings/index'),
+        name: 'DeviceListing',
+        meta: {
+          title: 'DeviceListing',
+          icon: 'list',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':deviceId/drive-summary',
+        component: () => import('@/views/drive-summery/index'),
+        name: 'DriveSummary',
+        meta: {
+          title: 'DriveSummary',
+          icon: 'documentation',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        },
+        hidden: true,
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      },
+      {
+        path: ':deviceId/drive-route',
+        component: () => import('@/views/map-route/index'),
+        name: 'DriveRoute',
+        hidden: true,
+        meta: {
+          title: 'DriveRoute',
+          icon: 'documentation',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
+    path: '/event-summary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: {
+          title: 'EventSummary',
+          icon: 'el-icon-data-line',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: {
+          title: 'EventDetail',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: {
+          title: 'EventMap',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: {
+          title: 'EventVideo',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      }
+    ]
+  },
+  {
+    path: '/customers',
+    component: Layout,
+    redirect: '/customers/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer/index'),
+        name: 'Customers',
+        meta: {
+          title: 'customerListings',
+          icon: 'el-icon-school',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/customer/new-customer/index'),
+        name: 'NewCustomer',
+        hidden: true,
+        meta: {
+          title: 'newCustomer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/customer/edit-customer/index'),
+        name: 'EditCustomer',
+        hidden: true,
+        meta: {
+          title: 'editCustomer',
+          noCache: true,
+          breadcrumbTitle: 'editCustomerBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
+      }
+    ]
+  },
+  {
+    path: '/users',
+    component: Layout,
+    redirect: '/users/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user/index'),
+        name: 'Users',
+        meta: {
+          title: 'userListings',
+          icon: 'user',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/user/new-user/index'),
+        name: 'NewUser',
+        hidden: true,
+        meta: {
+          title: 'newUser',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/user/edit-user/index'),
+        name: 'EditUser',
+        hidden: true,
+        meta: {
+          title: 'editUser',
+          noCache: true,
+          breadcrumbTitle: 'editUserBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
 
-// export const originalAsyncRoutes = [
-//   {
-//     path: '/permission',
-//     component: Layout,
-//     redirect: '/permission/page',
-//     alwaysShow: true, // will always show the root menu
-//     name: 'Permission',
-//     meta: {
-//       title: 'permission',
-//       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
-//     },
-//     children: [
-//       {
-//         path: 'page',
-//         component: () => import('@/views/permission/page'),
-//         name: 'PagePermission',
-//         meta: {
-//           title: 'pagePermission',
-//           roles: ['admin'] // or you can only set roles in sub nav
-//         }
-//       },
-//       {
-//         path: 'directive',
-//         component: () => import('@/views/permission/directive'),
-//         name: 'DirectivePermission',
-//         meta: {
-//           title: 'directivePermission'
-//           // if do not set roles, means: this page does not require permission
-//         }
-//       },
-//       {
-//         path: 'role',
-//         component: () => import('@/views/permission/role'),
-//         name: 'RolePermission',
-//         meta: {
-//           title: 'rolePermission',
-//           roles: ['admin']
-//         }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/icon',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/icons/index'),
-//         name: 'Icons',
-//         meta: { title: 'icons', icon: 'icon', noCache: true }
-//       }
-//     ]
-//   },
-
-//   /** when your routing map is too long, you can split it into small modules **/
-//   componentsRouter,
-//   chartsRouter,
-//   nestedRouter,
-//   tableRouter,
-
-//   {
-//     path: '/example',
-//     component: Layout,
-//     redirect: '/example/list',
-//     name: 'Example',
-//     meta: {
-//       title: 'example',
-//       icon: 'el-icon-s-help'
-//     },
-//     children: [
-//       {
-//         path: 'create',
-//         component: () => import('@/views/example/create'),
-//         name: 'CreateArticle',
-//         meta: { title: 'createArticle', icon: 'edit' }
-//       },
-//       {
-//         path: 'edit/:id(\\d+)',
-//         component: () => import('@/views/example/edit'),
-//         name: 'EditArticle',
-//         meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
-//         hidden: true
-//       },
-//       {
-//         path: 'list',
-//         component: () => import('@/views/example/list'),
-//         name: 'ArticleList',
-//         meta: { title: 'articleList', icon: 'list' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/tab',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/tab/index'),
-//         name: 'Tab',
-//         meta: { title: 'tab', icon: 'tab' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/error',
-//     component: Layout,
-//     redirect: 'noRedirect',
-//     name: 'ErrorPages',
-//     meta: {
-//       title: 'errorPages',
-//       icon: '404'
-//     },
-//     children: [
-//       {
-//         path: '401',
-//         component: () => import('@/views/error-page/401'),
-//         name: 'Page401',
-//         meta: { title: 'page401', noCache: true }
-//       },
-//       {
-//         path: '404',
-//         component: () => import('@/views/error-page/404'),
-//         name: 'Page404',
-//         meta: { title: 'page404', noCache: true }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/error-log',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'log',
-//         component: () => import('@/views/error-log/index'),
-//         name: 'ErrorLog',
-//         meta: { title: 'errorLog', icon: 'bug' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/excel',
-//     component: Layout,
-//     redirect: '/excel/export-excel',
-//     name: 'Excel',
-//     meta: {
-//       title: 'excel',
-//       icon: 'excel'
-//     },
-//     children: [
-//       {
-//         path: 'export-excel',
-//         component: () => import('@/views/excel/export-excel'),
-//         name: 'ExportExcel',
-//         meta: { title: 'exportExcel' }
-//       },
-//       {
-//         path: 'export-selected-excel',
-//         component: () => import('@/views/excel/select-excel'),
-//         name: 'SelectExcel',
-//         meta: { title: 'selectExcel' }
-//       },
-//       {
-//         path: 'export-merge-header',
-//         component: () => import('@/views/excel/merge-header'),
-//         name: 'MergeHeader',
-//         meta: { title: 'mergeHeader' }
-//       },
-//       {
-//         path: 'upload-excel',
-//         component: () => import('@/views/excel/upload-excel'),
-//         name: 'UploadExcel',
-//         meta: { title: 'uploadExcel' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/zip',
-//     component: Layout,
-//     redirect: '/zip/download',
-//     alwaysShow: true,
-//     name: 'Zip',
-//     meta: { title: 'zip', icon: 'zip' },
-//     children: [
-//       {
-//         path: 'download',
-//         component: () => import('@/views/zip/index'),
-//         name: 'ExportZip',
-//         meta: { title: 'exportZip' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/pdf',
-//     component: Layout,
-//     redirect: '/pdf/index',
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/pdf/index'),
-//         name: 'PDF',
-//         meta: { title: 'pdf', icon: 'pdf' }
-//       }
-//     ]
-//   },
-//   {
-//     path: '/pdf/download',
-//     component: () => import('@/views/pdf/download'),
-//     hidden: true
-//   },
-
-//   {
-//     path: '/theme',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/theme/index'),
-//         name: 'Theme',
-//         meta: { title: 'theme', icon: 'theme' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/clipboard',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/clipboard/index'),
-//         name: 'ClipboardDemo',
-//         meta: { title: 'clipboardDemo', icon: 'clipboard' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/i18n',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/i18n-demo/index'),
-//         name: 'I18n',
-//         meta: { title: 'i18n', icon: 'international' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: 'external-link',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'https://github.com/PanJiaChen/vue-element-admin',
-//         meta: { title: 'externalLink', icon: 'link' }
-//       }
-//     ]
-//   },
-
-//   // 404 page must be placed at the end !!!
-//   { path: '*', redirect: '/404', hidden: true }
-// ]
+  {
+    path: '/roles',
+    component: Layout,
+    redirect: '/roles/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/role/index'),
+        name: 'Roles',
+        meta: {
+          title: 'roleListings',
+          icon: 'el-icon-s-cooperation',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/role/new-role/index'),
+        name: 'NewRole',
+        hidden: true,
+        meta: {
+          title: 'newRole',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/role/edit-role/index'),
+        name: 'EditRole',
+        hidden: true,
+        meta: {
+          title: 'editRole',
+          noCache: true,
+          breadcrumbTitle: 'roleBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+  {
+    path: '/groups',
+    component: Layout,
+    redirect: '/group/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customer-group/index'),
+        name: 'Group',
+        meta: {
+          title: 'groupManagement',
+          icon: 'peoples',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.VIEW, GROUP_PRIVILEGE.ADD, GROUP_PRIVILEGE.EDIT, GROUP_PRIVILEGE.DELETE]
+        }
+      }
+    ]
+  }
+]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support

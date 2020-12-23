@@ -37,6 +37,9 @@ export default {
     DriveRoute: 'ライブルート',
     CreateVideo: 'ビデオの作成',
     DeviceListing: 'デバイスリスト',
+    OperatorListing: 'オペレーターリスト',
+    newDriver: '新しいオペレーター',
+    editDriver: 'オペレーターの編集',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -70,7 +73,17 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '多言語',
     externalLink: '外部リンク',
-    profile: 'プロフィール'
+    profile: 'プロフィール',
+    userListings: 'ユーザー',
+    customerListings: '会社リスト',
+    newCustomer: '会社を追加',
+    editCustomer: '会社を編集',
+    roleListings: 'ロールリスト',
+    newRole: 'ロールを追加',
+    editRole: 'ロールを編集',
+    groupManagement: 'グループを管理',
+    newUser: 'ユーザーを追加',
+    editUser: 'ユーザーを編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -182,16 +195,54 @@ export default {
     invalidDatetimeRange: '日時の範囲、期間は',
     videoDuration: 'ビデオの長さは',
     noVideo: 'ビデオはありません',
-    videoIsProcessing: 'ビデオは処理中'
-  },
-
-  user: {
-    listings: {
-      userId: 'ID',
-      userName: '会社名',
-      userVehicle: '車両',
-      userRunning: '走っている'
-    }
+    videoIsProcessing: 'ビデオは処理中',
+    driverIdRequired: 'オペレーターIdが必要です',
+    nameRequired: '名前は必須です',
+    dobRequired: 'DOBが必要です',
+    addressRequired: 'アドレスが必要です',
+    licenseNoRequired: '免許番号が必要です',
+    licenseReceivedDateRequired: '免許の受領日が必要です',
+    licenseRenewalDateRequired: '免許の有効期限が必要です',
+    licenseLocationRequired: '免許の場所が必要です',
+    phoneNumberRequired: '電話番号が必要です',
+    driverHasBeenCreated: '演算子が作成されました',
+    driverHasBeenEdited: '演算子が編集されました',
+    userNameRequired: 'ユーザー名が必要があります',
+    stkUserRequired: 'STKユーザーが必要があります',
+    emailRequired: 'メールが必要があります',
+    roleRequired: '役割が必要があります',
+    passwordRequired: 'パスワードが必要があります',
+    confirmPasswordRequired: 'パスワードが必要であることを確認',
+    passwordMismatch: 'パスワードの確認はパスワードと同じである必要があります',
+    invalidLength: 'パスワードは6文字以上である必要があります。',
+    emailNotValid: '有効なメールアドレスを入力してください',
+    emailAlreadyRegistered: 'すでに登録されたメール',
+    customerNameRequired: '顧客名が必要',
+    customerDescriptionRequired: '顧客説明必須',
+    deviceNameRequired: 'デバイス名は必要があります',
+    serialNumberRequired: '通し番号は必要があります',
+    deviceHasBeenCreated: 'デバイスが作成されました',
+    somethingWentWrong: '何かがうまくいきませんでした',
+    confirmDelete: '「{0}」を削除してもよろしいでしょうか',
+    deviceHasBeenDeleted: 'デバイスが削除されました',
+    deviceHasBeenEdited: 'デバイスが編集されました',
+    userHasBeenCreated: 'ユーザーが作成されました',
+    userHasBeenDeleted: 'ユーザーが削除されました',
+    userHasBeenEdited: 'ユーザーが編集されました',
+    customerHasBeenCreated: '顧客が作成されました',
+    customerHasBeenDeleted: '顧客が削除されました',
+    customerHasBeenEdited: '顧客が編集されました',
+    maintenanceInfoHasBeenCreated: 'メンテナンス履歴が作成されました',
+    maintenanceInfoHasBeenDeleted: 'メンテナンス履歴が削除されました',
+    maintenanceInfoHasBeenEdited: 'メンテナンス履歴が編集されました',
+    descriptionRequired: '説明は必要があります',
+    customerBeenCreated: '会社が作成されました',
+    roleHasBeenCreated: 'ロールが作成されました',
+    roleHasBeenDeleted: 'ロールが削除されました',
+    roleHasBeenEdited: 'ロールが編集されました',
+    groupHasBeenCreated: 'グループが作成されました',
+    groupHasBeenDeleted: 'グループが削除されました',
+    groupHasBeenEdited: 'グループが編集されました'
   },
 
   event: {
@@ -274,7 +325,35 @@ export default {
     end: '終了',
     and: 'と',
     video: 'ビデオ',
-    create: '作成'
+    create: '作成',
+    history: '作成',
+    edit: '編集',
+    delete: '削除',
+    save: '保存',
+    cancel: 'キャンセル',
+    reset: 'リセット',
+    images: '写真',
+    description: '説明',
+    back: '戻る',
+    confirm: '確認',
+    warning: '注意',
+    id: '番号',
+    company: '会社',
+    image: '写真',
+    createdAt: '作成日',
+    updatedAt: '編集日',
+    newest: '最新',
+    oldest: '最古',
+    admin: '管理者',
+    user: '一般のユーザー',
+    readOnly: '読み取り専用のユーザー',
+    all: 'すべて',
+    latitude: '緯度 (Lat)',
+    longitude: '経度 (Lng)',
+    add: '追加',
+    clear: '入力をクリア',
+    view: '覧',
+    select: '選択'
   },
   maps: {
     status: {
@@ -323,5 +402,135 @@ export default {
     datetime: '日付時刻',
     maps: '地図',
     running: '走行'
+  },
+
+  driver: {
+    listings: {
+      id: 'ID',
+      driverId: 'オペレーターID',
+      age: '年齢',
+      name: '名前',
+      licenseNo: '免許番号',
+      licensevalidTill: '免許有効期限',
+      phoneNo: '電話番号'
+
+    },
+    new: {
+      title: 'オペレーターの追加'
+    },
+    edit: {
+      title: 'オペレーターの編集'
+    },
+    form: {
+      driverId: 'オペレーターID',
+      dob: 'DOB',
+      name: '名前',
+      licenseNo: '免許番号',
+      phoneNo: '電話番号',
+      address: 'アドレス',
+      licenseReceived: '免許受領日',
+      licenseRenewal: '免許有効期限',
+      licenseLocation: '免許の場所'
+    }
+  },
+  user: {
+    listings: {
+      userId: '番号',
+      userName: '名',
+      userEmail: 'Eメール',
+      userRole: '役割',
+      userUpdated: '最終更新時刻',
+      selectUser: 'ユーザーを選択',
+      total: '全ユーザー数'
+    },
+    new: {
+      title: 'ユーザーを追加'
+    },
+    edit: {
+      title: 'ユーザーの編集'
+    },
+    form: {
+      firstName: '名前',
+      lastName: '名字',
+      userEmail: 'Eメール',
+      userRole: '役割',
+      userPassword: 'パスワード',
+      userConfirmPassword: '確認',
+      changePassword: 'パスワードを変更',
+      sysRole: 'システムロール',
+      groups: 'グループ',
+      pleaseSelectUserGroup: 'グループを選択'
+    }
+  },
+
+  customer: {
+    new: {
+      title: '会社を追加'
+    },
+
+    edit: {
+      title: '会社を編集'
+    },
+
+    listings: {
+      id: '番号',
+      name: '名前',
+      stkUser: 'STKユーザー',
+      updated: '最終更新時刻'
+    },
+
+    form: {
+      name: '名前',
+      description: '説明',
+      stkUser: 'STKユーザー'
+    }
+  },
+
+  role: {
+    new: {
+      title: 'ロールを追加'
+    },
+
+    edit: {
+      title: 'ロールを追加'
+    },
+
+    listings: {
+      id: '番号',
+      name: 'ロール名',
+      resources: '許可',
+      updated: '最終更新時刻'
+    },
+
+    form: {
+      name: 'ロール名',
+      description: '説明',
+      companyListings: '会社リスト',
+      resources: '許可',
+      device: 'デバイス',
+      event: 'イベント',
+      operator: 'オペレーター',
+      user: 'ユーザー',
+      role: 'ロール',
+      group: 'グループ',
+      customer: '会社',
+      vehicle: '車両'
+    }
+  },
+
+  group: {
+    id: 'グループ番号',
+    new: {
+      title: 'グループを追加'
+    },
+    newest: '新グループ',
+    form: {
+      name: 'グループ名',
+      description: '説明'
+    },
+    filterPlaceholder: 'グループ名で検索',
+    append: '追加',
+    delete: '削除'
   }
+
 }

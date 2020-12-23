@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="filter-section">
       <el-col :span="10">
-        <span v-if="!hasAdminPermission">{{ $t('user.listings.total') }}: {{ total }}</span>
+        <span v-if="!hasAdminPermission">{{ $t('role.listings.total') }}: {{ total }}</span>
         <el-select
           v-else
           v-model="customerId"
@@ -17,41 +17,40 @@
           />
         </el-select>
       </el-col>
-      <el-col :span="14" class="new-user-button-section">
-        <el-button v-permission="[systemRole.ADMIN, userPrivilege.ADD]" type="primary" @click="$router.push('/users/new')">{{
-          this.$t("user.new.title")
+      <el-col :span="12" class="new-role-button-section">
+        <el-button v-permission="[systemRole.ADMIN, rolePrivilege.ADD]" type="primary" @click="$router.push('/roles/new')">{{
+          this.$t("role.new.title")
         }}</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-table v-loading="loading" :data="users" border style="width: 100%">
-          <el-table-column prop="id" :label="this.$t('user.listings.userId')" width="50" />
-          <el-table-column prop="name" :label="this.$t('user.listings.userName')" />
-          <el-table-column prop="email" :label="this.$t('user.listings.userEmail')" />
-          <el-table-column prop="role" :label="this.$t('user.listings.userRole')">
+        <el-table v-loading="loading" :data="roles" border style="width: 100%">
+          <el-table-column prop="id" :label="this.$t('role.listings.id')" width="50" />
+          <el-table-column prop="name" :label="this.$t('role.listings.name')" />
+          <el-table-column :label="this.$t('role.listings.resources')">
             <template slot-scope="scope">
-              {{ scope.row.role }}
+              <el-tag v-for="item of mapBadge(scope.row.privileges)" :key="item" class="privilege-resource">{{ item }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="updated" :label="this.$t('user.listings.userUpdated')" />
+          <el-table-column prop="updated" :label="this.$t('role.listings.updated')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
-                v-permission="[systemRole.ADMIN, userPrivilege.EDIT]"
+                v-permission="[systemRole.ADMIN, rolePrivilege.EDIT]"
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/users/${scope.row.id}/edit`)
+                  $router.push(`/roles/${scope.row.id}/edit`)
                 "
               >
                 {{ $t("general.edit") }}
               </el-button>
               <el-button
-                v-permission="[systemRole.ADMIN, userPrivilege.DELETE]"
+                v-permission="[systemRole.ADMIN, rolePrivilege.DELETE]"
                 type="danger"
                 size="small"
-                @click="onDeleteUserClicked(scope.row.id)"
+                @click="onDeleteRoleClicked(scope.row.id)"
               >
                 {{ $t("general.delete") }}
               </el-button>
@@ -65,47 +64,42 @@
 </template>
 
 <script>
-import { fetchUsers, deleteUser } from '@/api/user'
-import { fetchCustomers, fetchCustomerUsers } from '@/api/customer'
+import {
+  fetchRoles,
+  deleteRole
+} from '@/api/role'
+import { fetchCustomerRoles, fetchCustomers } from '@/api/customer'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
-import { SYSTEM_ROLE, USER_PRIVILEGE } from '@/enums'
-import checkPermission from '@/utils/permission'
 import permission from '@/directive/permission'
+import { SYSTEM_ROLE, ROLE_PRIVILEGE } from '@/enums'
+import checkPermission from '@/utils/permission'
 
 export default {
-  name: 'UserListings',
+  name: 'RoleListings',
   components: {
     Pagination
   },
   directives: { permission },
-  props: {
-    userId: {
-      type: Number,
-      default() {
-        return 0
-      }
-    }
-  },
   data() {
     return {
-      customers: [],
-      users: null,
+      roles: null,
       total: 0,
       listQuery: {
         page: 1,
         limit: 10
       },
       loading: false,
-      customerId: ''
+      customerId: '',
+      customers: []
     }
   },
   computed: {
     systemRole() {
       return SYSTEM_ROLE
     },
-    userPrivilege() {
-      return USER_PRIVILEGE
+    rolePrivilege() {
+      return ROLE_PRIVILEGE
     },
     hasAdminPermission() {
       return checkPermission([SYSTEM_ROLE.ADMIN])
@@ -119,44 +113,62 @@ export default {
     this.$router.push({
       query: this.listQuery
     })
-
     if (this.hasAdminPermission) {
       const { data } = await fetchCustomers()
       this.customers = data
     }
+
     await this.fetchListings()
   },
   methods: {
-    mapUsersToDataTable(user) {
+    mapBadge(privileges) {
+      return privileges ? privileges.map(x => {
+        if (!x.add && !x.view && !x.edit && !x.delete) {
+          return null
+        } else {
+          const badges = []
+          if (x.view) { badges.push(this.$t(`general.view`)) }
+
+          if (x.add) { badges.push(this.$t(`general.add`)) }
+
+          if (x.edit) { badges.push(this.$t(`general.edit`)) }
+
+          if (x.delete) { badges.push(this.$t(`general.delete`)) }
+
+          return this.$t(`role.form.${x.resource}`) + ': ' + badges.join(' ')
+        }
+      }).filter(x => x !== null) : []
+    },
+    mapData(role) {
       return {
-        id: user.id,
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.username,
-        role: user.role ? user.role.name : '',
-        updated: moment(user.updated_at || user.created_at).format('YYYY/MM/DD hh:mm')
+        id: role.id,
+        name: role.name,
+        resources: role.role,
+        privileges: role.privileges,
+        updated: moment(role.updated_at || role.created_at).format('YYYY/MM/DD hh:mm')
       }
     },
     async fetchListings() {
       this.loading = true
       let response = null
       if (this.hasAdminPermission && this.customerId) {
-        response = await fetchCustomerUsers(this.customerId, this.listQuery)
+        response = await fetchCustomerRoles(this.customerId, this.listQuery)
       } else {
-        response = await fetchUsers(this.listQuery)
+        response = await fetchRoles(this.listQuery)
       }
       const { data, meta } = response
-      this.users = data.map(this.mapUsersToDataTable)
+      this.roles = data.map(this.mapData)
       this.total = meta.total
       this.loading = false
       this.$router.push({
         query: this.listQuery
       })
     },
-    onDeleteUserClicked(id) {
+    onDeleteRoleClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
-        `${this.$t('user.listings.userId')}: ${id}`
+        `${this.$t('role.listings.id')}: ${id}`
       )
 
       this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
@@ -168,10 +180,10 @@ export default {
       })
     },
     deleteConfirmed(id) {
-      deleteUser(id)
+      deleteRole(id)
         .then(() => {
           this.$message({
-            message: this.$t('message.userHasBeenDeleted'),
+            message: this.$t('message.roleHasBeenDeleted'),
             type: 'success'
           })
           this.fetchListings()
@@ -195,7 +207,12 @@ export default {
     margin-bottom: 15px;
 }
 
-.new-user-button-section {
+.new-role-button-section {
     text-align: right;
+}
+
+.privilege-resource {
+   margin-bottom: 2.5px;
+   margin-right: 2.5px;
 }
 </style>

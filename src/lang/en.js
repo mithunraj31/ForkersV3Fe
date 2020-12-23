@@ -37,6 +37,9 @@ export default {
     DriveRoute: 'Drive Route',
     CreateVideo: 'Create Video',
     DeviceListing: 'Device Listings',
+    OperatorListing: 'Operator Listings',
+    newDriver: 'New Operator',
+    editDriver: 'Edit Operator',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -70,7 +73,17 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
     externalLink: 'External Link',
-    profile: 'Profile'
+    profile: 'Profile',
+    userListings: 'User listings',
+    customerListings: 'Company listings',
+    newCustomer: 'New customer',
+    editCustomer: 'Edit customer',
+    roleListings: 'Role listings',
+    newRole: 'New role',
+    editRole: 'Edit role',
+    groupManagement: 'Group Manangement',
+    newUser: 'New user',
+    editUser: 'Edit User'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -182,16 +195,53 @@ export default {
     invalidDatetimeRange: 'Datetime range, Duration should be between',
     videoDuration: 'Video duration should be between',
     noVideo: 'No video',
-    videoIsProcessing: 'Video is processing'
-  },
-
-  user: {
-    listings: {
-      userId: 'ID',
-      userName: 'Name',
-      userVehicle: 'Vehicle',
-      userRunning: 'Running'
-    }
+    videoIsProcessing: 'Video is processing',
+    driverIdRequired: 'OperatorId is Required',
+    nameRequired: 'Name is Required',
+    dobRequired: 'DOB is Required',
+    addressRequired: 'Address is Required',
+    licenseNoRequired: 'License Number is Required',
+    licenseReceivedDateRequired: 'License ReceivedDate is Required',
+    licenseRenewalDateRequired: 'License ExpiryDate is Required',
+    licenseLocationRequired: 'License Location is Required',
+    phoneNumberRequired: 'Phone Number is Required',
+    driverHasBeenCreated: 'Operator is created',
+    driverHasBeenEdited: 'Operator has been edited',
+    userNameRequired: 'User Name is Required',
+    stkUserRequired: 'STK user is Required',
+    emailRequired: 'Email is Required',
+    roleRequired: 'Role is Required',
+    passwordRequired: 'Password is Required',
+    confirmPasswordRequired: 'Confirm Password is Required',
+    passwordMismatch: 'Confirm Password should be same as Password',
+    invalidLength: 'Password should be minimum 6 characters.',
+    emailNotValid: 'Enter a valid email',
+    emailAlreadyRegistered: 'Email Already Registered',
+    customerNameRequired: 'Customer Name Required',
+    customerDescriptionRequired: 'Customer Desceiption  Required',
+    deviceNameRequired: 'Device name is required',
+    serialNumberRequired: 'Serial number is required',
+    deviceHasBeenCreated: 'Device has been created',
+    somethingWentWrong: 'Something went wrong',
+    confirmDelete: 'Are you sure you want to delete {0}?',
+    deviceHasBeenDeleted: 'Device has been deleted',
+    deviceHasBeenEdited: 'Device has been edited',
+    userHasBeenCreated: 'User has been created',
+    userHasBeenDeleted: 'User has been deleted',
+    userHasBeenEdited: 'User has been edited',
+    customerHasBeenCreated: 'Customer has been created',
+    customerHasBeenDeleted: 'Customer has been deleted',
+    customerHasBeenEdited: 'Customer has been edited',
+    maintenanceInfoHasBeenCreated: 'Maintenance has been created',
+    maintenanceInfoHasBeenDeleted: 'Maintenance has been deleted',
+    maintenanceInfoHasBeenEdited: 'Maintenance has been edited',
+    descriptionRequired: 'Description is required',
+    roleHasBeenCreated: 'Role has been created',
+    roleHasBeenDeleted: 'Role has been deleted',
+    roleHasBeenEdited: 'Role has been edited',
+    groupHasBeenCreated: 'Group has been created',
+    groupHasBeenDeleted: 'Group has been deleted',
+    groupHasBeenEdited: 'Group has been edited'
   },
 
   event: {
@@ -274,7 +324,35 @@ export default {
     end: 'End',
     and: 'and',
     video: 'Video',
-    create: 'Create'
+    create: 'Create',
+    history: 'History',
+    edit: 'Edit',
+    delete: 'Delete',
+    reset: 'Reset',
+    save: 'Save',
+    images: 'Images',
+    description: 'Description',
+    back: 'Return',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    warning: 'Warning',
+    id: 'ID',
+    company: 'Company',
+    image: 'Image',
+    createdAt: 'Created at',
+    updatedAt: 'Updated at',
+    newest: 'Newest',
+    oldest: 'Oldest',
+    admin: 'Admin',
+    user: 'User',
+    readOnly: 'Read only',
+    all: 'All',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
+    clear: 'Clear',
+    add: 'Add',
+    view: 'View',
+    select: 'Select'
   },
   maps: {
     status: {
@@ -325,5 +403,134 @@ export default {
     datetime: 'Datetime',
     maps: 'Maps',
     running: 'Running'
+  },
+
+  driver: {
+    listings: {
+      id: 'Id',
+      driverId: 'OperatorId',
+      age: 'Age',
+      name: 'Name',
+      licenseNo: 'License Number',
+      licensevalidTill: 'License Valid Till',
+      phoneNo: 'Phone Number'
+
+    },
+    new: {
+      title: 'Add Operator'
+    },
+    edit: {
+      title: 'Edit Operator'
+    },
+    form: {
+      driverId: 'OperatorId',
+      dob: 'DOB',
+      name: 'Name',
+      licenseNo: 'License Number',
+      phoneNo: 'Phone Number',
+      address: 'Address',
+      licenseLocation: 'License Location',
+      licenseReceived: 'License Received Date',
+      licenseRenewal: 'License Valid Till'
+    }
+  },
+  user: {
+    listings: {
+      userId: 'ID',
+      userName: 'Name',
+      userEmail: 'Email',
+      userRole: 'Role',
+      userUpdated: 'Last updated',
+      selectUser: 'Select user',
+      total: 'Total'
+    },
+    new: {
+      title: 'New User'
+    },
+    edit: {
+      title: 'Edit User'
+    },
+    form: {
+      firstName: 'First name',
+      lastName: 'Last name',
+      userEmail: 'Email',
+      userRole: 'Role',
+      userPassword: 'Password',
+      userConfirmPassword: 'Confirm',
+      changePassword: 'Change Password',
+      sysRole: 'System role',
+      groups: 'Groups',
+      pleaseSelectUserGroup: 'Please select group'
+    }
+  },
+
+  customer: {
+    new: {
+      title: 'New company'
+    },
+
+    edit: {
+      title: 'Edit company'
+    },
+
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      stkUser: 'STK User',
+      updated: 'Last updated'
+    },
+
+    form: {
+      name: 'Name',
+      description: 'Description',
+      stkUser: 'STK user'
+    }
+  },
+
+  role: {
+    new: {
+      title: 'New role'
+    },
+
+    edit: {
+      title: 'Edit role'
+    },
+
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      resources: 'Resources',
+      updated: 'Last updated'
+    },
+
+    form: {
+      name: 'Name',
+      description: 'Description',
+      companyListings: 'Company listings',
+      resources: 'Resources',
+      device: 'Device',
+      event: 'Event',
+      operator: 'Operator',
+      user: 'User',
+      role: 'Role',
+      group: 'Group',
+      customer: 'Customer',
+      vehicle: 'Vehicle'
+    }
+  },
+
+  group: {
+    id: 'Group ID',
+    new: {
+      title: 'New group'
+    },
+    newest: 'Newest group',
+    form: {
+      name: 'Group name',
+      description: 'description'
+    },
+    filterPlaceholder: 'Search by group name',
+    append: 'Append',
+    delete: 'Delete'
   }
 }

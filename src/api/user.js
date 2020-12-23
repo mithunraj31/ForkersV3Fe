@@ -1,32 +1,63 @@
 import request from '@/utils/request'
 
-export function login(data) {
+export function fetchUsers(listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = '?perPage=1000'
+  }
   return request({
-    url: '/vue-element-admin/user/login',
-    method: 'post',
-    data
-  })
-}
-
-export function getInfo(token) {
-  return request({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
-
-export function logout() {
-  return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
-  })
-}
-
-export function fetchUsers(query) {
-  return request({
-    // url: `/users?perPage=${query.limit}&page=${query.page}`,
-    url: '/vue-element-admin/user/users',
+    url: `/users${params}`,
     method: 'get'
+  })
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'delete'
+  })
+}
+
+export function fetchUserById(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'get'
+  })
+}
+
+export function newUser(data) {
+  return request({
+    url: `/users`,
+    method: 'post',
+    data: {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      username: data.username,
+      customer_id: data.customerId,
+      role_id: data.roleId,
+      sys_role: data.sysRole,
+      password: data.password,
+      groups: data.groupIds
+    }
+  })
+}
+
+export function editUser(data) {
+  return request({
+    url: `/users/${data.id}`,
+    method: 'put',
+    data: {
+      id: data.id,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      // username: data.username,
+      customer_id: data.customerId,
+      role_id: data.roleId,
+      sys_role: data.sysRole,
+      password: data.password,
+      groups: data.groupIds
+    }
   })
 }

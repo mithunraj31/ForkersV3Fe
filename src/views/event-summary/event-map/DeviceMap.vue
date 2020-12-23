@@ -87,7 +87,7 @@ export default {
     eventClick() {
       localStorage.setItem('Tab', 'first')
       this.$router.push(
-        `/eventSummary/${this.$route.params.eventId}/event-detail`
+        `/event-summary/${this.$route.params.eventId}/event-detail`
       )
     }
   }
