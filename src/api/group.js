@@ -53,3 +53,16 @@ export function editGroup(data) {
     data: body
   })
 }
+
+export function fetchGroupUsers(id, listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage=${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = `?perPage=${1000}`
+  }
+  return request({
+    url: `/groups/${id}/users${params}`,
+    method: 'get'
+  })
+}
