@@ -15,9 +15,15 @@
           style="width: auto"
         >
           <el-table-column prop="rfid" :label="this.$t('rfid.listings.rfid')" />
-          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
+          <el-table-column
+            prop="operatorId"
+            :label="this.$t('driver.listings.driverId')"
+          >
             <template slot-scope="scope">
-              <label class="click" @click="driverDetailClick(scope.row.operatorId)">
+              <label
+                class="click"
+                @click="driverDetailClick(scope.row.operatorId)"
+              >
                 {{ scope.row.operatorId }}
               </label>
             </template>
@@ -66,6 +72,11 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="button-class">
+          <el-button type="primary" @click="$router.go(-1)">{{
+            $t("general.back")
+          }}</el-button>
+        </div>
         <pagination
           :total="total"
           :page.sync="listQuery.page"
@@ -78,7 +89,7 @@
 </template>
 
 <script>
-import { findrfIdHistory } from '@/api/rfid-history'
+import { findrfIdHistory } from '@/api/rfid'
 
 import Pagination from '@/components/Pagination'
 
@@ -132,7 +143,10 @@ export default {
     async fetchListings() {
       let response = null
       this.loading = true
-      response = await findrfIdHistory(+this.$route.params.rfid, this.listQuery)
+      response = await findrfIdHistory(
+        +this.$route.params.rfid,
+        this.listQuery
+      )
       const { data, total } = response
       this.rfidHistoryDatas = data.map(this.mapRfidHistoryToDataTable)
       this.total = total
@@ -155,5 +169,9 @@ export default {
 .click {
   color: blue;
   cursor: pointer;
+}
+.button-class {
+  padding: 5px;
+  text-align: right;
 }
 </style>

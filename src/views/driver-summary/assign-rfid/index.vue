@@ -9,13 +9,29 @@
               <el-input v-model="form.id" disabled />
             </el-form-item>
             <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
-              <el-input v-model="form.rfid" />
+              <el-autocomplete
+                v-model="selectedId"
+                popper-class="my-autocomplete"
+                :fetch-suggestions="querySearch"
+                :placeholder="$t('general.select')"
+                @change="handleSelect"
+                @select="handleSelect"
+              >
+                <template slot-scope="{ item }">
+                  <div class="value">
+                    {{ item.id }}
+                    <span class="link">{{ item.customer_id }}</span>
+                  </div>
+                </template>
+              </el-autocomplete>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="this.onSubmit">{{
                 $t("general.save")
               }}</el-button>
-              <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
+              <el-button @click="$router.go(-1)">{{
+                $t("general.cancel")
+              }}</el-button>
             </el-form-item>
           </el-col>
         </div>
@@ -25,6 +41,7 @@
 </template>
 
 <script>
+import { fetchRfid } from '@/api/rfid'
 import { assignRfid } from '@/api/driver'
 
 export default {
@@ -35,7 +52,10 @@ export default {
       default: () => {
         return {
           id: 0,
-          rfid: ''
+          rfid: {
+            type: Number,
+            default: 0
+          }
         }
       }
     }
@@ -60,7 +80,7 @@ export default {
     return {
       form: {
         id: +this.$route.params.id,
-        rfid: ''
+        rfid: 0
       },
       dialogVisible: false,
       loading: false,
@@ -70,6 +90,11 @@ export default {
           {
             required: true,
             trigger: 'blur',
+            validator: validaterfid
+          },
+          {
+            required: true,
+            trigger: 'change',
             validator: validaterfid
           }
         ],
@@ -82,6 +107,14 @@ export default {
         ]
       }
     }
+  },
+  mounted() {
+    this.listQuery = {
+      limit: 0,
+      unAssigned: true,
+      assigned: false
+    }
+    this.fetchListings()
   },
 
   methods: {
@@ -108,6 +141,34 @@ export default {
             })
         }
       })
+    },
+    async fetchListings() {
+      let response = null
+      this.loading = true
+      try {
+        response = await fetchRfid(this.listQuery)
+        this.opIds = response
+        this.loading = false
+      } catch (exception) {
+        this.loading = false
+      }
+    },
+    querySearch(queryString, cb) {
+      var opIds = this.opIds
+      var results = queryString
+        ? opIds.filter(this.createFilter(queryString))
+        : opIds
+      // call callback function to return suggestion objects
+      cb(results)
+    },
+    createFilter(queryString) {
+      return (opIds) => {
+        return opIds.id === queryString
+      }
+    },
+    handleSelect(item) {
+      this.selectedId = item.id
+      this.form.rfid = item.id
     }
   }
 }

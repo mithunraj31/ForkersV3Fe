@@ -19,7 +19,11 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column prop="id" :label="this.$t('driver.listings.id')" width="90px">
+          <el-table-column
+            prop="id"
+            :label="this.$t('driver.listings.id')"
+            width="90px"
+          >
             <template slot-scope="scope">
               <label class="click" @click="driverDetailClick(scope.row.id)">
                 {{ scope.row.id }}
@@ -54,7 +58,10 @@
             prop="licenseRenewal"
             :label="this.$t('driver.listings.licensevalidTill')"
           />
-          <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
+          <el-table-column
+            prop="phoneNo"
+            :label="this.$t('driver.listings.phoneNo')"
+          />
           <el-table-column prop="rfid" :label="this.$t('driver.listings.rfid')">
             <template slot-scope="scope">
               <div
@@ -73,7 +80,8 @@
             <template slot-scope="scope">
               <el-dropdown>
                 <el-button type="info" class="device-summary-btn" size="small">
-                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
+                  {{ $t("device.drive")
+                  }}<i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown" size="mini">
                   <el-dropdown-item>
@@ -97,7 +105,7 @@
                 v-if="scope.row.rfid !== null"
                 type="danger"
                 size="small"
-                @click="removeRFIDClicked(scope.row.id)"
+                @click="removeRFIDClicked(scope.row.id, scope.row.rfid)"
               >
                 {{ $t("driver.listings.unMapRFID") }}
               </el-button>
@@ -117,7 +125,9 @@
                 circle
                 size="small"
                 icon="el-icon-edit"
-                @click.native.prevent="$router.push(`/drivers/${scope.row.id}/edit`)"
+                @click.native.prevent="
+                  $router.push(`/drivers/${scope.row.id}/edit`)
+                "
               />
               <el-button
                 v-permission="[systemRole.ADMIN, driverPrivilege.DELETE]"
@@ -170,7 +180,9 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        unAssigned: true,
+        assigned: true
       },
       loading: false,
       pickerOptions: {
@@ -233,7 +245,9 @@ export default {
   async created() {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
-      limit: +(this.$route.query.limit || this.listQuery.limit)
+      limit: +(this.$route.query.limit || this.listQuery.limit),
+      unAssigned: true,
+      assigned: true
     }
     this.$router.push({
       query: this.listQuery
@@ -320,7 +334,7 @@ export default {
       return age
     },
 
-    removeRFIDClicked($id) {
+    removeRFIDClicked($id, $rfid) {
       let deleteConfirmMessage = this.$t('message.confirmRemove')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
@@ -332,12 +346,12 @@ export default {
         cancelButtonText: this.$t('general.cancel'),
         type: 'warning'
       }).then(() => {
-        this.removeRFIDConfirmed($id)
+        this.removeRFIDConfirmed($id, $rfid)
       })
     },
-    removeRFIDConfirmed($id) {
+    removeRFIDConfirmed($id, $rfid) {
       this.loading = true
-      removeRFID($id)
+      removeRFID($id, $rfid)
         .then(() => {
           this.$message({
             message: this.$t('message.rfidIsRemoved'),

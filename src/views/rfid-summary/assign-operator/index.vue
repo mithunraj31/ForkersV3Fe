@@ -8,7 +8,10 @@
             <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
               <el-input v-model="form.rfid" disabled />
             </el-form-item>
-            <el-form-item :label="this.$t('driver.form.operatorName')" prop="name">
+            <el-form-item
+              :label="this.$t('driver.form.operatorName')"
+              prop="name"
+            >
               <el-autocomplete
                 v-model="selectedId"
                 popper-class="my-autocomplete"
@@ -30,7 +33,10 @@
         <div>
           <el-col :span="24">
             <el-col :span="12">
-              <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
+              <el-form-item
+                :label="this.$t('driver.form.driverId')"
+                prop="operatorId"
+              >
                 <el-input v-model="form.operatorId" disabled />
               </el-form-item>
             </el-col>
@@ -40,7 +46,10 @@
               </template>
             </el-form-item>
             <el-col :span="12">
-              <el-form-item :label="this.$t('driver.form.licenseNo')" prop="licenseNo">
+              <el-form-item
+                :label="this.$t('driver.form.licenseNo')"
+                prop="licenseNo"
+              >
                 <el-input v-model="form.licenseNo" disabled />
               </el-form-item>
 
@@ -57,7 +66,11 @@
                 prop="licenseReceived"
               >
                 <template>
-                  <el-date-picker v-model="form.licenseReceived" type="date" disabled />
+                  <el-date-picker
+                    v-model="form.licenseReceived"
+                    type="date"
+                    disabled
+                  />
                 </template>
               </el-form-item>
 
@@ -66,18 +79,28 @@
                 prop="licenseRenewal"
               >
                 <template>
-                  <el-date-picker v-model="form.licenseRenewal" type="date" disabled />
+                  <el-date-picker
+                    v-model="form.licenseRenewal"
+                    type="date"
+                    disabled
+                  />
                 </template>
               </el-form-item>
             </el-col>
 
             <el-col :span="12">
-              <el-form-item :label="this.$t('driver.form.phoneNo')" prop="phoneNo">
+              <el-form-item
+                :label="this.$t('driver.form.phoneNo')"
+                prop="phoneNo"
+              >
                 <el-input v-model="form.phoneNo" disabled />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item :label="this.$t('driver.form.address')" prop="address">
+              <el-form-item
+                :label="this.$t('driver.form.address')"
+                prop="address"
+              >
                 <el-input v-model="form.address" disabled />
               </el-form-item>
             </el-col>
@@ -86,7 +109,9 @@
                 <el-button type="primary" @click="this.onSubmit">{{
                   $t("general.save")
                 }}</el-button>
-                <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
+                <el-button @click="$router.go(-1)">{{
+                  $t("general.cancel")
+                }}</el-button>
               </el-form-item>
             </el-col>
           </el-col>
@@ -97,8 +122,8 @@
 </template>
 
 <script>
-import { assignOperator } from '@/api/rfid-history'
-import { fetchAllDrivers } from '@/api/driver'
+import { assignOperator } from '@/api/rfid'
+import { fetchDrivers } from '@/api/driver'
 
 export default {
   name: 'AssignRfid',
@@ -181,6 +206,11 @@ export default {
     }
   },
   mounted() {
+    this.listQuery = {
+      limit: 0,
+      unAssigned: true,
+      assigned: false
+    }
     this.fetchListings()
   },
 
@@ -212,7 +242,7 @@ export default {
       let response = null
       this.loading = true
       try {
-        response = await fetchAllDrivers()
+        response = await fetchDrivers(this.listQuery)
         this.opIds = response
         this.loading = false
       } catch (exception) {
@@ -221,13 +251,17 @@ export default {
     },
     querySearch(queryString, cb) {
       var opIds = this.opIds
-      var results = queryString ? opIds.filter(this.createFilter(queryString)) : opIds
+      var results = queryString
+        ? opIds.filter(this.createFilter(queryString))
+        : opIds
       // call callback function to return suggestion objects
       cb(results)
     },
     createFilter(queryString) {
       return (opIds) => {
-        return opIds.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        return (
+          opIds.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        )
       }
     },
     handleSelect(item) {

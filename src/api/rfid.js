@@ -1,8 +1,14 @@
 import request from '@/utils/request'
 
 export function fetchRfid(query) {
+  let params = ''
+  if (query.limit === 0) {
+    params = `unAssigned=${query.unAssigned}&assigned=${query.assigned}`
+  } else if (query) {
+    params = `perPage=${query.limit}&page=${query.page}&unAssigned=${query.unAssigned}&assigned=${query.assigned}`
+  }
   return request({
-    url: `/rfid?perPage=${query.limit}&page=${query.page}`,
+    url: `/rfid?${params}`,
     method: 'get'
   })
 }
@@ -16,7 +22,10 @@ export function fetchRfidById(id) {
 
 export function newRfid(rfid) {
   const data = {
-    rfid: rfid.rfid
+    id: rfid.id,
+    customerId: rfid.customerId,
+    ownerId: rfid.ownerId,
+    groupId: rfid.groupId
   }
   return request({
     url: `/rfid`,
@@ -28,7 +37,9 @@ export function newRfid(rfid) {
 export function editRfid(rfid) {
   const data = {
     id: rfid.id,
-    rfid: rfid.rfid
+    customerId: rfid.customerId,
+    ownerId: rfid.ownerId,
+    groupId: rfid.groupId
   }
   return request({
     url: `/rfid/${data.id}`,
@@ -43,3 +54,25 @@ export function deleteRfid(id) {
     method: 'delete'
   })
 }
+
+export function assignOperator(rfid) {
+  return request({
+    url: `rfid/${rfid.rfid}/assign/operator/${rfid.operatorId}`,
+    method: 'put'
+  })
+}
+
+export function findrfIdHistory(rfid, query) {
+  return request({
+    url: `/rfid/${rfid}/history?perPage=${query.limit}&page=${query.page}`,
+    method: 'get'
+  })
+}
+
+export function removeOperator(rfid, operatorId) {
+  return request({
+    url: `rfid/${rfid}/remove/operator/${operatorId}`,
+    method: 'put'
+  })
+}
+

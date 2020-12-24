@@ -19,26 +19,31 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column prop="id" :label="this.$t('rfid.listings.id')" width="35px" />
-          <el-table-column prop="rfid" :label="this.$t('rfid.listings.rfid')">
+          <el-table-column prop="id" :label="this.$t('rfid.listings.id')">
             <template slot-scope="scope">
-              <div class="click" @click="rfidHistoryClick(scope.row.rfid)">
-                {{ scope.row.rfid }}
+              <div class="click" @click="rfidHistoryClick(scope.row.id)">
+                {{ scope.row.id }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="createdBy" :label="this.$t('rfid.listings.createdBy')" />
+
           <el-table-column
-            prop="currentOperatorId"
-            :label="this.$t('rfid.listings.assignStatus')"
+            prop="customerId"
+            :label="this.$t('rfid.form.customer')"
+          />
+          <el-table-column prop="ownerId" :label="this.$t('rfid.form.owner')" />
+          <el-table-column prop="groupId" :label="this.$t('rfid.form.group')" />
+          <el-table-column
+            prop="operatorId"
+            :label="this.$t('driver.listings.driverId')"
           >
             <template slot-scope="scope">
               <div
-                v-if="scope.row.currentOperatorId !== 0"
+                v-if="scope.row.operatorId !== null"
                 class="click"
-                @click="driverDetailClick(scope.row.currentOperatorId)"
+                @click="driverDetailClick(scope.row.operatorId)"
               >
-                {{ $t("rfid.listings.assigned") }}
+                {{ scope.row.operatorId }}
               </div>
               <div v-else>
                 {{ $t("rfid.listings.notAssigned") }}
@@ -49,7 +54,8 @@
             <template slot-scope="scope">
               <el-dropdown>
                 <el-button type="info" class="device-summary-btn" size="mini">
-                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
+                  {{ $t("device.drive")
+                  }}<i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown" size="mini">
                   <el-dropdown-item>
@@ -63,26 +69,28 @@
                         :end-placeholder="$t('general.end')"
                         align="right"
                         value-format="yyyy-MM-dd HH:mm:ss"
-                        @change="driveClick(drivetimeRange, scope.row.rfid)"
+                        @change="driveClick(drivetimeRange, scope.row.id)"
                       />
                     </div>
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <el-button
-                v-if="scope.row.currentOperatorId !== 0"
+                v-if="scope.row.operatorId !== null"
                 type="danger"
                 size="small"
-                @click="removeOperatorClicked(scope.row.rfid)"
+                @click="
+                  removeOperatorClicked(scope.row.id, scope.row.operatorId)
+                "
               >
                 {{ $t("rfid.listings.unMapOperator") }}
               </el-button>
               <el-button
-                v-if="scope.row.currentOperatorId === 0"
+                v-if="scope.row.operatorId === null"
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/rfid/${scope.row.rfid}/assign-operator`)
+                  $router.push(`/rfid/${scope.row.id}/assign-operator`)
                 "
               >
                 {{ $t("rfid.listings.mapOperator") }}
@@ -94,7 +102,9 @@
                 circle
                 size="small"
                 icon="el-icon-edit"
-                @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
+                @click.native.prevent="
+                  $router.push(`/rfid/${scope.row.id}/edit`)
+                "
               />
               <el-button
                 v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
@@ -120,8 +130,7 @@
 </template>
 
 <script>
-import { fetchRfid, deleteRfid } from '@/api/rfid'
-import { removeOperator } from '@/api/rfid-history'
+import { fetchRfid, deleteRfid, removeOperator } from '@/api/rfid'
 import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
 import checkPermission from '@/utils/permission'
@@ -146,7 +155,9 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        unAssigned: true,
+        assigned: false
       },
       loading: false,
       pickerOptions: {
@@ -210,7 +221,9 @@ export default {
   async created() {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
-      limit: +(this.$route.query.limit || this.listQuery.limit)
+      limit: +(this.$route.query.limit || this.listQuery.limit),
+      unAssigned: true,
+      assigned: true
     }
     this.$router.push({
       query: this.listQuery
@@ -221,9 +234,10 @@ export default {
     mapRfidToDataTable(rfid) {
       return {
         id: rfid.id,
-        rfid: rfid.rfid,
-        createdBy: rfid.createdBy,
-        currentOperatorId: rfid.current_operator_id
+        customerId: rfid.customer_id,
+        ownerId: rfid.owner_id,
+        groupId: rfid.group_id,
+        operatorId: rfid.operator_id
       }
     },
     async fetchListings() {
@@ -290,7 +304,7 @@ export default {
     async rfidHistoryClick($rfid) {
       this.$router.push(`/rfid/${$rfid}/history`)
     },
-    removeOperatorClicked($rfid) {
+    removeOperatorClicked($rfid, $operatorId) {
       let deleteConfirmMessage = this.$t('message.confirmRemove')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
@@ -302,12 +316,12 @@ export default {
         cancelButtonText: this.$t('general.cancel'),
         type: 'warning'
       }).then(() => {
-        this.removeOperatorConfirmed($rfid)
+        this.removeOperatorConfirmed($rfid, $operatorId)
       })
     },
-    removeOperatorConfirmed($rfid) {
+    removeOperatorConfirmed($rfid, $operatorId) {
       this.loading = true
-      removeOperator($rfid)
+      removeOperator($rfid, $operatorId)
         .then(() => {
           this.$message({
             message: this.$t('message.operatorIsRemoved'),

@@ -256,7 +256,12 @@ export default {
     groupHasBeenEdited: 'Group has been edited',
     rfidHasAssigned: 'RFID has been Assigned',
     rfidIsRemoved: 'RFID is Removed',
-    rfidRequired: 'RFID is Required'
+    rfidRequired: 'RFID is Required',
+    driverHasBeenDeleted: 'Operator Has been Deleted',
+    rfidHasBeenDeleted: 'RFID Has been Deleted',
+    customerRequired: 'Customer Required',
+    ownerRequired: 'Owner Required',
+    groupRequired: 'Group reguired'
   },
 
   event: {
@@ -477,7 +482,11 @@ export default {
       title: 'Edit RFID'
     },
     form: {
-      rfid: 'RFID'
+      rfid: 'RFID',
+      customer: 'Customer',
+      owner: 'Owner',
+      group: 'Group'
+
     }
   },
   user: {

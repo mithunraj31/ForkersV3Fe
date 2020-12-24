@@ -1,15 +1,14 @@
 import request from '@/utils/request'
 
 export function fetchDrivers(query) {
+  let params = ''
+  if (query.limit === 0) {
+    params = `unAssigned=${query.unAssigned}&assigned=${query.assigned}`
+  } else if (query) {
+    params = `perPage=${query.limit}&page=${query.page}&unAssigned=${query.unAssigned}&assigned=${query.assigned}`
+  }
   return request({
-    url: `/operators?perPage=${query.limit}&page=${query.page}`,
-    method: 'get'
-  })
-}
-
-export function fetchAllDrivers() {
-  return request({
-    url: `/operators/all/data`,
+    url: `/operators?${params}`,
     method: 'get'
   })
 }
@@ -67,21 +66,17 @@ export function deleteDriver(id) {
   })
 }
 
-export function removeRFID(id) {
+export function removeRFID(id, rfid) {
   return request({
-    url: `/operators/${id}/rfid/`,
-    method: 'delete'
+    url: `/operators/${id}/remove/rfid/${rfid}`,
+    method: 'put'
   })
 }
 
-export function assignRfid(ids) {
-  const data = {
-    rfid: ids.rfid,
-    id: ids.id
-  }
+export function assignRfid(data) {
   return request({
-    url: `/operators/assign`,
-    method: 'post',
-    data
+    url: `/operators/${data.id}/assign/rfid/${data.rfid}`,
+    method: 'put'
   })
 }
+

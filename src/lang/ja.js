@@ -248,7 +248,7 @@ export default {
     operatorIsRemoved: '演算子が削除されました',
     rfidDataHasBeenCreated: 'RFIDが作成されました',
     rfidDataHasBeenEdited: 'RFIDが編集されました',
-    driverIdNotFound: 'OperatorIdが見つかりません',
+    driverIdNotFound: 'オペレーターIdが見つかりません',
     roleHasBeenCreated: 'ロールが作成されました',
     roleHasBeenDeleted: 'ロールが削除されました',
     roleHasBeenEdited: 'ロールが編集されました',
@@ -257,7 +257,12 @@ export default {
     groupHasBeenEdited: 'グループが編集されました',
     rfidHasAssigned: 'RFIDが割り当てました',
     rfidIsRemoved: 'RFIDが削除されました',
-    rfidRequired: 'RFIDは必要があります'
+    rfidRequired: 'RFIDは必要があります',
+    driverHasBeenDelete: 'オペレーターが削除されました',
+    rfidHasBeenDeleted: 'RFIDが削除されました',
+    customerRequired: '顧客が必要',
+    ownerRequired: '所有者が必要',
+    groupRequired: 'グループが必要'
   },
 
   event: {
@@ -475,7 +480,10 @@ export default {
       title: 'RFIDを編集する'
     },
     form: {
-      rfid: 'RFID'
+      rfid: 'RFID',
+      customer: 'お客様',
+      owner: 'オーナー',
+      group: 'グループ'
     }
   },
   user: {
