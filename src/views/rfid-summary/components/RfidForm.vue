@@ -2,19 +2,11 @@
   <div class="app-container">
     <el-row>
       <el-col :span="12">
-        <el-form
-          ref="form"
-          :rules="formRules"
-          :model="form"
-          label-width="120px"
-        >
+        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="id">
-            <el-input v-model="form.id" />
+            <el-input v-model="form.id" :disabled="disabled" />
           </el-form-item>
-          <el-form-item
-            :label="this.$t('rfid.form.customer')"
-            prop="customerId"
-          >
+          <el-form-item :label="this.$t('rfid.form.customer')" prop="customerId">
             <el-input v-model="form.customerId" />
           </el-form-item>
           <el-form-item :label="this.$t('rfid.form.group')" prop="groupId">
@@ -24,9 +16,7 @@
             <el-button type="primary" @click="this.onSubmit">{{
               this.$t("general.save")
             }}</el-button>
-            <el-button @click="$router.go(-1)">{{
-              this.$t("general.cancel")
-            }}</el-button>
+            <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -45,7 +35,7 @@ export default {
           id: 0,
           customerId: '',
           groupId: '',
-          createdBy: ''
+          disabled: false
         }
       }
     }
@@ -102,7 +92,8 @@ export default {
             validator: validateGroupId
           }
         ]
-      }
+      },
+      disabled: false
     }
   },
   watch: {
@@ -111,6 +102,7 @@ export default {
       this.form.id = newRfid.id
       this.form.customerId = newRfid.customerId
       this.form.groupId = newRfid.groupId
+      this.disabled = newRfid.disabled
     }
   },
   methods: {

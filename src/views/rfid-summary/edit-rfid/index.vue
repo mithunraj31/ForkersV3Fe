@@ -29,7 +29,8 @@ export default {
         customerId: data.customer_id,
         ownerId: data.owner_id,
         groupId: data.group_id,
-        operatorId: data.operator_id
+        operatorId: data.operator_id,
+        disabled: true
       }
     } catch (err) {
       this.$router.push('/404')

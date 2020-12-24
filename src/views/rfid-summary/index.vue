@@ -27,16 +27,10 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            prop="customerId"
-            :label="this.$t('rfid.form.customer')"
-          />
+          <el-table-column prop="customerId" :label="this.$t('rfid.form.customer')" />
           <el-table-column prop="ownerId" :label="this.$t('rfid.form.owner')" />
           <el-table-column prop="groupId" :label="this.$t('rfid.form.group')" />
-          <el-table-column
-            prop="operatorId"
-            :label="this.$t('driver.listings.driverId')"
-          >
+          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
               <div
                 v-if="scope.row.operatorId !== null"
@@ -50,12 +44,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column :label="this.$t('general.action')" width="350px">
+          <el-table-column :label="this.$t('general.action')" width="400px">
             <template slot-scope="scope">
               <el-dropdown>
                 <el-button type="info" class="device-summary-btn" size="mini">
-                  {{ $t("device.drive")
-                  }}<i class="el-icon-arrow-down el-icon--right" />
+                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown" size="mini">
                   <el-dropdown-item>
@@ -78,17 +71,17 @@
               <el-button
                 v-if="scope.row.operatorId !== null"
                 type="danger"
-                size="small"
-                @click="
-                  removeOperatorClicked(scope.row.id, scope.row.operatorId)
-                "
+                plain
+                size="mini"
+                @click="removeOperatorClicked(scope.row.id, scope.row.operatorId)"
               >
                 {{ $t("rfid.listings.unMapOperator") }}
               </el-button>
               <el-button
                 v-if="scope.row.operatorId === null"
                 type="primary"
-                size="small"
+                plain
+                size="mini"
                 @click.native.prevent="
                   $router.push(`/rfid/${scope.row.id}/assign-operator`)
                 "
@@ -98,23 +91,19 @@
               <el-button
                 v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
                 type="primary"
-                plain
-                circle
-                size="small"
-                icon="el-icon-edit"
-                @click.native.prevent="
-                  $router.push(`/rfid/${scope.row.id}/edit`)
-                "
-              />
+                size="mini"
+                @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
+              >
+                {{ $t("general.edit") }}
+              </el-button>
               <el-button
                 v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
                 type="danger"
-                plain
-                circle
-                icon="el-icon-delete"
-                size="small"
+                size="mini"
                 @click="onDeleterfidClicked(scope.row.id)"
-              />
+              >
+                {{ $t("general.delete") }}
+              </el-button>
             </template>
           </el-table-column>
         </el-table>

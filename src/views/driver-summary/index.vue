@@ -19,37 +19,14 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column
-            prop="id"
-            :label="this.$t('driver.listings.id')"
-            width="90px"
-          >
+          <el-table-column prop="id" :label="this.$t('driver.listings.id')" width="90px">
             <template slot-scope="scope">
               <label class="click" @click="driverDetailClick(scope.row.id)">
                 {{ scope.row.id }}
               </label>
             </template>
           </el-table-column>
-          <el-table-column prop="name" :label="this.$t('driver.listings.name')">
-            <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <p>{{ $t("driver.listings.name") }}: {{ scope.row.name }}</p>
-                <p>{{ $t("driver.form.address") }}: {{ scope.row.address }}</p>
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                </div>
-              </el-popover>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="dob"
-            :label="this.$t('driver.listings.age')"
-            width="50px"
-          >
-            <template slot-scope="scope">
-              {{ calculateAge(scope.row.dob) }}
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" :label="this.$t('driver.listings.name')" />
           <el-table-column
             prop="licenseNo"
             :label="this.$t('driver.listings.licenseNo')"
@@ -58,10 +35,7 @@
             prop="licenseRenewal"
             :label="this.$t('driver.listings.licensevalidTill')"
           />
-          <el-table-column
-            prop="phoneNo"
-            :label="this.$t('driver.listings.phoneNo')"
-          />
+          <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
           <el-table-column prop="rfid" :label="this.$t('driver.listings.rfid')">
             <template slot-scope="scope">
               <div
@@ -76,12 +50,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column :label="this.$t('general.action')" width="350px">
+          <el-table-column :label="this.$t('general.action')" width="400px">
             <template slot-scope="scope">
               <el-dropdown>
-                <el-button type="info" class="device-summary-btn" size="small">
-                  {{ $t("device.drive")
-                  }}<i class="el-icon-arrow-down el-icon--right" />
+                <el-button type="info" class="device-summary-btn" size="mini">
+                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown" size="mini">
                   <el-dropdown-item>
@@ -104,7 +77,8 @@
               <el-button
                 v-if="scope.row.rfid !== null"
                 type="danger"
-                size="small"
+                plain
+                size="mini"
                 @click="removeRFIDClicked(scope.row.id, scope.row.rfid)"
               >
                 {{ $t("driver.listings.unMapRFID") }}
@@ -112,7 +86,8 @@
               <el-button
                 v-if="scope.row.rfid === null"
                 type="primary"
-                size="small"
+                plain
+                size="mini"
                 @click.native.prevent="
                   $router.push(`/drivers/${scope.row.id}/assign-rfid`)
                 "
@@ -122,21 +97,19 @@
               <el-button
                 v-permission="[systemRole.ADMIN, driverPrivilege.EDIT]"
                 type="primary"
-                circle
-                size="small"
-                icon="el-icon-edit"
-                @click.native.prevent="
-                  $router.push(`/drivers/${scope.row.id}/edit`)
-                "
-              />
+                size="mini"
+                @click.native.prevent="$router.push(`/drivers/${scope.row.id}/edit`)"
+              >
+                {{ $t("general.edit") }}
+              </el-button>
               <el-button
                 v-permission="[systemRole.ADMIN, driverPrivilege.DELETE]"
                 type="danger"
-                circle
-                size="small"
-                icon="el-icon-delete"
+                size="mini"
                 @click="onDeletedriverClicked(scope.row.id)"
-              />
+              >
+                {{ $t("general.delete") }}
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -153,7 +126,6 @@
 
 <script>
 import { fetchDrivers, deleteDriver, removeRFID } from '@/api/driver'
-import moment from '@/utils/moment'
 import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
 import checkPermission from '@/utils/permission'
@@ -329,11 +301,6 @@ export default {
     async onPaged() {
       await this.fetchListings()
     },
-    calculateAge(dob) {
-      var age = moment().diff(dob, 'years')
-      return age
-    },
-
     removeRFIDClicked($id, $rfid) {
       let deleteConfirmMessage = this.$t('message.confirmRemove')
       deleteConfirmMessage = String.format(

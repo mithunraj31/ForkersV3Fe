@@ -46,6 +46,7 @@ export default {
     rfidHistory: 'Rfid History',
     driverDetail: 'Operator Information',
     assignOperator: 'Assign Operator',
+    assignRFID: 'Assign RFID',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
