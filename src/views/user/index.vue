@@ -7,7 +7,7 @@
           v-else
           v-model="customerId"
           :placeholder="$t('general.select')"
-          @change="fetchListings"
+          @change="onCustomerIdChanged"
         >
           <el-option
             v-for="item in customers"
@@ -23,18 +23,19 @@
         }}</el-button>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="24">
+    <el-row :gutter="15">
+      <el-col v-if="groups && groups.length > 0" :span="6">
+        <group-selector :groups="groups" @onSelect="onGroupSelected" />
+      </el-col>
+      <el-col :span="groups && groups.length > 0 ? 18 : 24">
         <el-table v-loading="loading" :data="users" border style="width: 100%">
           <el-table-column prop="id" :label="this.$t('user.listings.userId')" width="50" />
           <el-table-column prop="name" :label="this.$t('user.listings.userName')" />
-          <el-table-column prop="email" :label="this.$t('user.listings.userEmail')" />
           <el-table-column prop="role" :label="this.$t('user.listings.userRole')">
             <template slot-scope="scope">
               {{ scope.row.role }}
             </template>
           </el-table-column>
-          <el-table-column prop="updated" :label="this.$t('user.listings.userUpdated')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
@@ -66,17 +67,20 @@
 
 <script>
 import { fetchUsers, deleteUser } from '@/api/user'
-import { fetchCustomers, fetchCustomerUsers } from '@/api/customer'
+import { fetchCustomers, fetchCustomerUsers, fetchCustomerGroups } from '@/api/customer'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 import { SYSTEM_ROLE, USER_PRIVILEGE } from '@/enums'
 import checkPermission from '@/utils/permission'
 import permission from '@/directive/permission'
+import GroupSelector from '@/components/GroupSelector'
+import { fetchGroupUsers, fetchGroups } from '@/api/group'
 
 export default {
   name: 'UserListings',
   components: {
-    Pagination
+    Pagination,
+    GroupSelector
   },
   directives: { permission },
   props: {
@@ -97,7 +101,9 @@ export default {
         limit: 10
       },
       loading: false,
-      customerId: ''
+      customerId: '',
+      groups: [],
+      groupId: ''
     }
   },
   computed: {
@@ -121,8 +127,11 @@ export default {
     })
 
     if (this.hasAdminPermission) {
-      const { data } = await fetchCustomers()
-      this.customers = data
+      const customers = await fetchCustomers()
+      this.customers = customers.data
+    } else {
+      const groups = await fetchGroups()
+      this.groups = groups.data
     }
     await this.fetchListings()
   },
@@ -139,7 +148,9 @@ export default {
     async fetchListings() {
       this.loading = true
       let response = null
-      if (this.hasAdminPermission && this.customerId) {
+      if (this.groupId) {
+        response = await fetchGroupUsers(this.groupId, this.listQuery)
+      } else if (this.hasAdminPermission && this.customerId) {
         response = await fetchCustomerUsers(this.customerId, this.listQuery)
       } else {
         response = await fetchUsers(this.listQuery)
@@ -184,6 +195,16 @@ export default {
         })
     },
     async onPaged() {
+      await this.fetchListings()
+    },
+    async onGroupSelected(group) {
+      this.groupId = group.id
+      await this.fetchListings()
+    },
+    async onCustomerIdChanged() {
+      this.groupId = ''
+      const { data } = await fetchCustomerGroups(this.customerId)
+      this.groups = data
       await this.fetchListings()
     }
   }

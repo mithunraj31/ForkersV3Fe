@@ -39,12 +39,12 @@
             node-key="id"
             default-expand-all
             :expand-on-click-node="false"
-            draggable
+            :draggable="hasDragalbePermission"
             :filter-node-method="filterNode"
             @node-drop="handleDrop"
           >
             <span slot-scope="{ node, data }" class="custom-tree-node">
-              <span @click="onGroupClicked(data.id)">{{ data.name }}</span>
+              <span @click="onGroupClicked(data.id)">{{ data.name }} </span>
               <span>
                 <el-button
                   type="text"
@@ -126,6 +126,9 @@ export default {
     },
     groupPrivilege() {
       return GROUP_PRIVILEGE
+    },
+    hasDragalbePermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.EDIT])
     }
   },
   watch: {
@@ -203,13 +206,15 @@ export default {
 
       setTimeout(this.fetchCustomerGroups, 500)
     },
-    async handleDrop(draggingNode, dropNode) {
+    async handleDrop(draggingNode, dropNode, type) {
+      const isTopParent = type === 'before' && dropNode.data.parent_id === null
+      const isChildren = type === 'before' && dropNode.data.parent_id !== null
       const group = {
         id: draggingNode.data.id,
         name: draggingNode.data.name,
         description: draggingNode.data.description,
         customerId: draggingNode.data.customer_id,
-        parentId: dropNode.data.id
+        parentId: isTopParent ? null : (isChildren ? dropNode.data.parent_id : dropNode.data.id)
       }
       await this.onSubmit(group)
     },

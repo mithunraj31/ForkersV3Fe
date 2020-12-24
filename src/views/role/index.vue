@@ -17,7 +17,7 @@
           />
         </el-select>
       </el-col>
-      <el-col :span="12" class="new-role-button-section">
+      <el-col :span="14" class="new-role-button-section">
         <el-button v-permission="[systemRole.ADMIN, rolePrivilege.ADD]" type="primary" @click="$router.push('/roles/new')">{{
           this.$t("role.new.title")
         }}</el-button>
