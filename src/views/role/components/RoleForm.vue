@@ -113,7 +113,7 @@ export default {
       return ['view', 'add', 'edit', 'delete']
     },
     roleResources() {
-      return this.resourceTypes.map(type => {
+      return this.resourceTypes.filter(x => this.resources[x]).map(type => {
         return {
           resource: type,
           add: this.resources[type].includes('add'),
