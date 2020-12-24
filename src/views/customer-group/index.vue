@@ -39,7 +39,7 @@
             node-key="id"
             default-expand-all
             :expand-on-click-node="false"
-            draggable
+            :draggable="hasDragalbePermission"
             :filter-node-method="filterNode"
             @node-drop="handleDrop"
           >
@@ -126,6 +126,9 @@ export default {
     },
     groupPrivilege() {
       return GROUP_PRIVILEGE
+    },
+    hasDragalbePermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.EDIT])
     }
   },
   watch: {
