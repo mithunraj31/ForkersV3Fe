@@ -6,7 +6,6 @@
         :data="events"
         border
         size="small"
-        stripe
         style="width: 100%"
       >
         <el-table-column :label="this.$t('event.eventId')" prop="eventId">
@@ -165,12 +164,12 @@ export default {
 
     eventClick(eventId) {
       localStorage.setItem('Tab', 'first')
-      this.$router.push(`/eventSummary/${eventId}/event-detail`)
+      this.$router.push(`/event-summary/${eventId}/event-detail`)
     },
 
     videoClick(eventId) {
       localStorage.setItem('Tab', 'third')
-      this.$router.push(`/eventSummary/${eventId}/event-detail`)
+      this.$router.push(`/event-summary/${eventId}/event-detail`)
     },
 
     async fetchListings() {
@@ -193,9 +192,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+$--color-primary: #005D74;
+
 .click {
-  color: blue;
+  color: $--color-primary;
   cursor: pointer;
 }
 

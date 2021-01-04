@@ -6,6 +6,7 @@
       row-key="id"
       default-expand-all
       :row-class-name="tableRowClassName"
+      border
     >
       <el-table-column prop="start" :label="$t('driveSummary.startDatetime')" />
       <el-table-column prop="end" :label="$t('driveSummary.endDatetime')" />

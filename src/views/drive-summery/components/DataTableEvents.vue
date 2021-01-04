@@ -6,6 +6,7 @@
       row-key="id"
       default-expand-all
       stripe
+      border
     >
       <el-table-column prop="date" :label="$t('driveSummary.datetime')" />
       <el-table-column :label="$t('driveSummary.type')">
@@ -187,17 +188,17 @@ export default {
     },
     navigateToMap(data) {
       this.$router.push({
-        path: '/eventSummary/' + data.id + '/event-map'
+        path: '/event-summary/' + data.id + '/event-map'
       })
     },
     navigateToVideo(data) {
       this.$router.push({
-        path: '/eventSummary/' + data.id + '/event-video'
+        path: '/event-summary/' + data.id + '/event-video'
       })
     },
     navigateToEvent(data) {
       this.$router.push({
-        path: '/eventSummary/' + data.id + '/event-detail'
+        path: '/event-summary/' + data.id + '/event-detail'
       })
     }
   }

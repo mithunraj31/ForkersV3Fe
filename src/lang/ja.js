@@ -373,7 +373,7 @@ export default {
     longitude: '経度 (Lng)',
     add: '追加',
     clear: '入力をクリア',
-    view: '見る',
+    view: '覧',
     select: '選択'
   },
   maps: {
@@ -495,8 +495,7 @@ export default {
       userRole: '役割',
       userUpdated: '最終更新時刻',
       selectUser: 'ユーザーを選択',
-      userVehicle: '車両',
-      userRunning: '走っている'
+      total: '全ユーザー数'
     },
     new: {
       title: 'ユーザーを追加'
@@ -511,7 +510,10 @@ export default {
       userRole: '役割',
       userPassword: 'パスワード',
       userConfirmPassword: '確認',
-      changePassword: 'パスワードを変更'
+      changePassword: 'パスワードを変更',
+      sysRole: 'システムロール',
+      groups: 'グループ',
+      pleaseSelectUserGroup: 'グループを選択'
     }
   },
 
@@ -565,7 +567,8 @@ export default {
       user: 'ユーザー',
       role: 'ロール',
       group: 'グループ',
-      customer: '会社'
+      customer: '会社',
+      vehicle: '車両'
     }
   },
 

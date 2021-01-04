@@ -16,7 +16,7 @@
           />
         </el-select>
         <el-button
-          v-if="customers.length > 0"
+          v-permission="[systemRole.ADMIN, groupPrivilege.ADD]"
           class="new-group-btn"
           type="primary"
           @click="newGroup(null)"
@@ -39,18 +39,30 @@
             node-key="id"
             default-expand-all
             :expand-on-click-node="false"
-            draggable
+            :draggable="hasDragalbePermission"
             :filter-node-method="filterNode"
             @node-drop="handleDrop"
           >
             <span slot-scope="{ node, data }" class="custom-tree-node">
-              <span @click="onGroupClicked(data.id)">{{ data.name }}</span>
+              <span @click="onGroupClicked(data.id)">{{ data.name }} </span>
               <span>
-                <el-button type="text" size="mini" @click="newGroup(data.id)">
+                <el-button
+                  type="text"
+                  size="mini"
+                  @click="onGroupClicked(data.id)"
+                >
+                  {{ $t('general.view') }}
+                </el-button>
+                <el-button
+                  :disabled="!checkPermission([systemRole.ADMIN, groupPrivilege.ADD])"
+                  type="text"
+                  size="mini"
+                  @click="newGroup(data.id)"
+                >
                   {{ $t('group.append') }}
                 </el-button>
                 <el-button
-                  :disabled="node.childNodes.length > 0"
+                  :disabled="node.childNodes.length > 0 || !checkPermission([systemRole.ADMIN, groupPrivilege.DELETE])"
                   type="text"
                   size="mini"
                   @click="removeGroup(data.id)"
@@ -82,7 +94,7 @@ import {
 import { deleteGroup, newGroup, fetchGroupById, fetchGroups, editGroup } from '@/api/group'
 import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
-import { SYSTEM_ROLE } from '@/enums'
+import { SYSTEM_ROLE, GROUP_PRIVILEGE } from '@/enums'
 import CustomerGroupForm from './components/CustomerGroupForm'
 
 export default {
@@ -111,6 +123,12 @@ export default {
     },
     hasAdminPermission() {
       return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    groupPrivilege() {
+      return GROUP_PRIVILEGE
+    },
+    hasDragalbePermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.EDIT])
     }
   },
   watch: {
@@ -130,6 +148,7 @@ export default {
     }
   },
   methods: {
+    checkPermission,
     async fetchCustomers() {
       const { data } = await fetchCustomers()
       this.customers = data
@@ -187,13 +206,15 @@ export default {
 
       setTimeout(this.fetchCustomerGroups, 500)
     },
-    async handleDrop(draggingNode, dropNode) {
+    async handleDrop(draggingNode, dropNode, type) {
+      const isTopParent = type === 'before' && dropNode.data.parent_id === null
+      const isChildren = type === 'before' && dropNode.data.parent_id !== null
       const group = {
         id: draggingNode.data.id,
         name: draggingNode.data.name,
         description: draggingNode.data.description,
         customerId: draggingNode.data.customer_id,
-        parentId: dropNode.data.id
+        parentId: isTopParent ? null : (isChildren ? dropNode.data.parent_id : dropNode.data.id)
       }
       await this.onSubmit(group)
     },

@@ -1,5 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {
+  SYSTEM_ROLE,
+  GROUP_PRIVILEGE,
+  USER_PRIVILEGE,
+  ROLE_PRIVILEGE,
+  DEVICE_PRIVILEGE,
+  VEHICLE_PRIVILEGE,
+  EVENT_PRIVILEGE
+} from '@/enums'
 
 Vue.use(Router)
 
@@ -74,79 +83,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/devices',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/device-listings/index'),
-        name: 'DeviceListing',
-        meta: { title: 'DeviceListing', icon: 'list', affix: false }
-      },
-      {
-        path: ':deviceId/drive-summary',
-        component: () => import('@/views/drive-summery/index'),
-        name: 'DriveSummary',
-        meta: { title: 'DriveSummary', icon: 'documentation', affix: false },
-        hidden: true,
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          deviceId: route.params.deviceId
-        })
-      },
-      {
-        path: ':deviceId/drive-route',
-        component: () => import('@/views/map-route/index'),
-        name: 'DriveRoute',
-        hidden: true,
-        meta: { title: 'DriveRoute', icon: 'documentation', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          deviceId: route.params.deviceId
-        })
-      }
-    ]
-  },
-  {
-    path: '/event-summary',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/event-summary/index'),
-        name: 'EventSummary',
-        meta: { title: 'EventSummary', icon: 'el-icon-data-line', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end
-        })
-      },
-      {
-        path: ':eventId/event-detail',
-        component: () => import('@/views/event-summary/event-detail-container/index'),
-        name: ':eventId',
-        hidden: true,
-        meta: { title: 'EventDetail', noCache: true }
-      },
-      {
-        path: ':eventId/event-map',
-        component: () => import('@/views/event-summary/event-map/DeviceMap'),
-        name: 'EventMap',
-        hidden: true,
-        meta: { title: 'EventMap', noCache: true }
-      },
-      {
-        path: ':eventId/event-video',
-        component: () => import('@/views/event-summary/event-video/index'),
-        name: 'EventVideo',
-        hidden: true,
-        meta: { title: 'EventVideo', noCache: true }
-      }
-    ]
-  },
-  {
     path: '/video',
     component: Layout,
     hidden: true,
@@ -201,7 +137,7 @@ export const constantRoutes = [
         component: () => import('@/views/driver-summary/new-driver/index'),
         name: 'NewDriver',
         hidden: true,
-        meta: { title: 'newDriver', noCache: false }
+        meta: { title: 'newDriver', noCache: true }
       },
       {
         path: ':id/edit',
@@ -284,31 +220,116 @@ export const constantRoutes = [
         meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
-  },
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
   {
-    path: '/users',
+    path: '/devices',
     component: Layout,
-    redirect: '/users/index',
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/user/index'),
-        name: 'Users',
-        meta: { title: 'userListings', icon: 'user', noCache: true }
+        path: '',
+        component: () => import('@/views/device-listings/index'),
+        name: 'DeviceListing',
+        meta: {
+          title: 'DeviceListing',
+          icon: 'list',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        }
       },
       {
-        path: 'new',
-        component: () => import('@/views/user/new-user/index'),
-        name: 'NewUser',
+        path: ':deviceId/drive-summary',
+        component: () => import('@/views/drive-summery/index'),
+        name: 'DriveSummary',
+        meta: {
+          title: 'DriveSummary',
+          icon: 'documentation',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        },
         hidden: true,
-        meta: { title: 'newUser', noCache: false }
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
       },
       {
-        path: ':id/edit',
-        component: () => import('@/views/user/edit-user/index'),
-        name: 'EditUser',
+        path: ':deviceId/drive-route',
+        component: () => import('@/views/map-route/index'),
+        name: 'DriveRoute',
         hidden: true,
-        meta: { title: 'editUser', noCache: true, breadcrumbTitle: 'editUserBreadcrumbTitle' }
+        meta: {
+          title: 'DriveRoute',
+          icon: 'documentation',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, DEVICE_PRIVILEGE.VIEW, VEHICLE_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          deviceId: route.params.deviceId
+        })
+      }
+    ]
+  },
+  {
+    path: '/event-summary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: {
+          title: 'EventSummary',
+          icon: 'el-icon-data-line',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: {
+          title: 'EventDetail',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: {
+          title: 'EventMap',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: {
+          title: 'EventVideo',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
       }
     ]
   },
@@ -321,24 +342,80 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/customer/index'),
         name: 'Customers',
-        meta: { title: 'customerListings', icon: 'el-icon-school', noCache: true }
+        meta: {
+          title: 'customerListings',
+          icon: 'el-icon-school',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
       },
       {
         path: 'new',
         component: () => import('@/views/customer/new-customer/index'),
         name: 'NewCustomer',
         hidden: true,
-        meta: { title: 'newCustomer', noCache: false }
+        meta: {
+          title: 'newCustomer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
       },
       {
         path: ':id/edit',
         component: () => import('@/views/customer/edit-customer/index'),
         name: 'EditCustomer',
         hidden: true,
-        meta: { title: 'editCustomer', noCache: true, breadcrumbTitle: 'editCustomerBreadcrumbTitle' }
+        meta: {
+          title: 'editCustomer',
+          noCache: true,
+          breadcrumbTitle: 'editCustomerBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN]
+        }
       }
     ]
   },
+  {
+    path: '/users',
+    component: Layout,
+    redirect: '/users/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user/index'),
+        name: 'Users',
+        meta: {
+          title: 'userListings',
+          icon: 'user',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/user/new-user/index'),
+        name: 'NewUser',
+        hidden: true,
+        meta: {
+          title: 'newUser',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/user/edit-user/index'),
+        name: 'EditUser',
+        hidden: true,
+        meta: {
+          title: 'editUser',
+          noCache: true,
+          breadcrumbTitle: 'editUserBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, USER_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+
   {
     path: '/roles',
     component: Layout,
@@ -348,21 +425,35 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/role/index'),
         name: 'Roles',
-        meta: { title: 'roleListings', icon: 'el-icon-s-cooperation', noCache: true }
+        meta: {
+          title: 'roleListings',
+          icon: 'el-icon-s-cooperation',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.VIEW]
+        }
       },
       {
         path: 'new',
         component: () => import('@/views/role/new-role/index'),
         name: 'NewRole',
         hidden: true,
-        meta: { title: 'newRole', noCache: false }
+        meta: {
+          title: 'newRole',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.ADD]
+        }
       },
       {
         path: ':id/edit',
         component: () => import('@/views/role/edit-role/index'),
         name: 'EditRole',
         hidden: true,
-        meta: { title: 'editRole', noCache: true, breadcrumbTitle: 'roleBreadcrumbTitle' }
+        meta: {
+          title: 'editRole',
+          noCache: true,
+          breadcrumbTitle: 'roleBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, ROLE_PRIVILEGE.EDIT]
+        }
       }
     ]
   },
@@ -375,17 +466,16 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/customer-group/index'),
         name: 'Group',
-        meta: { title: 'groupManagement', icon: 'peoples', noCache: true }
+        meta: {
+          title: 'groupManagement',
+          icon: 'peoples',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.VIEW, GROUP_PRIVILEGE.ADD, GROUP_PRIVILEGE.EDIT, GROUP_PRIVILEGE.DELETE]
+        }
       }
     ]
   }
 ]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = []
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support

@@ -3,18 +3,20 @@ function generatePrivilege(moduleName) {
     ADD: `${moduleName}:add`,
     EDIT: `${moduleName}:edit`,
     DELETE: `${moduleName}:delete`,
-    VIEW: `${moduleName}:delete`
+    VIEW: `${moduleName}:view`
   })
 }
 
 export const RESOURCE_TYPE = Object.freeze({
   GROUP: 'group',
   USER: 'user',
-  CUSTOMER: 'customer',
   ROLE: 'role',
   DEVICE: 'device',
   EVENT: 'event',
-  OPERATOR: 'operator'
+  OPERATOR: 'operator',
+  VEHICLE: 'vehicle',
+  RFID: 'rfid',
+  DRIVER: 'driver'
 })
 
 export const SYSTEM_ROLE = Object.freeze({
@@ -22,5 +24,18 @@ export const SYSTEM_ROLE = Object.freeze({
   USER: 'user'
 })
 
-export const RFID_PRIVILAGE = generatePrivilege('rfid')
-export const DRIVER_PRIVILAGE = generatePrivilege('driver')
+export const RFID_PRIVILAGE = generatePrivilege(RESOURCE_TYPE.RFID)
+export const DRIVER_PRIVILAGE = generatePrivilege(RESOURCE_TYPE.DRIVER)
+export const GROUP_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.GROUP)
+
+export const USER_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.USER)
+
+export const DEVICE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.DEVICE)
+
+export const EVENT_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.EVENT)
+
+export const OPERATOR_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.OPERATOR)
+
+export const ROLE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.ROLE)
+
+export const VEHICLE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.VEHICLE)

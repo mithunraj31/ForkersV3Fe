@@ -373,3 +373,18 @@ export function convertStrLocalDatetimeToUtc(datetime, format = 'YYYY-MM-DD HH:m
   const localDatetime = moment.tz(datetime, format, currentTimezone)
   return localDatetime.tz('UTC').format(format)
 }
+
+export function findNestedObjectById(obj, targetId) {
+  if (obj.id === targetId) {
+    return obj
+  }
+  if (obj.children) {
+    for (const item of obj.children) {
+      const check = findNestedObjectById(item, targetId)
+      if (check) {
+        return check
+      }
+    }
+  }
+  return null
+}

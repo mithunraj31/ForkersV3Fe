@@ -53,20 +53,42 @@ export function deleteCustomer(id) {
   })
 }
 
-export function fetchCustomerRolesByCustomerId(id) {
+export function fetchCustomerRoles(id, listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage=${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = `?perPage=1000`
+  }
   return request({
-    url: `/customers/${id}/roles`,
+    url: `/customers/${id}/roles${params}`,
     method: 'get'
   })
 }
 
-export function fetchCustomerGroups(id) {
+export function fetchCustomerGroups(id, listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage=${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = `?perPage=1000`
+  }
   return request({
-    url: `/customers/${id}/groups`,
+    url: `/customers/${id}/groups${params}`,
     method: 'get'
   })
 }
 
-export function deleteCustomerGroup(customerId, groupId) {
+export function fetchCustomerUsers(id, listQuery) {
+  let params = ''
+  if (listQuery) {
+    params = `?perPage=${listQuery.limit}&page=${listQuery.page}`
+  } else {
+    params = `?perPage=1000`
+  }
 
+  return request({
+    url: `/customers/${id}/users${params}`,
+    method: 'get'
+  })
 }
