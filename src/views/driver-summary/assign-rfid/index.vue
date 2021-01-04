@@ -29,9 +29,7 @@
               <el-button type="primary" @click="this.onSubmit">{{
                 $t("general.save")
               }}</el-button>
-              <el-button @click="$router.go(-1)">{{
-                $t("general.cancel")
-              }}</el-button>
+              <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
             </el-form-item>
           </el-col>
         </div>
@@ -155,15 +153,13 @@ export default {
     },
     querySearch(queryString, cb) {
       var opIds = this.opIds
-      var results = queryString
-        ? opIds.filter(this.createFilter(queryString))
-        : opIds
+      var results = queryString ? opIds.filter(this.createFilter(queryString)) : opIds
       // call callback function to return suggestion objects
       cb(results)
     },
     createFilter(queryString) {
       return (opIds) => {
-        return opIds.id === queryString
+        return opIds.id === parseInt(queryString)
       }
     },
     handleSelect(item) {
