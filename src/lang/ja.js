@@ -427,7 +427,7 @@ export default {
 
   driver: {
     listings: {
-      id: 'オペレーターID',
+      id: 'ID',
       driverId: 'オペレーターID',
       age: '年齢',
       name: '名前',
