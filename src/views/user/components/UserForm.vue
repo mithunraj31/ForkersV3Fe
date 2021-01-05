@@ -237,6 +237,7 @@ export default {
       this.form.groupIds = newUser.groupIds
 
       this.visible = false
+      this.form.password = undefined
       this.onCustomerChanged()
     }
   },
