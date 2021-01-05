@@ -181,7 +181,7 @@ export const constantRoutes = [
         component: () => import('@/views/rfid-summary/new-rfid/index'),
         name: 'NewRfid',
         hidden: true,
-        meta: { title: 'newRfid', noCache: false }
+        meta: { title: 'newRfid', noCache: true }
       },
       {
         path: ':id/edit',

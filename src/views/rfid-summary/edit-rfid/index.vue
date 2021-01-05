@@ -23,9 +23,9 @@ export default {
   async mounted() {
     this.loading = true
     try {
-      const { data } = await fetchRfidById(+this.$route.params.id)
+      const { data } = await fetchRfidById(this.$route.params.id)
       this.rfidData = {
-        id: +this.$route.params.id,
+        id: this.$route.params.id,
         customerId: data.customer_id,
         ownerId: data.owner_id,
         groupId: data.group_id,

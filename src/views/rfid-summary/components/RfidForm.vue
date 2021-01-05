@@ -3,14 +3,11 @@
     <el-row>
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
+          <el-form-item v-if="hasAdminPermission" :label="this.$t('rfid.form.customer')">
+            <company-selector @change="onCustomerChange" />
+          </el-form-item>
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="id">
             <el-input v-model="form.id" :disabled="disabled" />
-          </el-form-item>
-          <el-form-item :label="this.$t('rfid.form.customer')" prop="customerId">
-            <el-input v-model="form.customerId" />
-          </el-form-item>
-          <el-form-item :label="this.$t('rfid.form.group')" prop="groupId">
-            <el-input v-model="form.groupId" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="this.onSubmit">{{
@@ -25,8 +22,15 @@
 </template>
 
 <script>
+import CompanySelector from '@/components/CompanySelector'
+import permission from '@/directive/permission'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE } from '@/enums'
+
 export default {
   name: 'RfidForm',
+  components: { CompanySelector },
+  directives: { permission },
   props: {
     rfidData: {
       type: Object,
@@ -34,7 +38,6 @@ export default {
         return {
           id: 0,
           customerId: '',
-          groupId: '',
           disabled: false
         }
       }
@@ -55,19 +58,11 @@ export default {
         callback()
       }
     }
-    const validateGroupId = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.groupRequired')))
-      } else {
-        callback()
-      }
-    }
 
     return {
       form: {
         id: '',
-        customerId: '',
-        groupId: ''
+        customerId: ''
       },
       dialogVisible: false,
       formRules: {
@@ -84,24 +79,21 @@ export default {
             trigger: 'blur',
             validator: validateCustomerId
           }
-        ],
-        groupId: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateGroupId
-          }
         ]
       },
       disabled: false
     }
   },
+  computed: {
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    }
+  },
   watch: {
     rfidData: function(newRfid, oldRfid) {
-      this.form.operatorId = newRfid.operatorId
       this.form.id = newRfid.id
+      this.form.operatorId = newRfid.operatorId
       this.form.customerId = newRfid.customerId
-      this.form.groupId = newRfid.groupId
       this.disabled = newRfid.disabled
     }
   },
@@ -114,9 +106,10 @@ export default {
           })
         }
       })
+    },
+    onCustomerChange(customerId) {
+      this.form.customerId = customerId
     }
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

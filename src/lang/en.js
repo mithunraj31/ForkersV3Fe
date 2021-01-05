@@ -472,7 +472,8 @@ export default {
       mapOperator: 'Assign Operator',
       unMapOperator: 'Remove Operator',
       assignedFrom: 'Start Date',
-      assignedTill: 'End Date'
+      assignedTill: 'End Date',
+      total: 'Total'
     },
     new: {
       title: 'New RFID',
@@ -571,7 +572,9 @@ export default {
       role: 'Role',
       group: 'Group',
       customer: 'Customer',
-      vehicle: 'Vehicle'
+      vehicle: 'Vehicle',
+      rfid: 'RFID',
+      driver: 'Driver'
     }
   },
 

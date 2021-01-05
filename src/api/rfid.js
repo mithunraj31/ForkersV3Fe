@@ -1,12 +1,17 @@
 import request from '@/utils/request'
 
-export function fetchRfid(query) {
+export function fetchRfid(query, customerId = null) {
   let params = ''
   if (query.limit === 0) {
     params = `unAssigned=${query.unAssigned}&assigned=${query.assigned}`
   } else if (query) {
     params = `perPage=${query.limit}&page=${query.page}&unAssigned=${query.unAssigned}&assigned=${query.assigned}`
   }
+
+  if (customerId) {
+    params += `&customer_id=${customerId}`
+  }
+
   return request({
     url: `/rfid?${params}`,
     method: 'get'
@@ -23,9 +28,7 @@ export function fetchRfidById(id) {
 export function newRfid(rfid) {
   const data = {
     id: rfid.id,
-    customerId: rfid.customerId,
-    ownerId: rfid.ownerId,
-    groupId: rfid.groupId
+    customer_id: rfid.customerId
   }
   return request({
     url: `/rfid`,

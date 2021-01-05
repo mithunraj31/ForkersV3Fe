@@ -93,7 +93,10 @@ export default {
         user: [],
         role: [],
         event: [],
-        operator: []
+        operator: [],
+        vehicle: [],
+        rfid: [],
+        driver: []
       },
       customers: [],
       formRules: {

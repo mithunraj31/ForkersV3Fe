@@ -38,10 +38,10 @@ export default {
     CreateVideo: 'ビデオの作成',
     DeviceListing: 'デバイスリスト',
     OperatorListing: 'オペレーターリスト',
-    newDriver: '新しいオペレーター',
+    newDriver: 'オペレーターを追加',
     editDriver: 'オペレーターの編集',
     RfidListing: 'RFIDリスト',
-    newRfid: '新しいRFID',
+    newRfid: 'RFIDを追加',
     editRfid: 'RFIDの編集',
     rfidHistory: 'RFIDの履歴',
     driverDetail: 'オペレーター情報',
@@ -465,15 +465,16 @@ export default {
       rfid: 'RFID',
       createdBy: '作成されたユーザー',
       assignStatus: 'ステータスの割り当て',
-      notAssigned: '未割り当て',
+      notAssigned: 'なし',
       assigned: 'オペレーター割り当て済み',
       mapOperator: '演算子の割り当て',
       unMapOperator: '演算子の削除',
       assignedFrom: '開始日',
-      assignedTill: '終了日'
+      assignedTill: '終了日',
+      total: '全RFID数'
     },
     new: {
-      title: '新しいRFID',
+      title: 'RFIDを追加',
       operatorHistory: 'RFIDのオペレーター履歴',
       assignOperator: '演算子の割り当て'
     },
@@ -482,7 +483,7 @@ export default {
     },
     form: {
       rfid: 'RFID',
-      customer: 'お客様',
+      customer: '会社',
       owner: 'オーナー',
       group: 'グループ'
     }
@@ -546,7 +547,7 @@ export default {
     },
 
     edit: {
-      title: 'ロールを追加'
+      title: 'ロールを編集'
     },
 
     listings: {
@@ -568,7 +569,9 @@ export default {
       role: 'ロール',
       group: 'グループ',
       customer: '会社',
-      vehicle: '車両'
+      vehicle: '車両',
+      rfid: 'RFID',
+      driver: 'ドライバー'
     }
   },
 

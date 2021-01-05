@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="24" class="new-rfid-button-section">
+      <el-col :span="10">
+        <span v-if="!hasAdminPermission">{{ $t('rfid.listings.total') }}: {{ total }}</span>
+        <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
+      </el-col>
+      <el-col :span="14" class="new-rfid-button-section">
         <el-button
           v-permission="[systemRole.ADMIN, rfidPrivilege.ADD]"
           type="primary"
@@ -27,9 +31,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="customerId" :label="this.$t('rfid.form.customer')" />
-          <el-table-column prop="ownerId" :label="this.$t('rfid.form.owner')" />
-          <el-table-column prop="groupId" :label="this.$t('rfid.form.group')" />
+          <el-table-column prop="customerName" :label="this.$t('rfid.form.customer')" />
           <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
               <div
@@ -124,10 +126,13 @@ import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
 import checkPermission from '@/utils/permission'
 import { SYSTEM_ROLE, RFID_PRIVILAGE } from '@/enums'
+import CompanySelector from '@/components/CompanySelector'
+
 export default {
   name: 'RfidListings',
   components: {
-    Pagination
+    Pagination,
+    CompanySelector
   },
   directives: { permission },
   props: {
@@ -191,7 +196,8 @@ export default {
           }
         ]
       },
-      drivetimeRange: ''
+      drivetimeRange: '',
+      customerId: ''
     }
   },
 
@@ -224,8 +230,7 @@ export default {
       return {
         id: rfid.id,
         customerId: rfid.customer_id,
-        ownerId: rfid.owner_id,
-        groupId: rfid.group_id,
+        customerName: rfid.customer.name,
         operatorId: rfid.operator_id
       }
     },
@@ -233,7 +238,8 @@ export default {
       let response = null
       this.loading = true
       try {
-        response = await fetchRfid(this.listQuery)
+        console.log(this.customerId)
+        response = await fetchRfid(this.listQuery, this.customerId)
         const { data, total } = response
         this.rfidDatas = data.map(this.mapRfidToDataTable)
         this.total = total
@@ -326,6 +332,10 @@ export default {
             type: 'danger'
           })
         })
+    },
+    async onCustomerChanged(customerId) {
+      this.customerId = customerId
+      await this.fetchListings()
     }
   }
 }
