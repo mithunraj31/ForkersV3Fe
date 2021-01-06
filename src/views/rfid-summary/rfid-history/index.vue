@@ -144,7 +144,7 @@ export default {
       let response = null
       this.loading = true
       response = await findrfIdHistory(
-        +this.$route.params.rfid,
+        this.$route.params.rfid,
         this.listQuery
       )
       const { data, total } = response

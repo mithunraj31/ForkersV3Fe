@@ -1,7 +1,13 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="20" class="new-driver-button-section">
+      <el-col :span="10">
+        <span
+          v-if="!hasAdminPermission"
+        >{{ $t("rfid.listings.total") }}: {{ total }}</span>
+        <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
+      </el-col>
+      <el-col :span="10" class="new-driver-button-section">
         <el-checkbox
           v-model="assigned"
           :label="$t('general.assigned')"
@@ -32,18 +38,18 @@
           style="width: auto"
           size="small"
         >
-          <el-table-column prop="id" :label="this.$t('driver.listings.id')" width="90px">
+          <el-table-column
+            prop="id"
+            :label="$t('driver.listings.licenseNo')"
+            width="90px"
+          >
             <template slot-scope="scope">
               <label class="click" @click="driverDetailClick(scope.row.id)">
-                {{ scope.row.id }}
+                {{ scope.row.licenseNo }}
               </label>
             </template>
           </el-table-column>
           <el-table-column prop="name" :label="this.$t('driver.listings.name')" />
-          <el-table-column
-            prop="licenseNo"
-            :label="this.$t('driver.listings.licenseNo')"
-          />
           <el-table-column
             prop="licenseRenewal"
             :label="this.$t('driver.listings.licensevalidTill')"
@@ -154,12 +160,15 @@ import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
 import checkPermission from '@/utils/permission'
 import { SYSTEM_ROLE, DRIVER_PRIVILAGE } from '@/enums'
+import * as moment from 'moment'
+import CompanySelector from '@/components/CompanySelector'
 
 export default {
   name: 'DriverListings',
   directives: { permission },
   components: {
-    Pagination
+    Pagination,
+    CompanySelector
   },
   props: {
     id: {
@@ -258,7 +267,9 @@ export default {
         dob: driver.dob,
         address: driver.address,
         licenseNo: driver.license_no,
-        licenseRenewal: driver.license_renewal_date,
+        licenseRenewal: driver.license_renewal_date
+          ? moment(driver.license_renewal_date).format('yyyy/MM/DD')
+          : '',
         licenseLocation: driver.license_location,
         phoneNo: driver.phone_no,
         rfid: driver.rfid
@@ -279,7 +290,7 @@ export default {
       let response = null
       this.loading = true
       try {
-        response = await fetchDrivers(this.listQuery)
+        response = await fetchDrivers(this.listQuery, this.customerId)
         const { data, total } = response
         this.drivers = data.map(this.mapdriversToDataTable)
         this.total = total
@@ -373,6 +384,10 @@ export default {
             type: 'danger'
           })
         })
+    },
+    async onCustomerChanged(customerId) {
+      this.customerId = customerId
+      await this.fetchListings()
     }
   }
 }

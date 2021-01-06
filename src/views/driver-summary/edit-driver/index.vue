@@ -33,7 +33,8 @@ export default {
         licenseReceived: data.license_received_date,
         licenseRenewal: data.license_renewal_date,
         licenseLocation: data.license_location,
-        phoneNo: data.phone_no
+        phoneNo: data.phone_no,
+        customerId: data.customer_id
       }
     } catch (err) {
       this.$router.push('/404')

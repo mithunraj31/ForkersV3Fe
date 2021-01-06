@@ -15,11 +15,24 @@
 import { fetchCustomers } from '@/api/customer'
 export default {
   name: 'CompanySelector',
+  props: {
+    id: {
+      type: Number,
+      default: () => {
+        return 0
+      }
+    }
+  },
   data() {
     return {
       loading: false,
       customers: [],
       customerId: ''
+    }
+  },
+  watch: {
+    id(newId) {
+      this.customerId = newId
     }
   },
   async mounted() {
