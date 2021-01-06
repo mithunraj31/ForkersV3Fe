@@ -64,64 +64,75 @@
           </el-table-column>
           <el-table-column :label="this.$t('general.action')" width="400px">
             <template slot-scope="scope">
-              <el-dropdown>
-                <el-button type="info" class="device-summary-btn" size="mini">
-                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
-                </el-button>
-                <el-dropdown-menu slot="dropdown" size="mini">
-                  <el-dropdown-item>
-                    <div class="block">
-                      <el-date-picker
-                        v-model="drivetimeRange"
-                        type="datetimerange"
-                        :picker-options="pickerOptions"
-                        range-separator="~"
-                        :start-placeholder="$t('general.begin')"
-                        :end-placeholder="$t('general.end')"
-                        align="right"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        @change="driveClick(drivetimeRange, scope.row.id)"
-                      />
-                    </div>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <el-button
-                v-if="scope.row.operatorId !== null"
-                type="danger"
-                plain
-                size="mini"
-                @click="removeOperatorClicked(scope.row.id, scope.row.operatorId)"
-              >
-                {{ $t("rfid.listings.unMapOperator") }}
-              </el-button>
-              <el-button
-                v-if="scope.row.operatorId === null"
-                type="primary"
-                plain
-                size="mini"
-                @click.native.prevent="
-                  $router.push(`/rfid/${scope.row.id}/assign-operator`)
-                "
-              >
-                {{ $t("rfid.listings.mapOperator") }}
-              </el-button>
-              <el-button
-                v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
-                type="primary"
-                size="mini"
-                @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
-              >
-                {{ $t("general.edit") }}
-              </el-button>
-              <el-button
-                v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
-                type="danger"
-                size="mini"
-                @click="onDeleterfidClicked(scope.row.id)"
-              >
-                {{ $t("general.delete") }}
-              </el-button>
+              <el-row>
+                <el-col :span="6">
+                  <el-dropdown>
+                    <el-button type="info" class="device-summary-btn" size="mini">
+                      {{ $t("device.drive")
+                      }}<i class="el-icon-arrow-down el-icon--right" />
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown" size="mini">
+                      <el-dropdown-item>
+                        <div class="block">
+                          <el-date-picker
+                            v-model="drivetimeRange"
+                            type="datetimerange"
+                            :picker-options="pickerOptions"
+                            range-separator="~"
+                            :start-placeholder="$t('general.begin')"
+                            :end-placeholder="$t('general.end')"
+                            align="right"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            @change="driveClick(drivetimeRange, scope.row.id)"
+                          />
+                        </div>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </el-col>
+                <el-col :span="8">
+                  <el-button
+                    v-if="scope.row.operatorId !== null"
+                    type="danger"
+                    plain
+                    size="mini"
+                    @click="removeOperatorClicked(scope.row.id, scope.row.operatorId)"
+                  >
+                    {{ $t("rfid.listings.unMapOperator") }}
+                  </el-button>
+                  <el-button
+                    v-if="scope.row.operatorId === null"
+                    type="primary"
+                    plain
+                    size="mini"
+                    @click.native.prevent="
+                      $router.push(`/rfid/${scope.row.id}/assign-operator`)
+                    "
+                  >
+                    {{ $t("rfid.listings.mapOperator") }}
+                  </el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
+                    type="primary"
+                    size="mini"
+                    @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
+                  >
+                    {{ $t("general.edit") }}
+                  </el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
+                    type="danger"
+                    size="mini"
+                    @click="onDeleterfidClicked(scope.row.id)"
+                  >
+                    {{ $t("general.delete") }}
+                  </el-button>
+                </el-col>
+              </el-row>
             </template>
           </el-table-column>
         </el-table>
