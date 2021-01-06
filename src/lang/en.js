@@ -373,7 +373,9 @@ export default {
     clear: 'Clear',
     add: 'Add',
     view: 'View',
-    select: 'Select'
+    select: 'Select',
+    assigned: 'Assigned',
+    unAssigned: 'UnAssigned'
   },
   maps: {
     status: {

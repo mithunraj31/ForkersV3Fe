@@ -2,10 +2,26 @@
   <div class="app-container">
     <el-row class="filter-section">
       <el-col :span="10">
-        <span v-if="!hasAdminPermission">{{ $t('rfid.listings.total') }}: {{ total }}</span>
+        <span
+          v-if="!hasAdminPermission"
+        >{{ $t("rfid.listings.total") }}: {{ total }}</span>
         <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
       </el-col>
-      <el-col :span="14" class="new-rfid-button-section">
+      <el-col :span="10" class="new-rfid-button-section">
+        <el-checkbox
+          v-model="assigned"
+          :label="$t('general.assigned')"
+          border
+          @change="onChecked()"
+        />
+        <el-checkbox
+          v-model="unAssigned"
+          :label="$t('general.unAssigned')"
+          border
+          @change="onChecked()"
+        />
+      </el-col>
+      <el-col :span="4" class="new-rfid-button-section">
         <el-button
           v-permission="[systemRole.ADMIN, rfidPrivilege.ADD]"
           type="primary"
@@ -147,11 +163,11 @@ export default {
     return {
       rfidDatas: null,
       total: 0,
+      unAssigned: true,
+      assigned: true,
       listQuery: {
         page: 1,
-        limit: 10,
-        unAssigned: true,
-        assigned: false
+        limit: 10
       },
       loading: false,
       pickerOptions: {
@@ -217,8 +233,8 @@ export default {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
       limit: +(this.$route.query.limit || this.listQuery.limit),
-      unAssigned: true,
-      assigned: true
+      unAssigned: this.unAssigned,
+      assigned: this.assigned
     }
     this.$router.push({
       query: this.listQuery
@@ -294,6 +310,18 @@ export default {
         })
     },
     async onPaged() {
+      await this.fetchListings()
+    },
+    async onChecked() {
+      this.listQuery = {
+        page: +(this.$route.query.page || this.listQuery.page),
+        limit: +(this.$route.query.limit || this.listQuery.limit),
+        unAssigned: this.unAssigned,
+        assigned: this.assigned
+      }
+      this.$router.push({
+        query: this.listQuery
+      })
       await this.fetchListings()
     },
     async rfidHistoryClick($rfid) {

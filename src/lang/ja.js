@@ -374,7 +374,9 @@ export default {
     add: '追加',
     clear: '入力をクリア',
     view: '覧',
-    select: '選択'
+    select: '選択',
+    assigned: '割り当てられた',
+    unAssigned: '未割り当て'
   },
   maps: {
     status: {
