@@ -1,12 +1,17 @@
 import request from '@/utils/request'
 
-export function fetchDrivers(query) {
+export function fetchDrivers(query, customerId = null) {
   let params = ''
   if (query.limit === 0) {
     params = `unAssigned=${query.unAssigned}&assigned=${query.assigned}`
   } else if (query) {
     params = `perPage=${query.limit}&page=${query.page}&unAssigned=${query.unAssigned}&assigned=${query.assigned}`
   }
+
+  if (customerId) {
+    params += `&customer_id=${customerId}`
+  }
+
   return request({
     url: `/operators?${params}`,
     method: 'get'
@@ -31,6 +36,11 @@ export function newDriver(driver) {
     license_location: driver.licenseLocation,
     phone_no: driver.phoneNo
   }
+
+  if (driver.customerId) {
+    data.customer_id = driver.customerId
+  }
+
   return request({
     url: `/operators`,
     method: 'post',
@@ -52,6 +62,11 @@ export function editDriver(driver) {
     phone_no: driver.phoneNo
 
   }
+
+  if (driver.customerId) {
+    data.customer_id = driver.customerId
+  }
+
   return request({
     url: `/operators/${data.id}`,
     method: 'put',

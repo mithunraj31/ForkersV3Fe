@@ -2,7 +2,10 @@
   <div class="app-container">
     <el-row>
       <el-col :span="12">
-        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
+        <el-form ref="form" :rules="formRules" :model="form" label-width="180px">
+          <el-form-item v-if="hasAdminPermission" :label="this.$t('driver.form.customer')">
+            <company-selector :id="+form.customerId" @change="onCustomerChanged" />
+          </el-form-item>
           <el-form-item :label="this.$t('driver.form.name')" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
@@ -46,7 +49,7 @@
             <el-input v-model="form.phoneNo" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="this.onSubmit">{{
+            <el-button type="primary" @click="onSubmit">{{
               this.$t("general.save")
             }}</el-button>
             <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
@@ -58,8 +61,13 @@
 </template>
 
 <script>
+import CompanySelector from '@/components/CompanySelector'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE, DRIVER_PRIVILAGE } from '@/enums'
+
 export default {
   name: 'DriverForm',
+  components: { CompanySelector },
   props: {
     driver: {
       type: Object,
@@ -73,7 +81,8 @@ export default {
           licenseReceived: '',
           licenseRenewal: '',
           licenseLocation: '',
-          phoneNo: ''
+          phoneNo: '',
+          customerId: 0
         }
       }
     }
@@ -145,7 +154,8 @@ export default {
         licenseReceived: '',
         licenseRenewal: '',
         licenseLocation: '',
-        phoneNo: ''
+        phoneNo: '',
+        customerId: ''
       },
       dialogVisible: false,
       formRules: {
@@ -208,6 +218,18 @@ export default {
       }
     }
   },
+
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    driverPrivilege() {
+      return DRIVER_PRIVILAGE
+    }
+  },
   watch: {
     driver: function(newDriver, oldDriver) {
       this.form.id = newDriver.id
@@ -219,6 +241,7 @@ export default {
       this.form.licenseRenewal = newDriver.licenseRenewal
       this.form.licenseLocation = newDriver.licenseLocation
       this.form.phoneNo = newDriver.phoneNo
+      this.form.customerId = newDriver.customerId
     }
   },
   methods: {
@@ -230,6 +253,9 @@ export default {
           })
         }
       })
+    },
+    onCustomerChanged(customerId) {
+      this.form.customerId = customerId
     }
   }
 }

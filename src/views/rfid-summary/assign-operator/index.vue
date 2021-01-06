@@ -106,7 +106,7 @@
             </el-col>
             <el-col :span="24">
               <el-form-item>
-                <el-button type="primary" @click="this.onSubmit">{{
+                <el-button type="primary" @click="onSubmit">{{
                   $t("general.save")
                 }}</el-button>
                 <el-button @click="$router.go(-1)">{{
@@ -168,7 +168,7 @@ export default {
     return {
       form: {
         id: 0,
-        rfid: +this.$route.params.rfid,
+        rfid: this.$route.params.rfid,
         operatorId: '',
         name: '',
         dob: '',

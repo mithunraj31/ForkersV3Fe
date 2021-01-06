@@ -206,7 +206,7 @@ export default {
     driverIdRequired: 'オペレーターIdが必要です',
     nameRequired: '名前は必須です',
     dobRequired: 'DOBが必要です',
-    addressRequired: 'アドレスが必要です',
+    addressRequired: '住所が必要です',
     licenseNoRequired: '免許番号が必要です',
     licenseReceivedDateRequired: '免許の受領日が必要です',
     licenseRenewalDateRequired: '免許の有効期限が必要です',
@@ -452,11 +452,12 @@ export default {
       name: '名前',
       licenseNo: '免許番号',
       phoneNo: '電話番号',
-      address: 'アドレス',
+      address: '住所',
       licenseReceived: '免許受領日',
       licenseRenewal: '免許有効期限',
       licenseLocation: '免許の場所',
-      operatorName: '演算子名'
+      operatorName: '演算子名',
+      customer: '会社'
     }
   },
   rfid: {
