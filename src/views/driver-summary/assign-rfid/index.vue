@@ -19,7 +19,7 @@
               >
                 <template slot-scope="{ item }">
                   <div class="value">
-                    {{ item.rfid_id }}
+                    {{ item.id }}
                     <span class="link">{{ item.customer_id }}</span>
                   </div>
                 </template>
@@ -159,12 +159,12 @@ export default {
     },
     createFilter(queryString) {
       return (opIds) => {
-        return opIds.rfid_id.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        return opIds.id.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     handleSelect(item) {
-      this.selectedId = item.rfid_id
-      this.form.rfid = item.rfid_id
+      this.selectedId = item.id
+      this.form.rfid = item.id
     }
   }
 }

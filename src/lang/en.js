@@ -431,7 +431,7 @@ export default {
   driver: {
     listings: {
       id: 'ID',
-      driverId: 'OperatorId',
+      driverId: 'Operator',
       age: 'Age',
       name: 'Name',
       licenseNo: 'License Number',

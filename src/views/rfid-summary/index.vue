@@ -47,15 +47,15 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="customer" :label="this.$t('rfid.form.customer')" />
-          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
+          <el-table-column prop="customerName" :label="this.$t('rfid.form.customer')" />
+          <el-table-column prop="operator" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
               <div
                 v-if="scope.row.operatorId !== null"
                 class="click"
                 @click="driverDetailClick(scope.row.operatorId)"
               >
-                {{ scope.row.operatorId }}
+                {{ scope.row.operatorName }}
               </div>
               <div v-else>
                 {{ $t("rfid.listings.notAssigned") }}
@@ -256,7 +256,9 @@ export default {
     mapRfidToDataTable(rfid) {
       return {
         id: rfid.id,
-        customer: rfid.customer_id,
+        customerName: rfid.customer.name,
+        customerId: rfid.customer.id,
+        operatorName: rfid.operator_name,
         operatorId: rfid.operator_id
       }
     },
