@@ -29,7 +29,9 @@
               <el-button type="primary" @click="onSubmit">{{
                 $t("general.save")
               }}</el-button>
-              <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
+              <el-button @click="$router.go(-1)">{{
+                $t("general.cancel")
+              }}</el-button>
             </el-form-item>
           </el-col>
         </div>
@@ -120,7 +122,6 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.loading = true
-          console.log(this.form)
           assignRfid(this.form)
             .then((response) => {
               this.loading = false
@@ -153,7 +154,9 @@ export default {
     },
     querySearch(queryString, cb) {
       var opIds = this.opIds
-      var results = queryString ? opIds.filter(this.createFilter(queryString)) : opIds
+      var results = queryString
+        ? opIds.filter(this.createFilter(queryString))
+        : opIds
       // call callback function to return suggestion objects
       cb(results)
     },

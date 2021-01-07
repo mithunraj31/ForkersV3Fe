@@ -15,16 +15,10 @@
           style="width: auto"
         >
           <el-table-column prop="rfid" :label="this.$t('rfid.listings.rfid')" />
-          <el-table-column
-            prop="operatorId"
-            :label="this.$t('driver.listings.driverId')"
-          >
+          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
-              <label
-                class="click"
-                @click="driverDetailClick(scope.row.operatorId)"
-              >
-                {{ scope.row.operatorId }}
+              <label class="click" @click="driverDetailClick(scope.row.operatorId)">
+                {{ scope.row.operatorName }}
               </label>
             </template>
           </el-table-column>
@@ -136,6 +130,7 @@ export default {
         id: rfid.id,
         rfid: rfid.rfid,
         operatorId: rfid.operator_id,
+        operatorName: rfid.operator.name,
         assignedFrom: rfid.assigned_from,
         assignedTill: rfid.assigned_till
       }
@@ -143,10 +138,7 @@ export default {
     async fetchListings() {
       let response = null
       this.loading = true
-      response = await findrfIdHistory(
-        this.$route.params.rfid,
-        this.listQuery
-      )
+      response = await findrfIdHistory(this.$route.params.rfid, this.listQuery)
       const { data, total } = response
       this.rfidHistoryDatas = data.map(this.mapRfidHistoryToDataTable)
       this.total = total
