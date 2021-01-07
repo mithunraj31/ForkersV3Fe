@@ -26,7 +26,7 @@
               </el-autocomplete>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="this.onSubmit">{{
+              <el-button type="primary" @click="onSubmit">{{
                 $t("general.save")
               }}</el-button>
               <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
