@@ -47,7 +47,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="customerName" :label="this.$t('rfid.form.customer')" />
+          <el-table-column prop="customer" :label="this.$t('rfid.form.customer')" />
           <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
               <div
@@ -90,7 +90,7 @@
                     </el-dropdown-menu>
                   </el-dropdown>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="10">
                   <el-button
                     v-if="scope.row.operatorId !== null"
                     type="danger"
@@ -256,8 +256,7 @@ export default {
     mapRfidToDataTable(rfid) {
       return {
         id: rfid.id,
-        customerId: rfid.customer_id,
-        customerName: rfid.customer.name,
+        customer: rfid.customer_id,
         operatorId: rfid.operator_id
       }
     },
@@ -265,7 +264,6 @@ export default {
       let response = null
       this.loading = true
       try {
-        console.log(this.customerId)
         response = await fetchRfid(this.listQuery, this.customerId)
         const { data, total } = response
         this.rfidDatas = data.map(this.mapRfidToDataTable)
@@ -275,6 +273,7 @@ export default {
           query: this.listQuery
         })
       } catch (exception) {
+        console.log(exception)
         this.loading = false
       }
     },

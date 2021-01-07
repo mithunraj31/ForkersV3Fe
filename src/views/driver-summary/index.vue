@@ -103,7 +103,9 @@
                     type="danger"
                     plain
                     size="mini"
-                    @click="removeRFIDClicked(scope.row.id, scope.row.rfid)"
+                    @click="
+                      removeRFIDClicked(scope.row.id, scope.row.rfid, scope.row.licenseNo)
+                    "
                   >
                     {{ $t("driver.listings.unMapRFID") }}
                   </el-button>
@@ -134,7 +136,7 @@
                     v-permission="[systemRole.ADMIN, driverPrivilege.DELETE]"
                     type="danger"
                     size="mini"
-                    @click="onDeletedriverClicked(scope.row.id)"
+                    @click="onDeletedriverClicked(scope.row.id, scope.row.licenseNo)"
                   >
                     {{ $t("general.delete") }}
                   </el-button>
@@ -284,9 +286,6 @@ export default {
       )
     },
     async fetchListings() {
-      console.log(this.listQuery)
-      console.log(this.assigned)
-
       let response = null
       this.loading = true
       try {
@@ -305,11 +304,11 @@ export default {
     driverDetailClick(id) {
       this.$router.push(`/drivers/${id}/detail`)
     },
-    onDeletedriverClicked(id) {
+    onDeletedriverClicked(id, licenseNo) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
-        `${this.$t('driver.listings.driverId')}: ${id}`
+        `${this.$t('driver.listings.licenseNo')}: ${licenseNo}`
       )
 
       this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
@@ -351,11 +350,11 @@ export default {
       })
       await this.fetchListings()
     },
-    removeRFIDClicked($id, $rfid) {
+    removeRFIDClicked($id, $rfid, licenseNo) {
       let deleteConfirmMessage = this.$t('message.confirmRemove')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
-        `${this.$t('driver.listings.id')}: ${$id}`
+        `${this.$t('driver.listings.licenseNo')}: ${licenseNo}`
       )
 
       this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {

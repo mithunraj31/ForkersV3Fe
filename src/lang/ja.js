@@ -215,7 +215,7 @@ export default {
     driverHasBeenCreated: '演算子が作成されました',
     driverHasBeenEdited: '演算子が編集されました',
     confirmDelete: '「{0}」を削除してもよろしいでしょうか',
-    confirmRemove: 'RFID「{0}」Operatorを削除してもよろしいですか？',
+    confirmRemove: '「{0}」オペレーターとRFIDの割り当てを解除してもよろしいですか？',
     userNameRequired: 'ユーザー名が必要があります',
     stkUserRequired: 'STKユーザーが必要があります',
     emailRequired: 'メールが必要があります',

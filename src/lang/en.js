@@ -215,7 +215,7 @@ export default {
     driverHasBeenCreated: 'Operator is created',
     driverHasBeenEdited: 'Operator has been edited',
     confirmDelete: 'Are you sure you want to delete {0}?',
-    confirmRemove: 'Are you sure you want to remove Operator for RFID {0}?',
+    confirmRemove: 'Are you sure you want to UnAssign Operator and RFID for {0}?',
     userNameRequired: 'User Name is Required',
     stkUserRequired: 'STK user is Required',
     emailRequired: 'Email is Required',
