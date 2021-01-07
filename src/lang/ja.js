@@ -373,7 +373,7 @@ export default {
     longitude: '経度 (Lng)',
     add: '追加',
     clear: '入力をクリア',
-    view: '覧',
+    view: '見る',
     select: '選択'
   },
   maps: {
