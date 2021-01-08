@@ -7,7 +7,7 @@
         >{{ $t("rfid.listings.total") }}: {{ total }}</span>
         <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
       </el-col>
-      <el-col :span="10" class="new-driver-button-section">
+      <el-col :span="14" class="new-driver-button-section">
         <el-checkbox
           v-model="assigned"
           :label="$t('general.assigned')"
@@ -16,12 +16,11 @@
         />
         <el-checkbox
           v-model="unAssigned"
+          class="checkbox-filter"
           :label="$t('general.unAssigned')"
           border
           @change="onChecked()"
         />
-      </el-col>
-      <el-col :span="4" class="new-driver-button-section">
         <el-button
           v-permission="[systemRole.ADMIN, driverPrivilege.ADD]"
           type="primary"
@@ -410,5 +409,9 @@ $--color-primary: #005d74;
 .click {
   color: $--color-primary;
   cursor: pointer;
+}
+
+.checkbox-filter {
+  margin-right: 15px;
 }
 </style>
