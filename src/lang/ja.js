@@ -90,7 +90,10 @@ export default {
     editRole: 'ロールを編集',
     groupManagement: 'グループを管理',
     newUser: 'ユーザーを追加',
-    editUser: 'ユーザーを編集'
+    editUser: 'ユーザーを編集',
+    manufacturerListings: 'メーカーリスト',
+    newManufacturer: 'メーカーを追加',
+    editManufacturer: 'メーカーを編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -263,7 +266,11 @@ export default {
     rfidHasBeenDeleted: 'RFIDが削除されました',
     customerRequired: '顧客が必要',
     ownerRequired: '所有者が必要',
-    groupRequired: 'グループが必要'
+    groupRequired: 'グループが必要',
+    manufacturerRequired: 'メーカー名が必要です',
+    manufacturerHasBeenCreated: 'メーカー名が作成されました',
+    manufacturerBeenDeleted: 'メーカー名が削除されました',
+    manufacturerHasBeenEdited: 'メーカー名が編集されました'
   },
 
   event: {
@@ -574,7 +581,8 @@ export default {
       customer: '会社',
       vehicle: '車両',
       rfid: 'RFID',
-      driver: 'ドライバー'
+      driver: 'ドライバー',
+      manufacturer: 'メーカー'
     }
   },
 
@@ -591,6 +599,25 @@ export default {
     filterPlaceholder: 'グループ名で検索',
     append: '追加',
     delete: '削除'
+  },
+  manufacturer: {
+    new: {
+      title: 'メーカーを追加'
+    },
+    listings: {
+      id: '番号',
+      name: 'メーカー名',
+      description: '備考  ',
+      updated: '最終更新時刻'
+    },
+    form: {
+      customer: '会社',
+      name: 'メーカー名',
+      description: '備考'
+    },
+    edit: {
+      title: 'メーカーを編集'
+    }
   }
 
 }

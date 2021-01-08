@@ -90,7 +90,10 @@ export default {
     editRole: 'Edit role',
     groupManagement: 'Group Manangement',
     newUser: 'New user',
-    editUser: 'Edit User'
+    editUser: 'Edit User',
+    manufacturerListings: 'Manufacturer listings',
+    newManufacturer: 'New manufacturer',
+    editManufacturer: 'Edit manufacturer'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -262,7 +265,11 @@ export default {
     rfidHasBeenDeleted: 'RFID Has been Deleted',
     customerRequired: 'Customer Required',
     ownerRequired: 'Owner Required',
-    groupRequired: 'Group reguired'
+    groupRequired: 'Group reguired',
+    manufacturerRequired: 'Manufacturer name is required',
+    manufacturerHasBeenCreated: 'Manufacturer has been created',
+    manufacturerBeenDeleted: 'Manufacturer has been deleted',
+    manufacturerHasBeenEdited: 'Manufacturer has been edited'
   },
 
   event: {
@@ -577,7 +584,8 @@ export default {
       customer: 'Customer',
       vehicle: 'Vehicle',
       rfid: 'RFID',
-      driver: 'Driver'
+      driver: 'Driver',
+      manufacturer: 'Manufacturer'
     }
   },
 
@@ -594,5 +602,21 @@ export default {
     filterPlaceholder: 'Search by group name',
     append: 'Append',
     delete: 'Delete'
+  },
+  manufacturer: {
+    new: {
+      title: 'New Manufacturer'
+    },
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      description: 'Description',
+      updated: 'Last updated'
+    },
+    form: {
+      customer: 'Customer',
+      name: 'Name',
+      description: 'Description'
+    }
   }
 }

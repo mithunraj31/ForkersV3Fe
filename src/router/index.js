@@ -7,7 +7,8 @@ import {
   ROLE_PRIVILEGE,
   DEVICE_PRIVILEGE,
   VEHICLE_PRIVILEGE,
-  EVENT_PRIVILEGE
+  EVENT_PRIVILEGE,
+  MANUFACTURER_PRIVILEGE
 } from '@/enums'
 
 Vue.use(Router)
@@ -471,6 +472,47 @@ export const asyncRoutes = [
           icon: 'peoples',
           noCache: true,
           roles: [SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.VIEW, GROUP_PRIVILEGE.ADD, GROUP_PRIVILEGE.EDIT, GROUP_PRIVILEGE.DELETE]
+        }
+      }
+    ]
+  },
+  {
+    path: '/manufacturers',
+    component: Layout,
+    redirect: '/manufacturers/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/manufacturer/index'),
+        name: 'Manufacturers',
+        meta: {
+          title: 'manufacturerListings',
+          icon: 'el-icon-s-tools',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/manufacturer/new-manufacturer/index'),
+        name: 'NewManufacturer',
+        hidden: true,
+        meta: {
+          title: 'newManufacturer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/manufacturer/edit-manufacturer/index'),
+        name: 'EditManufacturer',
+        hidden: true,
+        meta: {
+          title: 'editManufacturer',
+          noCache: true,
+          breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
         }
       }
     ]

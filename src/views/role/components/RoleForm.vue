@@ -96,7 +96,8 @@ export default {
         operator: [],
         vehicle: [],
         rfid: [],
-        driver: []
+        driver: [],
+        manufacturer: []
       },
       customers: [],
       formRules: {

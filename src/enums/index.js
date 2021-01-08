@@ -16,7 +16,8 @@ export const RESOURCE_TYPE = Object.freeze({
   OPERATOR: 'operator',
   VEHICLE: 'vehicle',
   RFID: 'rfid',
-  DRIVER: 'driver'
+  DRIVER: 'driver',
+  Manufacturer: 'manufacturer'
 })
 
 export const SYSTEM_ROLE = Object.freeze({
@@ -25,7 +26,9 @@ export const SYSTEM_ROLE = Object.freeze({
 })
 
 export const RFID_PRIVILAGE = generatePrivilege(RESOURCE_TYPE.RFID)
+
 export const DRIVER_PRIVILAGE = generatePrivilege(RESOURCE_TYPE.DRIVER)
+
 export const GROUP_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.GROUP)
 
 export const USER_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.USER)
@@ -39,3 +42,5 @@ export const OPERATOR_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.OPERATOR)
 export const ROLE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.ROLE)
 
 export const VEHICLE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.VEHICLE)
+
+export const MANUFACTURER_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.Manufacturer)
