@@ -176,6 +176,47 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/vehicles',
+    component: Layout,
+    redirect: '/vehicles/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/vehicle/index'),
+        name: 'Vehicles',
+        meta: {
+          title: 'vehiclesListings',
+          icon: 'el-icon-truck',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/vehicle/new-vehicle/index'),
+        name: 'NewVehicle',
+        hidden: true,
+        meta: {
+          title: 'newVehicle',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/vehicle/edit-vehicle/index'),
+        name: 'EditVehicle',
+        hidden: true,
+        meta: {
+          title: 'editVehicle',
+          noCache: true,
+          breadcrumbTitle: 'editVehicleBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+  {
     path: '/customers',
     component: Layout,
     redirect: '/customers/index',
