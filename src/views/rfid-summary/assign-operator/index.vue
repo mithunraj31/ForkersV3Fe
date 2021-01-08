@@ -4,14 +4,14 @@
     <el-row>
       <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
         <div>
-          <el-col :span="12">
+          <el-col :span="10">
             <el-form-item :label="this.$t('rfid.form.rfid')" prop="rfid">
               <el-input v-model="form.rfid" disabled />
             </el-form-item>
-            <el-form-item
-              :label="this.$t('driver.form.operatorName')"
-              prop="name"
-            >
+            <el-form-item :label="$t('driver.listings.customer')">
+              <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
+            </el-form-item>
+            <el-form-item :label="this.$t('driver.form.operatorName')" prop="name">
               <el-autocomplete
                 v-model="selectedId"
                 popper-class="my-autocomplete"
@@ -32,86 +32,75 @@
         </div>
         <div>
           <el-col :span="24">
-            <el-col :span="12">
-              <el-form-item
-                :label="this.$t('driver.form.driverId')"
-                prop="operatorId"
-              >
-                <el-input v-model="form.operatorId" disabled />
-              </el-form-item>
-            </el-col>
-            <el-form-item :label="this.$t('driver.form.dob')" prop="dob">
-              <template>
-                <el-date-picker v-model="form.dob" type="date" disabled />
-              </template>
-            </el-form-item>
-            <el-col :span="12">
-              <el-form-item
-                :label="this.$t('driver.form.licenseNo')"
-                prop="licenseNo"
-              >
-                <el-input v-model="form.licenseNo" disabled />
-              </el-form-item>
+            <el-row>
+              <el-col :span="6">
+                <el-form-item :label="this.$t('driver.form.driverId')" prop="operatorId">
+                  <el-input v-model="form.operatorId" disabled />
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item :label="this.$t('driver.form.licenseNo')" prop="licenseNo">
+                  <el-input v-model="form.licenseNo" disabled />
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item :label="this.$t('driver.form.dob')" prop="dob">
+                  <template>
+                    <el-date-picker v-model="form.dob" type="date" disabled />
+                  </template>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <el-form-item :label="this.$t('driver.form.phoneNo')" prop="phoneNo">
+                  <el-input v-model="form.phoneNo" disabled />
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item
+                  :label="this.$t('driver.form.licenseLocation')"
+                  prop="licenseLocation"
+                >
+                  <el-input v-model="form.licenseLocation" disabled />
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item
+                  :label="this.$t('driver.form.licenseReceived')"
+                  prop="licenseReceived"
+                >
+                  <template>
+                    <el-date-picker v-model="form.licenseReceived" type="date" disabled />
+                  </template>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-              <el-form-item
-                :label="this.$t('driver.form.licenseLocation')"
-                prop="licenseLocation"
-              >
-                <el-input v-model="form.licenseLocation" disabled />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item
-                :label="this.$t('driver.form.licenseReceived')"
-                prop="licenseReceived"
-              >
-                <template>
-                  <el-date-picker
-                    v-model="form.licenseReceived"
-                    type="date"
-                    disabled
-                  />
-                </template>
-              </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item :label="this.$t('driver.form.address')" prop="address">
+                  <el-input v-model="form.address" disabled />
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item
+                  :label="this.$t('driver.form.licenseRenewal')"
+                  prop="licenseRenewal"
+                >
+                  <template>
+                    <el-date-picker v-model="form.licenseRenewal" type="date" disabled />
+                  </template>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-              <el-form-item
-                :label="this.$t('driver.form.licenseRenewal')"
-                prop="licenseRenewal"
-              >
-                <template>
-                  <el-date-picker
-                    v-model="form.licenseRenewal"
-                    type="date"
-                    disabled
-                  />
-                </template>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="12">
-              <el-form-item
-                :label="this.$t('driver.form.phoneNo')"
-                prop="phoneNo"
-              >
-                <el-input v-model="form.phoneNo" disabled />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item
-                :label="this.$t('driver.form.address')"
-                prop="address"
-              >
-                <el-input v-model="form.address" disabled />
-              </el-form-item>
-            </el-col>
             <el-col :span="24">
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">{{
                   $t("general.save")
                 }}</el-button>
-                <el-button @click="$router.go(-1)">{{
-                  $t("general.cancel")
-                }}</el-button>
+                <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
               </el-form-item>
             </el-col>
           </el-col>
@@ -124,9 +113,17 @@
 <script>
 import { assignOperator } from '@/api/rfid'
 import { fetchDrivers } from '@/api/driver'
+import permission from '@/directive/permission'
+import { SYSTEM_ROLE } from '@/enums'
+import CompanySelector from '@/components/CompanySelector'
+import checkPermission from '@/utils/permission'
 
 export default {
   name: 'AssignRfid',
+  directives: { permission },
+  components: {
+    CompanySelector
+  },
   props: {
     rfidData: {
       type: Object,
@@ -158,6 +155,9 @@ export default {
     }
 
     const validateOperatorName = (rule, value, callback) => {
+      if (!this.customerId) {
+        callback(new Error(this.$t('message.selectCustomer')))
+      }
       if (!value) {
         callback(new Error(this.$t('message.nameRequired')))
       } else {
@@ -205,6 +205,14 @@ export default {
       }
     }
   },
+  computed: {
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    }
+  },
   mounted() {
     this.listQuery = {
       limit: 0,
@@ -242,7 +250,7 @@ export default {
       let response = null
       this.loading = true
       try {
-        response = await fetchDrivers(this.listQuery)
+        response = await fetchDrivers(this.listQuery, this.customerId)
         this.opIds = response
         this.loading = false
       } catch (exception) {
@@ -251,17 +259,13 @@ export default {
     },
     querySearch(queryString, cb) {
       var opIds = this.opIds
-      var results = queryString
-        ? opIds.filter(this.createFilter(queryString))
-        : opIds
+      var results = queryString ? opIds.filter(this.createFilter(queryString)) : opIds
       // call callback function to return suggestion objects
       cb(results)
     },
     createFilter(queryString) {
       return (opIds) => {
-        return (
-          opIds.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-        )
+        return opIds.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     handleSelect(item) {
@@ -275,6 +279,13 @@ export default {
       this.form.licenseRenewal = item.license_renewal_date
       this.form.licenseLocation = item.license_location
       this.form.phoneNo = item.phone_no
+    },
+    async onCustomerChanged(customerId) {
+      this.customerId = customerId
+      this.selectedId = ''
+      this.form.name = ''
+      this.handleSelect('')
+      await this.fetchListings()
     }
   }
 }
