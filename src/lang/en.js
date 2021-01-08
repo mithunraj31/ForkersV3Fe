@@ -651,7 +651,28 @@ export default {
     form: {
       manufacturer: 'Manufacturer',
       name: 'Name',
-      seriesName: 'Series name'
+      seriesName: 'Series name',
+      modelName: 'Model Name',
+      powerType: 'Power Type',
+      structuralMethod: 'Structural Method',
+      engineModel: 'Engine Model',
+      ratedLoad: 'Rated Load(kg)',
+      forkLength: 'Fork Length(mm)',
+      forkWidth: 'Fork Width(mm)',
+      standardLift: 'Standard Lift(mm)',
+      maximumLift: 'Maximum Lift(mm)',
+      batteryVoltage: 'Battery Voltage(V)',
+      batteryCapacity: 'Battery Capacity(Ah)',
+      fuelTankCapcity: 'Fuel Tank Capacity(L)',
+      bodyWeight: 'Body Weight(kg)',
+      bodyLength: 'Body Length(mm)',
+      bodyWidth: 'Body Width(mm)',
+      headGuardHeight: 'Head Guard Height(mm)',
+      minTurningRadius: 'Minimum Turning Radius(mm)',
+      refLoadCenter: 'Reference Load Center(mm)',
+      tireSizeFrontWheel: 'Tire Size Front Wheel',
+      tireSizeRearWheel: 'Tire Size Rear Wheel',
+      remarks: 'Remarks'
     }
   },
   vehicle: {
