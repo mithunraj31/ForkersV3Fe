@@ -40,9 +40,7 @@ export function newRfid(rfid) {
 export function editRfid(rfid) {
   const data = {
     id: rfid.id,
-    customerId: rfid.customerId,
-    ownerId: rfid.ownerId,
-    groupId: rfid.groupId
+    customer_id: rfid.customerId
   }
   return request({
     url: `/rfid/${data.id}`,
