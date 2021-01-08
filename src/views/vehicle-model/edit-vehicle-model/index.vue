@@ -1,37 +1,35 @@
 <template>
   <div v-loading="loading" class="app-container">
-    <h3>{{ this.$t("manufacturer.edit.title") }}: {{ $route.params.id }}</h3>
-    <manufacturer-form :manufacturer="manufacturer" @onFormSubmit="onFormSubmit" />
+    <h3>{{ this.$t("vehicleModel.edit.title") }}: {{ $route.params.id }}</h3>
+    <vehicle-model-form :vehicle-model="vehicleModel" @onFormSubmit="onFormSubmit" />
   </div>
 </template>
 
 <script>
-import ManufacturerForm from '../components/ManufacturerForm'
+import VehicleModelForm from '../components/VehicleModelForm'
 import {
-  fetchManufacturerById,
-  editManufacturer
-} from '@/api/manufacturer'
+  editVehicleModel,
+  fetchVehicleModelById
+} from '@/api/vehicle-model'
 
 export default {
-  name: 'EditManufacturer',
+  name: 'EditVehicleModel',
   components: {
-    ManufacturerForm
+    VehicleModelForm
   },
   data() {
     return {
-      manufacturer: {},
+      vehicleModel: {},
       loading: false
     }
   },
   async mounted() {
     this.loading = true
     try {
-      const { data } = await fetchManufacturerById(+this.$route.params.id)
-      this.manufacturer = {
+      const { data } = await fetchVehicleModelById(+this.$route.params.id)
+      this.vehicleModel = {
         id: +this.$route.params.id,
-        name: data.name,
-        description: data.description,
-        customerId: data.customer_id
+        name: data.name
       }
     } catch (err) {
       this.$router.push('/404')
@@ -41,14 +39,14 @@ export default {
   methods: {
     onFormSubmit(form) {
       this.loading = true
-      editManufacturer(form)
+      editVehicleModel(form)
         .then(() => {
           this.loading = false
           this.$message({
-            message: this.$t('message.manufacturerHasBeenEdited'),
+            message: this.$t('message.vehicleModelHasBeenEdited'),
             type: 'success'
           })
-          this.$router.push('/manufacturers')
+          this.$router.push('/vehicle-models')
         })
         .catch(() => {
           this.loading = false

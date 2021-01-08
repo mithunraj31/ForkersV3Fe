@@ -1,29 +1,29 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="10" class="new-customer-button-section">
-        <company-selector @change="onCustomerChanged" />
+      <el-col :span="10">
+        <manufacturer-selector @change="onManufacturerChanged" />
       </el-col>
       <el-col :span="14" class="new-manufacturer-button-section">
-        <el-button type="primary" @click="$router.push('/manufacturers/new')">{{
-          this.$t("manufacturer.new.title")
+        <el-button type="primary" @click="$router.push('/vehicle-models/new')">{{
+          this.$t("vehicleModel.new.title")
         }}</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-table v-loading="loading" :data="manufacturers" border style="width: 100%">
-          <el-table-column prop="id" :label="this.$t('manufacturer.listings.id')" width="50" />
-          <el-table-column prop="name" :label="this.$t('manufacturer.listings.name')" />
-          <el-table-column prop="description" :label="this.$t('manufacturer.listings.description')" />
-          <el-table-column prop="updated" :label="this.$t('manufacturer.listings.updated')" />
+        <el-table v-loading="loading" :data="vehicleModels" border style="width: 100%">
+          <el-table-column prop="id" :label="this.$t('vehicleModel.listings.id')" width="50" />
+          <el-table-column prop="name" :label="this.$t('vehicleModel.listings.name')" />
+          <el-table-column prop="seriesName" :label="this.$t('vehicleModel.listings.seriesName')" />
+          <el-table-column prop="updated" :label="this.$t('vehicleModel.listings.updated')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/manufacturers/${scope.row.id}/edit`)
+                  $router.push(`/vehicle-models/${scope.row.id}/edit`)
                 "
               >
                 {{ $t("general.edit") }}
@@ -42,33 +42,33 @@
 
 <script>
 import {
-  fetchManufacturers,
-  deleteManufacturer
-} from '@/api/manufacturer'
+  fetchVehicleModels,
+  deleteVehicleModel
+} from '@/api/vehicle-model'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 import permission from '@/directive/permission/index.js'
-import CompanySelector from '@/components/CompanySelector'
+import ManufacturerSelector from '@/components/ManufacturerSelector'
 
 export default {
-  name: 'ManufacturerListings',
+  name: 'VehicleModelsListings',
   components: {
-    CompanySelector,
-    Pagination
+    Pagination,
+    ManufacturerSelector
   },
   directives: {
     permission
   },
   data() {
     return {
-      manufacturers: null,
+      vehicleModels: null,
       total: 0,
       listQuery: {
         page: 1,
         limit: 10
       },
       loading: false,
-      customerId: 0
+      manufacturerId: 0
     }
   },
 
@@ -88,19 +88,25 @@ export default {
       return {
         id: data.id,
         name: data.name,
-        description: data.description,
+        seriesName: data.series_name,
         updated: datetime
       }
     },
     async fetchListings() {
       this.loading = true
-      const { data, meta } = await fetchManufacturers(this.listQuery, this.customerId)
-      this.manufacturers = data.map(this.mapData)
-      this.total = meta.total
-      this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
+      try {
+        const { data, meta } = await fetchVehicleModels(this.listQuery, this.manufacturerId)
+        this.vehicleModels = data.map(this.mapData)
+        this.total = meta.total
+      } catch (ex) {
+        this.vehicleModels = []
+        this.total = 0
+      } finally {
+        this.loading = false
+        this.$router.push({
+          query: this.listQuery
+        })
+      }
     },
     onDeleteClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
@@ -118,10 +124,10 @@ export default {
       })
     },
     deleteConfirmed(id) {
-      deleteManufacturer(id)
+      deleteVehicleModel(id)
         .then(() => {
           this.$message({
-            message: this.$t('message.manufacturerHasBeenDeleted'),
+            message: this.$t('message.vehicleModelHasBeenDeleted'),
             type: 'success'
           })
           this.fetchListings()
@@ -136,8 +142,8 @@ export default {
     async onPaged() {
       await this.fetchListings()
     },
-    async onCustomerChanged(customerId) {
-      this.customerId = customerId
+    async onManufacturerChanged(manufacturerId) {
+      this.manufacturerId = manufacturerId
       await this.fetchListings()
     }
   }

@@ -93,7 +93,13 @@ export default {
     editUser: 'Edit User',
     manufacturerListings: 'Manufacturer listings',
     newManufacturer: 'New manufacturer',
-    editManufacturer: 'Edit manufacturer'
+    editManufacturer: 'Edit manufacturer',
+    vehicleModelListings: 'Vehicle model listings',
+    newVehicleModel: 'New vehicle model',
+    editVehicleModel: 'Edit vehicle model',
+    vehicleListings: 'Vehicle listings',
+    newVehicle: 'New vehicle',
+    editVehicle: 'Edit vehicle'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -268,9 +274,17 @@ export default {
     groupRequired: 'Group reguired',
     manufacturerRequired: 'Manufacturer name is required',
     manufacturerHasBeenCreated: 'Manufacturer has been created',
-    manufacturerBeenDeleted: 'Manufacturer has been deleted',
+    manufacturerHasBeenDeleted: 'Manufacturer has been deleted',
     manufacturerHasBeenEdited: 'Manufacturer has been edited',
-    selectCustomer: 'Select Customer First to View Suggestions'
+    vehicleModelNameRequired: 'Vehicle model name is required',
+    seriesNameRequired: 'Series name is required',
+    vehicleModelHasBeenCreated: 'Vehicle model has been created',
+    vehicleModelHasBeenDeleted: 'Vehicle model has been deleted',
+    vehicleModelHasBeenEdited: 'Vehicle model has been edited',
+    selectCustomer: 'Select Customer First to View Suggestions',
+    vehicleHasBeenCreated: 'Vehicle has been created',
+    vehicleHasBeenDeleted: 'Vehicle has been deleted',
+    vehicleHasBeenEdited: 'Vehicle has been edited'
   },
 
   event: {
@@ -619,6 +633,43 @@ export default {
       customer: 'Customer',
       name: 'Name',
       description: 'Description'
+    }
+  },
+  vehicleModel: {
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      seriesName: 'Series name',
+      updated: 'Last updated'
+    },
+    new: {
+      title: 'New model'
+    },
+    edit: {
+      title: 'Edit model'
+    },
+    form: {
+      manufacturer: 'Manufacturer',
+      name: 'Name',
+      seriesName: 'Series name'
+    }
+  },
+  vehicle: {
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      description: 'description',
+      updated: 'Last updated'
+    },
+    new: {
+      title: 'New vehicle'
+    },
+    edit: {
+      title: 'Edit vehicle'
+    },
+    form: {
+      name: 'Name',
+      description: 'description'
     }
   }
 }

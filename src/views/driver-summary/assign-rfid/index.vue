@@ -28,7 +28,6 @@
                   <template slot-scope="{ item }">
                     <div class="value">
                       {{ item.id }}
-                      <span class="link">{{ item.customer_id }}</span>
                     </div>
                   </template>
                 </el-autocomplete>

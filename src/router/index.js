@@ -8,7 +8,8 @@ import {
   DEVICE_PRIVILEGE,
   VEHICLE_PRIVILEGE,
   EVENT_PRIVILEGE,
-  MANUFACTURER_PRIVILEGE
+  MANUFACTURER_PRIVILEGE,
+  VEHICLE_MODEL_PRIVILEGE
 } from '@/enums'
 
 Vue.use(Router)
@@ -171,6 +172,47 @@ export const asyncRoutes = [
           end: route.query.end,
           deviceId: route.params.deviceId
         })
+      }
+    ]
+  },
+  {
+    path: '/vehicles',
+    component: Layout,
+    redirect: '/vehicles/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/vehicle/index'),
+        name: 'Vehicles',
+        meta: {
+          title: 'vehicleListings',
+          icon: 'el-icon-truck',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/vehicle/new-vehicle/index'),
+        name: 'NewVehicle',
+        hidden: true,
+        meta: {
+          title: 'newVehicle',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/vehicle/edit-vehicle/index'),
+        name: 'EditVehicle',
+        hidden: true,
+        meta: {
+          title: 'editVehicle',
+          noCache: true,
+          breadcrumbTitle: 'editVehicleBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
+        }
       }
     ]
   },
@@ -353,6 +395,47 @@ export const asyncRoutes = [
           noCache: true,
           breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
           roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+  {
+    path: '/vehicle-models',
+    component: Layout,
+    redirect: '/vehicle-model/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/vehicle-model/index'),
+        name: 'VehicleModels',
+        meta: {
+          title: 'vehicleModelListings',
+          icon: 'el-icon-odometer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/vehicle-model/new-vehicle-model/index'),
+        name: 'NewVehicleModel',
+        hidden: true,
+        meta: {
+          title: 'newVehicleModel',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/vehicle-model/edit-vehicle-model/index'),
+        name: 'EditVehicleModel',
+        hidden: true,
+        meta: {
+          title: 'editVehicleModel',
+          noCache: true,
+          breadcrumbTitle: 'editVehicleModelBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
         }
       }
     ]

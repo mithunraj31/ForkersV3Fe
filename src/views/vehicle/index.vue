@@ -1,29 +1,29 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="10" class="new-customer-button-section">
+      <!-- <el-col :span="10" class="new-customer-button-section">
         <company-selector @change="onCustomerChanged" />
-      </el-col>
-      <el-col :span="14" class="new-manufacturer-button-section">
-        <el-button type="primary" @click="$router.push('/manufacturers/new')">{{
-          this.$t("manufacturer.new.title")
+      </el-col> -->
+      <el-col :span="24" class="new-vehicle-button-section">
+        <el-button type="primary" @click="$router.push('/vehicles/new')">{{
+          this.$t("vehicle.new.title")
         }}</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-table v-loading="loading" :data="manufacturers" border style="width: 100%">
-          <el-table-column prop="id" :label="this.$t('manufacturer.listings.id')" width="50" />
-          <el-table-column prop="name" :label="this.$t('manufacturer.listings.name')" />
-          <el-table-column prop="description" :label="this.$t('manufacturer.listings.description')" />
-          <el-table-column prop="updated" :label="this.$t('manufacturer.listings.updated')" />
+        <el-table v-loading="loading" :data="vehicles" border style="width: 100%">
+          <el-table-column prop="id" :label="this.$t('vehicle.listings.id')" width="50" />
+          <el-table-column prop="name" :label="this.$t('vehicle.listings.name')" />
+          <el-table-column prop="description" :label="this.$t('vehicle.listings.description')" />
+          <el-table-column prop="updated" :label="this.$t('vehicle.listings.updated')" />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
                 type="primary"
                 size="small"
                 @click.native.prevent="
-                  $router.push(`/manufacturers/${scope.row.id}/edit`)
+                  $router.push(`/vehicles/${scope.row.id}/edit`)
                 "
               >
                 {{ $t("general.edit") }}
@@ -42,18 +42,16 @@
 
 <script>
 import {
-  fetchManufacturers,
-  deleteManufacturer
-} from '@/api/manufacturer'
+  fetchVehicles,
+  deleteVehicle
+} from '@/api/vehicle'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 import permission from '@/directive/permission/index.js'
-import CompanySelector from '@/components/CompanySelector'
 
 export default {
-  name: 'ManufacturerListings',
+  name: 'VehicleListings',
   components: {
-    CompanySelector,
     Pagination
   },
   directives: {
@@ -61,14 +59,13 @@ export default {
   },
   data() {
     return {
-      manufacturers: null,
+      vehicles: null,
       total: 0,
       listQuery: {
         page: 1,
         limit: 10
       },
-      loading: false,
-      customerId: 0
+      loading: false
     }
   },
 
@@ -94,13 +91,19 @@ export default {
     },
     async fetchListings() {
       this.loading = true
-      const { data, meta } = await fetchManufacturers(this.listQuery, this.customerId)
-      this.manufacturers = data.map(this.mapData)
-      this.total = meta.total
-      this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
+      try {
+        const { data, meta } = await fetchVehicles(this.listQuery)
+        this.vehicles = data.map(this.mapData)
+        this.total = meta.total
+      } catch (ex) {
+        this.vehicles = []
+        this.total = 0
+      } finally {
+        this.loading = false
+        this.$router.push({
+          query: this.listQuery
+        })
+      }
     },
     onDeleteClicked(id) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
@@ -118,10 +121,10 @@ export default {
       })
     },
     deleteConfirmed(id) {
-      deleteManufacturer(id)
+      deleteVehicle(id)
         .then(() => {
           this.$message({
-            message: this.$t('message.manufacturerHasBeenDeleted'),
+            message: this.$t('message.vehicleHasBeenDeleted'),
             type: 'success'
           })
           this.fetchListings()
@@ -149,7 +152,7 @@ export default {
     margin-bottom: 15px;
 }
 
-.new-manufacturer-button-section {
+.new-vehicle-button-section {
     text-align: right;
 }
 </style>
