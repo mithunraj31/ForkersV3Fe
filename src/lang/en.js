@@ -93,7 +93,13 @@ export default {
     editUser: 'Edit User',
     manufacturerListings: 'Manufacturer listings',
     newManufacturer: 'New manufacturer',
-    editManufacturer: 'Edit manufacturer'
+    editManufacturer: 'Edit manufacturer',
+    vehicleModelListings: 'Vehicle model listings',
+    newVehicleModel: 'New vehicle model',
+    editVehicleModel: 'Edit vehicle model',
+    vehicleListings: 'Vehicle listings',
+    newVehicle: 'New vehicle',
+    editVehicle: 'Edit vehicle'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -273,9 +279,12 @@ export default {
     vehicleModelNameRequired: 'Vehicle model name is required',
     seriesNameRequired: 'Series name is required',
     vehicleModelHasBeenCreated: 'Vehicle model has been created',
-    vehicleModelBeenDeleted: 'Vehicle model has been deleted',
+    vehicleModelHasBeenDeleted: 'Vehicle model has been deleted',
     vehicleModelHasBeenEdited: 'Vehicle model has been edited',
-    selectCustomer: 'Select Customer First to View Suggestions'
+    selectCustomer: 'Select Customer First to View Suggestions',
+    vehicleHasBeenCreated: 'Vehicle has been created',
+    vehicleHasBeenDeleted: 'Vehicle has been deleted',
+    vehicleHasBeenEdited: 'Vehicle has been edited'
   },
 
   event: {
@@ -643,6 +652,24 @@ export default {
       manufacturer: 'Manufacturer',
       name: 'Name',
       seriesName: 'Series name'
+    }
+  },
+  vehicle: {
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      description: 'description',
+      updated: 'Last updated'
+    },
+    new: {
+      title: 'New vehicle'
+    },
+    edit: {
+      title: 'Edit vehicle'
+    },
+    form: {
+      name: 'Name',
+      description: 'description'
     }
   }
 }

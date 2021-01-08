@@ -185,7 +185,7 @@ export const asyncRoutes = [
         component: () => import('@/views/vehicle/index'),
         name: 'Vehicles',
         meta: {
-          title: 'vehiclesListings',
+          title: 'vehicleListings',
           icon: 'el-icon-truck',
           noCache: true,
           roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
