@@ -124,6 +124,7 @@
                 </el-col>
                 <el-col :span="4">
                   <el-button
+                    v-if="scope.row.operatorId === null"
                     v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
                     type="danger"
                     size="mini"
