@@ -269,7 +269,8 @@ export default {
     manufacturerRequired: 'Manufacturer name is required',
     manufacturerHasBeenCreated: 'Manufacturer has been created',
     manufacturerBeenDeleted: 'Manufacturer has been deleted',
-    manufacturerHasBeenEdited: 'Manufacturer has been edited'
+    manufacturerHasBeenEdited: 'Manufacturer has been edited',
+    selectCustomer: 'Select Customer First to View Suggestions'
   },
 
   event: {
@@ -446,11 +447,12 @@ export default {
       phoneNo: 'Phone Number',
       rfid: 'RFID',
       unMapRFID: 'Remove RFID',
-      mapRFID: 'Assign RFID'
+      mapRFID: 'Assign RFID',
+      customer: 'Customer'
 
     },
     new: {
-      title: 'Add Operator',
+      title: 'New Operator',
       assignRfid: 'Assign RFID'
     },
     edit: {
