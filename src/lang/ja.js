@@ -373,10 +373,10 @@ export default {
     longitude: '経度 (Lng)',
     add: '追加',
     clear: '入力をクリア',
-    view: '覧',
-    select: '選択',
     assigned: '割り当てられた',
-    unAssigned: '未割り当て'
+    unAssigned: '未割り当て',
+    view: '見る',
+    select: '選択'
   },
   maps: {
     status: {
