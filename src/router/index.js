@@ -101,112 +101,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/operator',
-    component: Layout,
-    children: [
-      {
-        path: ':operatorId/driveSummary',
-        component: () => import('@/views/operator-drive-summery'),
-        name: 'OperatorDriveSummery',
-        hidden: true,
-        meta: { title: 'OperatorDriveSummary', icon: 'documentation', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          operatorId: route.params.operatorId
-        })
-      }
-    ]
-  },
-  {
-    path: '/drivers',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/driver-summary/index'),
-        name: 'Driver',
-        meta: {
-          title: 'OperatorListing',
-          icon: 'el-icon-s-tools',
-          noCache: true
-        }
-      },
-      {
-        path: 'new',
-        component: () => import('@/views/driver-summary/new-driver/index'),
-        name: 'NewDriver',
-        hidden: true,
-        meta: { title: 'newDriver', noCache: true }
-      },
-      {
-        path: ':id/edit',
-        component: () => import('@/views/driver-summary/edit-driver/index'),
-        name: 'EditDriver',
-        hidden: true,
-        meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
-      },
-      {
-        path: ':id/detail',
-        component: () => import('@/views/driver-summary/driver-detail/index'),
-        name: 'DriverDetail',
-        hidden: true,
-        meta: { title: 'driverDetail', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'driverDetailBreadcrumbTitle' }
-      },
-      {
-        path: ':id/assign-rfid',
-        component: () => import('@/views/driver-summary/assign-rfid/index'),
-        name: 'AssignRFID',
-        hidden: true,
-        meta: { title: 'assignRFID', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignRFIDBreadcrumbTitle' }
-      }
-    ]
-  },
-  {
-    path: '/rfid',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/rfid-summary/index'),
-        name: 'RFID',
-        meta: {
-          title: 'RfidListing',
-          icon: 'el-icon-s-shop',
-          noCache: true
-        }
-      },
-      {
-        path: 'new',
-        component: () => import('@/views/rfid-summary/new-rfid/index'),
-        name: 'NewRfid',
-        hidden: true,
-        meta: { title: 'newRfid', noCache: true }
-      },
-      {
-        path: ':id/edit',
-        component: () => import('@/views/rfid-summary/edit-rfid/index'),
-        name: 'EditRfid',
-        hidden: true,
-        meta: { title: 'editRfid', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editRfidBreadcrumbTitle' }
-      },
-      {
-        path: ':rfid/assign-operator',
-        component: () => import('@/views/rfid-summary/assign-operator/index'),
-        name: 'AssignOperator',
-        hidden: true,
-        meta: { title: 'assignOperator', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignOperatorBreadcrumbTitle' }
-      },
-      {
-        path: ':rfid/history',
-        component: () => import('@/views/rfid-summary/rfid-history/index'),
-        name: 'RfidHistory',
-        hidden: true,
-        meta: { title: 'rfidHistory', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'rfidHistoryBreadcrumbTitle' }
-      }
-    ]
-  },
 
   {
     path: '/profile',
@@ -277,60 +171,6 @@ export const asyncRoutes = [
           end: route.query.end,
           deviceId: route.params.deviceId
         })
-      }
-    ]
-  },
-  {
-    path: '/event-summary',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/event-summary/index'),
-        name: 'EventSummary',
-        meta: {
-          title: 'EventSummary',
-          icon: 'el-icon-data-line',
-          affix: false,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end
-        })
-      },
-      {
-        path: ':eventId/event-detail',
-        component: () => import('@/views/event-summary/event-detail-container/index'),
-        name: ':eventId',
-        hidden: true,
-        meta: {
-          title: 'EventDetail',
-          noCache: true,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        }
-      },
-      {
-        path: ':eventId/event-map',
-        component: () => import('@/views/event-summary/event-map/DeviceMap'),
-        name: 'EventMap',
-        hidden: true,
-        meta: {
-          title: 'EventMap',
-          noCache: true,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        }
-      },
-      {
-        path: ':eventId/event-video',
-        component: () => import('@/views/event-summary/event-video/index'),
-        name: 'EventVideo',
-        hidden: true,
-        meta: {
-          title: 'EventVideo',
-          noCache: true,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        }
       }
     ]
   },
@@ -513,6 +353,166 @@ export const asyncRoutes = [
           noCache: true,
           breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
           roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+  {
+    path: '/operator',
+    component: Layout,
+    children: [
+      {
+        path: ':operatorId/driveSummary',
+        component: () => import('@/views/operator-drive-summery'),
+        name: 'OperatorDriveSummery',
+        hidden: true,
+        meta: { title: 'OperatorDriveSummary', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          operatorId: route.params.operatorId
+        })
+      }
+    ]
+  },
+  {
+    path: '/drivers',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/driver-summary/index'),
+        name: 'Driver',
+        meta: {
+          title: 'OperatorListing',
+          icon: 'el-icon-s-help',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/driver-summary/new-driver/index'),
+        name: 'NewDriver',
+        hidden: true,
+        meta: { title: 'newDriver', noCache: true }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/driver-summary/edit-driver/index'),
+        name: 'EditDriver',
+        hidden: true,
+        meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
+      },
+      {
+        path: ':id/detail',
+        component: () => import('@/views/driver-summary/driver-detail/index'),
+        name: 'DriverDetail',
+        hidden: true,
+        meta: { title: 'driverDetail', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'driverDetailBreadcrumbTitle' }
+      },
+      {
+        path: ':id/assign-rfid',
+        component: () => import('@/views/driver-summary/assign-rfid/index'),
+        name: 'AssignRFID',
+        hidden: true,
+        meta: { title: 'assignRFID', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignRFIDBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/rfid',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/rfid-summary/index'),
+        name: 'RFID',
+        meta: {
+          title: 'RfidListing',
+          icon: 'el-icon-postcard',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/rfid-summary/new-rfid/index'),
+        name: 'NewRfid',
+        hidden: true,
+        meta: { title: 'newRfid', noCache: true }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/rfid-summary/edit-rfid/index'),
+        name: 'EditRfid',
+        hidden: true,
+        meta: { title: 'editRfid', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editRfidBreadcrumbTitle' }
+      },
+      {
+        path: ':rfid/assign-operator',
+        component: () => import('@/views/rfid-summary/assign-operator/index'),
+        name: 'AssignOperator',
+        hidden: true,
+        meta: { title: 'assignOperator', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignOperatorBreadcrumbTitle' }
+      },
+      {
+        path: ':rfid/history',
+        component: () => import('@/views/rfid-summary/rfid-history/index'),
+        name: 'RfidHistory',
+        hidden: true,
+        meta: { title: 'rfidHistory', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'rfidHistoryBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/event-summary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: {
+          title: 'EventSummary',
+          icon: 'el-icon-data-line',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: {
+          title: 'EventDetail',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: {
+          title: 'EventMap',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: {
+          title: 'EventVideo',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
         }
       }
     ]
