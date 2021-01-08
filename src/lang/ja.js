@@ -83,7 +83,10 @@ export default {
     editRole: 'ロールを編集',
     groupManagement: 'グループを管理',
     newUser: 'ユーザーを追加',
-    editUser: 'ユーザーを編集'
+    editUser: 'ユーザーを編集',
+    manufacturerListings: 'メーカーリスト',
+    newManufacturer: 'メーカーを追加',
+    editManufacturer: 'メーカーを編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -242,7 +245,11 @@ export default {
     roleHasBeenEdited: 'ロールが編集されました',
     groupHasBeenCreated: 'グループが作成されました',
     groupHasBeenDeleted: 'グループが削除されました',
-    groupHasBeenEdited: 'グループが編集されました'
+    groupHasBeenEdited: 'グループが編集されました',
+    manufacturerRequired: 'メーカー名が必要です',
+    manufacturerHasBeenCreated: 'メーカー名が作成されました',
+    manufacturerBeenDeleted: 'メーカー名が削除されました',
+    manufacturerHasBeenEdited: 'メーカー名が編集されました'
   },
 
   event: {
@@ -492,7 +499,7 @@ export default {
     },
 
     edit: {
-      title: 'ロールを追加'
+      title: 'ロールを編集'
     },
 
     listings: {
@@ -514,7 +521,8 @@ export default {
       role: 'ロール',
       group: 'グループ',
       customer: '会社',
-      vehicle: '車両'
+      vehicle: '車両',
+      manufacturer: 'メーカー'
     }
   },
 
@@ -531,6 +539,25 @@ export default {
     filterPlaceholder: 'グループ名で検索',
     append: '追加',
     delete: '削除'
+  },
+  manufacturer: {
+    new: {
+      title: 'メーカーを追加'
+    },
+    listings: {
+      id: '番号',
+      name: 'メーカー名',
+      description: '備考  ',
+      updated: '最終更新時刻'
+    },
+    form: {
+      customer: '会社',
+      name: 'メーカー名',
+      description: '備考'
+    },
+    edit: {
+      title: 'メーカーを編集'
+    }
   }
 
 }

@@ -83,7 +83,10 @@ export default {
     editRole: 'Edit role',
     groupManagement: 'Group Manangement',
     newUser: 'New user',
-    editUser: 'Edit User'
+    editUser: 'Edit User',
+    manufacturerListings: 'Manufacturer listings',
+    newManufacturer: 'New manufacturer',
+    editManufacturer: 'Edit manufacturer'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -515,7 +518,8 @@ export default {
       role: 'Role',
       group: 'Group',
       customer: 'Customer',
-      vehicle: 'Vehicle'
+      vehicle: 'Vehicle',
+      manufacturer: 'Manufacturer'
     }
   },
 
@@ -532,5 +536,21 @@ export default {
     filterPlaceholder: 'Search by group name',
     append: 'Append',
     delete: 'Delete'
+  },
+  manufacturer: {
+    new: {
+      title: 'New Manufacturer'
+    },
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      description: 'Description',
+      updated: 'Last updated'
+    },
+    form: {
+      customer: 'Customer',
+      name: 'Name',
+      description: 'Description'
+    }
   }
 }

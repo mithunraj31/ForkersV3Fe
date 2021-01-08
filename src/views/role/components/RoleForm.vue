@@ -93,7 +93,8 @@ export default {
         user: [],
         role: [],
         event: [],
-        operator: []
+        operator: [],
+        manufacturer: []
       },
       customers: [],
       formRules: {

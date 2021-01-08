@@ -14,7 +14,8 @@ export const RESOURCE_TYPE = Object.freeze({
   DEVICE: 'device',
   EVENT: 'event',
   OPERATOR: 'operator',
-  VEHICLE: 'vehicle'
+  VEHICLE: 'vehicle',
+  Manufacturer: 'manufacturer'
 })
 
 export const SYSTEM_ROLE = Object.freeze({
@@ -35,3 +36,5 @@ export const OPERATOR_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.OPERATOR)
 export const ROLE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.ROLE)
 
 export const VEHICLE_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.VEHICLE)
+
+export const Manufacturer_PRIVILEGE = generatePrivilege(RESOURCE_TYPE.Manufacturer)
