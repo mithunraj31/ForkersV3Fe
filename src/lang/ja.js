@@ -278,7 +278,8 @@ export default {
     seriesNameRequired: 'シリーズ名が必要です',
     vehicleModelHasBeenCreated: 'マスタが作成されました',
     vehicleModelBeenDeleted: 'マスタが削除されました',
-    vehicleModelHasBeenEdited: 'マスタが編集されました'
+    vehicleModelHasBeenEdited: 'マスタが編集されました',
+    selectCustomer: '提案を表示するには、最初に顧客を選択してください'
   },
 
   event: {
@@ -453,7 +454,8 @@ export default {
       phoneNo: '電話番号',
       rfid: 'RFID',
       unMapRFID: 'RFIDを削除',
-      mapRFID: 'RFIDの割り当て'
+      mapRFID: 'RFIDの割り当て',
+      customer: 'お客様'
 
     },
     new: {
