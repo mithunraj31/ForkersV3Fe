@@ -8,7 +8,8 @@ import {
   DEVICE_PRIVILEGE,
   VEHICLE_PRIVILEGE,
   EVENT_PRIVILEGE,
-  MANUFACTURER_PRIVILEGE
+  MANUFACTURER_PRIVILEGE,
+  VEHICLE_MODEL_PRIVILEGE
 } from '@/enums'
 
 Vue.use(Router)
@@ -353,6 +354,47 @@ export const asyncRoutes = [
           noCache: true,
           breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
           roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+  {
+    path: '/vehicle-models',
+    component: Layout,
+    redirect: '/vehicle-model/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/vehicle-model/index'),
+        name: 'VehicleModels',
+        meta: {
+          title: 'vehicleModelListings',
+          icon: 'el-icon-odometer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/vehicle-model/new-vehicle-model/index'),
+        name: 'NewVehicleModel',
+        hidden: true,
+        meta: {
+          title: 'newVehicleModel',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/vehicle-model/edit-vehicle-model/index'),
+        name: 'EditVehicleModel',
+        hidden: true,
+        meta: {
+          title: 'editVehicleModel',
+          noCache: true,
+          breadcrumbTitle: 'editVehicleModelBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
         }
       }
     ]

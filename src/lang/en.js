@@ -268,8 +268,13 @@ export default {
     groupRequired: 'Group reguired',
     manufacturerRequired: 'Manufacturer name is required',
     manufacturerHasBeenCreated: 'Manufacturer has been created',
-    manufacturerBeenDeleted: 'Manufacturer has been deleted',
-    manufacturerHasBeenEdited: 'Manufacturer has been edited'
+    manufacturerHasBeenDeleted: 'Manufacturer has been deleted',
+    manufacturerHasBeenEdited: 'Manufacturer has been edited',
+    vehicleModelNameRequired: 'Vehicle model name is required',
+    seriesNameRequired: 'Series name is required',
+    vehicleModelHasBeenCreated: 'Vehicle model has been created',
+    vehicleModelBeenDeleted: 'Vehicle model has been deleted',
+    vehicleModelHasBeenEdited: 'Vehicle model has been edited'
   },
 
   event: {
@@ -617,6 +622,25 @@ export default {
       customer: 'Customer',
       name: 'Name',
       description: 'Description'
+    }
+  },
+  vehicleModel: {
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      seriesName: 'Series name',
+      updated: 'Last updated'
+    },
+    new: {
+      title: 'New model'
+    },
+    edit: {
+      title: 'Edit model'
+    },
+    form: {
+      manufacturer: 'Manufacturer',
+      name: 'Name',
+      seriesName: 'Series name'
     }
   }
 }

@@ -93,7 +93,10 @@ export default {
     editUser: 'ユーザーを編集',
     manufacturerListings: 'メーカーリスト',
     newManufacturer: 'メーカーを追加',
-    editManufacturer: 'メーカーを編集'
+    editManufacturer: 'メーカーを編集',
+    vehicleModelListings: 'マスタデータ',
+    newVehicleModel: 'マスタを追加',
+    editVehicleModel: 'マスタを編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -267,10 +270,15 @@ export default {
     customerRequired: '顧客が必要',
     ownerRequired: '所有者が必要',
     groupRequired: 'グループが必要',
-    manufacturerRequired: 'メーカー名が必要です',
+    manufacturerRequired: 'メーカーが必要です',
     manufacturerHasBeenCreated: 'メーカー名が作成されました',
     manufacturerBeenDeleted: 'メーカー名が削除されました',
-    manufacturerHasBeenEdited: 'メーカー名が編集されました'
+    manufacturerHasBeenEdited: 'メーカー名が編集されました',
+    vehicleModelNameRequired: 'マスタ名が必要です',
+    seriesNameRequired: 'シリーズ名が必要です',
+    vehicleModelHasBeenCreated: 'マスタが作成されました',
+    vehicleModelBeenDeleted: 'マスタが削除されました',
+    vehicleModelHasBeenEdited: 'マスタが編集されました'
   },
 
   event: {
@@ -617,6 +625,25 @@ export default {
     },
     edit: {
       title: 'メーカーを編集'
+    }
+  },
+  vehicleModel: {
+    listings: {
+      id: '番号',
+      name: 'マスタ名',
+      seriesName: 'シリーズ名',
+      updated: '最終更新時刻'
+    },
+    new: {
+      title: 'マスタを追加'
+    },
+    edit: {
+      title: 'マスタを編集'
+    },
+    form: {
+      manufacturer: 'メーカー',
+      name: 'マスタ名',
+      seriesName: 'シリーズ名'
     }
   }
 
