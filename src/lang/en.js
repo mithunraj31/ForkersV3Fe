@@ -215,7 +215,7 @@ export default {
     driverHasBeenCreated: 'Operator is created',
     driverHasBeenEdited: 'Operator has been edited',
     confirmDelete: 'Are you sure you want to delete {0}?',
-    confirmRemove: 'Are you sure you want to remove Operator for RFID {0}?',
+    confirmRemove: 'Are you sure you want to UnAssign Operator and RFID for {0}?',
     userNameRequired: 'User Name is Required',
     stkUserRequired: 'STK user is Required',
     emailRequired: 'Email is Required',
@@ -373,7 +373,9 @@ export default {
     clear: 'Clear',
     add: 'Add',
     view: 'View',
-    select: 'Select'
+    select: 'Select',
+    assigned: 'Assigned',
+    unAssigned: 'UnAssigned'
   },
   maps: {
     status: {
@@ -429,7 +431,7 @@ export default {
   driver: {
     listings: {
       id: 'ID',
-      driverId: 'OperatorId',
+      driverId: 'Operator',
       age: 'Age',
       name: 'Name',
       licenseNo: 'License Number',

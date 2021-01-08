@@ -215,7 +215,7 @@ export default {
     driverHasBeenCreated: '演算子が作成されました',
     driverHasBeenEdited: '演算子が編集されました',
     confirmDelete: '「{0}」を削除してもよろしいでしょうか',
-    confirmRemove: 'RFID「{0}」Operatorを削除してもよろしいですか？',
+    confirmRemove: '「{0}」オペレーターとRFIDの割り当てを解除してもよろしいですか？',
     userNameRequired: 'ユーザー名が必要があります',
     stkUserRequired: 'STKユーザーが必要があります',
     emailRequired: 'メールが必要があります',
@@ -373,6 +373,8 @@ export default {
     longitude: '経度 (Lng)',
     add: '追加',
     clear: '入力をクリア',
+    assigned: '割り当てられた',
+    unAssigned: '未割り当て',
     view: '見る',
     select: '選択'
   },
@@ -428,7 +430,7 @@ export default {
   driver: {
     listings: {
       id: 'ID',
-      driverId: 'オペレーターID',
+      driverId: 'オペレーター',
       age: '年齢',
       name: '名前',
       licenseNo: '免許番号',

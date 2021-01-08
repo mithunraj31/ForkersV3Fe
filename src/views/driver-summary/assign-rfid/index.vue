@@ -26,10 +26,12 @@
               </el-autocomplete>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="this.onSubmit">{{
+              <el-button type="primary" @click="onSubmit">{{
                 $t("general.save")
               }}</el-button>
-              <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
+              <el-button @click="$router.go(-1)">{{
+                $t("general.cancel")
+              }}</el-button>
             </el-form-item>
           </el-col>
         </div>
@@ -49,7 +51,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          id: 0,
+          id: '',
           rfid: {
             type: Number,
             default: 0
@@ -120,7 +122,6 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.loading = true
-          console.log(this.form)
           assignRfid(this.form)
             .then((response) => {
               this.loading = false
@@ -153,13 +154,15 @@ export default {
     },
     querySearch(queryString, cb) {
       var opIds = this.opIds
-      var results = queryString ? opIds.filter(this.createFilter(queryString)) : opIds
+      var results = queryString
+        ? opIds.filter(this.createFilter(queryString))
+        : opIds
       // call callback function to return suggestion objects
       cb(results)
     },
     createFilter(queryString) {
       return (opIds) => {
-        return opIds.id === parseInt(queryString)
+        return opIds.id.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     handleSelect(item) {

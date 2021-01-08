@@ -2,18 +2,28 @@
   <div class="app-container">
     <el-row>
       <el-col :span="12">
-        <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
-          <el-form-item v-if="hasAdminPermission" :label="this.$t('rfid.form.customer')">
+        <el-form
+          ref="form"
+          :rules="formRules"
+          :model="form"
+          label-width="120px"
+        >
+          <el-form-item
+            v-if="hasAdminPermission"
+            :label="this.$t('rfid.form.customer')"
+          >
             <company-selector @change="onCustomerChange" />
           </el-form-item>
           <el-form-item :label="this.$t('rfid.form.rfid')" prop="id">
             <el-input v-model="form.id" :disabled="disabled" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="this.onSubmit">{{
+            <el-button type="primary" @click="onSubmit">{{
               this.$t("general.save")
             }}</el-button>
-            <el-button @click="$router.go(-1)">{{ this.$t("general.cancel") }}</el-button>
+            <el-button @click="$router.go(-1)">{{
+              this.$t("general.cancel")
+            }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>

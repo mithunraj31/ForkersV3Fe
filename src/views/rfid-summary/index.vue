@@ -2,10 +2,26 @@
   <div class="app-container">
     <el-row class="filter-section">
       <el-col :span="10">
-        <span v-if="!hasAdminPermission">{{ $t('rfid.listings.total') }}: {{ total }}</span>
+        <span
+          v-if="!hasAdminPermission"
+        >{{ $t("rfid.listings.total") }}: {{ total }}</span>
         <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
       </el-col>
-      <el-col :span="14" class="new-rfid-button-section">
+      <el-col :span="10" class="new-rfid-button-section">
+        <el-checkbox
+          v-model="assigned"
+          :label="$t('general.assigned')"
+          border
+          @change="onChecked()"
+        />
+        <el-checkbox
+          v-model="unAssigned"
+          :label="$t('general.unAssigned')"
+          border
+          @change="onChecked()"
+        />
+      </el-col>
+      <el-col :span="4" class="new-rfid-button-section">
         <el-button
           v-permission="[systemRole.ADMIN, rfidPrivilege.ADD]"
           type="primary"
@@ -32,14 +48,14 @@
           </el-table-column>
 
           <el-table-column prop="customerName" :label="this.$t('rfid.form.customer')" />
-          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
+          <el-table-column prop="operator" :label="this.$t('driver.listings.driverId')">
             <template slot-scope="scope">
               <div
                 v-if="scope.row.operatorId !== null"
                 class="click"
                 @click="driverDetailClick(scope.row.operatorId)"
               >
-                {{ scope.row.operatorId }}
+                {{ scope.row.operatorName }}
               </div>
               <div v-else>
                 {{ $t("rfid.listings.notAssigned") }}
@@ -48,64 +64,76 @@
           </el-table-column>
           <el-table-column :label="this.$t('general.action')" width="400px">
             <template slot-scope="scope">
-              <el-dropdown>
-                <el-button type="info" class="device-summary-btn" size="mini">
-                  {{ $t("device.drive") }}<i class="el-icon-arrow-down el-icon--right" />
-                </el-button>
-                <el-dropdown-menu slot="dropdown" size="mini">
-                  <el-dropdown-item>
-                    <div class="block">
-                      <el-date-picker
-                        v-model="drivetimeRange"
-                        type="datetimerange"
-                        :picker-options="pickerOptions"
-                        range-separator="~"
-                        :start-placeholder="$t('general.begin')"
-                        :end-placeholder="$t('general.end')"
-                        align="right"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        @change="driveClick(drivetimeRange, scope.row.id)"
-                      />
-                    </div>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <el-button
-                v-if="scope.row.operatorId !== null"
-                type="danger"
-                plain
-                size="mini"
-                @click="removeOperatorClicked(scope.row.id, scope.row.operatorId)"
-              >
-                {{ $t("rfid.listings.unMapOperator") }}
-              </el-button>
-              <el-button
-                v-if="scope.row.operatorId === null"
-                type="primary"
-                plain
-                size="mini"
-                @click.native.prevent="
-                  $router.push(`/rfid/${scope.row.id}/assign-operator`)
-                "
-              >
-                {{ $t("rfid.listings.mapOperator") }}
-              </el-button>
-              <el-button
-                v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
-                type="primary"
-                size="mini"
-                @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
-              >
-                {{ $t("general.edit") }}
-              </el-button>
-              <el-button
-                v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
-                type="danger"
-                size="mini"
-                @click="onDeleterfidClicked(scope.row.id)"
-              >
-                {{ $t("general.delete") }}
-              </el-button>
+              <el-row>
+                <el-col :span="6">
+                  <el-dropdown>
+                    <el-button type="info" class="device-summary-btn" size="mini">
+                      {{ $t("device.drive")
+                      }}<i class="el-icon-arrow-down el-icon--right" />
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown" size="mini">
+                      <el-dropdown-item>
+                        <div class="block">
+                          <el-date-picker
+                            v-model="drivetimeRange"
+                            type="datetimerange"
+                            :picker-options="pickerOptions"
+                            range-separator="~"
+                            :start-placeholder="$t('general.begin')"
+                            :end-placeholder="$t('general.end')"
+                            align="right"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            @change="driveClick(drivetimeRange, scope.row.id)"
+                          />
+                        </div>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </el-col>
+                <el-col :span="10">
+                  <el-button
+                    v-if="scope.row.operatorId !== null"
+                    type="danger"
+                    plain
+                    size="mini"
+                    @click="removeOperatorClicked(scope.row.id, scope.row.operatorId)"
+                  >
+                    {{ $t("rfid.listings.unMapOperator") }}
+                  </el-button>
+                  <el-button
+                    v-if="scope.row.operatorId === null"
+                    type="primary"
+                    plain
+                    size="mini"
+                    @click.native.prevent="
+                      $router.push(`/rfid/${scope.row.id}/assign-operator`)
+                    "
+                  >
+                    {{ $t("rfid.listings.mapOperator") }}
+                  </el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
+                    type="primary"
+                    size="mini"
+                    @click.native.prevent="$router.push(`/rfid/${scope.row.id}/edit`)"
+                  >
+                    {{ $t("general.edit") }}
+                  </el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    v-if="scope.row.operatorId === null"
+                    v-permission="[systemRole.ADMIN, rfidPrivilege.DELETE]"
+                    type="danger"
+                    size="mini"
+                    @click="onDeleterfidClicked(scope.row.id)"
+                  >
+                    {{ $t("general.delete") }}
+                  </el-button>
+                </el-col>
+              </el-row>
             </template>
           </el-table-column>
         </el-table>
@@ -147,11 +175,11 @@ export default {
     return {
       rfidDatas: null,
       total: 0,
+      unAssigned: true,
+      assigned: true,
       listQuery: {
         page: 1,
-        limit: 10,
-        unAssigned: true,
-        assigned: false
+        limit: 10
       },
       loading: false,
       pickerOptions: {
@@ -217,8 +245,8 @@ export default {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
       limit: +(this.$route.query.limit || this.listQuery.limit),
-      unAssigned: true,
-      assigned: true
+      unAssigned: this.unAssigned,
+      assigned: this.assigned
     }
     this.$router.push({
       query: this.listQuery
@@ -229,8 +257,9 @@ export default {
     mapRfidToDataTable(rfid) {
       return {
         id: rfid.id,
-        customerId: rfid.customer_id,
         customerName: rfid.customer.name,
+        customerId: rfid.customer.id,
+        operatorName: rfid.operator_name,
         operatorId: rfid.operator_id
       }
     },
@@ -238,7 +267,6 @@ export default {
       let response = null
       this.loading = true
       try {
-        console.log(this.customerId)
         response = await fetchRfid(this.listQuery, this.customerId)
         const { data, total } = response
         this.rfidDatas = data.map(this.mapRfidToDataTable)
@@ -248,6 +276,7 @@ export default {
           query: this.listQuery
         })
       } catch (exception) {
+        console.log(exception)
         this.loading = false
       }
     },
@@ -294,6 +323,18 @@ export default {
         })
     },
     async onPaged() {
+      await this.fetchListings()
+    },
+    async onChecked() {
+      this.listQuery = {
+        page: +(this.$route.query.page || this.listQuery.page),
+        limit: +(this.$route.query.limit || this.listQuery.limit),
+        unAssigned: this.unAssigned,
+        assigned: this.assigned
+      }
+      this.$router.push({
+        query: this.listQuery
+      })
       await this.fetchListings()
     },
     async rfidHistoryClick($rfid) {
