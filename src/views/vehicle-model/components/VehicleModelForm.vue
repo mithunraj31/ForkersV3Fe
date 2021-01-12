@@ -194,6 +194,153 @@ export default {
         callback()
       }
     }
+    const validateModelName = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.Required')))
+      } else {
+        callback()
+      }
+    }
+    const validatePowerType = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.powerTypeRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateStructuralMethod = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.structuralMethodRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateEngineModel = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.engineModelRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateRatedLoad = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.ratedLoadRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateForkLength = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.forkLengthRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateForkWidth = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.forkWidthRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateStandardLift = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.standardLiftRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateMaximumLift = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.maximumLiftRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateBatteryVoltage = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.batteryVoltageRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateBatteryCapacity = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.batteryCapacityRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateFuelTankCapcity = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.fuelTankCapcityRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateBodyWeight = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.bodyWeightRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateBodyLength = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.bodyLengthRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateBodyWidth = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.bodyWidthRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateHeadGuardHeight = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.headGuardHeightRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateMinTurningRadius = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.minTurningRadiusRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateRefLoadCenter = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.refLoadCenterRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateTireSizeFrontWheel = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.tireSizeFrontWheelRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateTireSizeRearWheel = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.tireSizeRearWheelRequired')))
+      } else {
+        callback()
+      }
+    }
+    const validateRemarks = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.$t('message.remarksRequired')))
+      } else {
+        callback()
+      }
+    }
 
     return {
       manufacturers: [],
@@ -250,6 +397,153 @@ export default {
             trigger: 'blur',
             validator: validateManufacturerId
           }
+        ],
+        modelName: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateModelName
+          }
+        ],
+        powerType: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validatePowerType
+          }
+        ],
+        structuralMethod: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateStructuralMethod
+          }
+        ],
+        engineModel: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateEngineModel
+          }
+        ],
+        ratedLoad: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateRatedLoad
+          }
+        ],
+        forkLength: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateForkLength
+          }
+        ],
+        forkWidth: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateForkWidth
+          }
+        ],
+        standardLift: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateStandardLift
+          }
+        ],
+        maximumLift: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateMaximumLift
+          }
+        ],
+        batteryVoltage: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateBatteryVoltage
+          }
+        ],
+        batteryCapacity: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateBatteryCapacity
+          }
+        ],
+        fuelTankCapcity: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateFuelTankCapcity
+          }
+        ],
+        bodyWeight: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateBodyWeight
+          }
+        ],
+        bodyLength: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateBodyLength
+          }
+        ],
+        bodyWidth: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateBodyWidth
+          }
+        ],
+        headGuardHeight: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateHeadGuardHeight
+          }
+        ],
+        minTurningRadius: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateMinTurningRadius
+          }
+        ],
+        refLoadCenter: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateRefLoadCenter
+          }
+        ],
+        tireSizeFrontWheel: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateTireSizeFrontWheel
+          }
+        ],
+        tireSizeRearWheel: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateTireSizeRearWheel
+          }
+        ],
+        remarks: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateRemarks
+          }
         ]
       }
     }
@@ -259,6 +553,27 @@ export default {
       this.form.id = vehicleModel.id
       this.form.name = vehicleModel.name
       this.form.seriesName = vehicleModel.seriesName
+      this.form.modelName = vehicleModel.modelName
+      this.form.powerType = vehicleModel.powerType
+      this.form.structuralMethod = vehicleModel.structuralMethod
+      this.form.engineModel = vehicleModel.engineModel
+      this.form.ratedLoad = vehicleModel.ratedLoad
+      this.form.forkLength = vehicleModel.forkLength
+      this.form.forkWidth = vehicleModel.forkWidth
+      this.form.standardLift = vehicleModel.standardLift
+      this.form.maximumLift = vehicleModel.maximumLift
+      this.form.batteryVoltage = vehicleModel.batteryVoltage
+      this.form.batteryCapacity = vehicleModel.batteryCapacity
+      this.form.fuelTankCapcity = vehicleModel.fuelTankCapcity
+      this.form.bodyWeight = vehicleModel.bodyWeight
+      this.form.bodyLength = vehicleModel.bodyLength
+      this.form.bodyWidth = vehicleModel.bodyWidth
+      this.form.headGuardHeight = vehicleModel.headGuardHeight
+      this.form.minTurningRadius = vehicleModel.minTurningRadius
+      this.form.refLoadCenter = vehicleModel.refLoadCenter
+      this.form.tireSizeFrontWheel = vehicleModel.tireSizeFrontWheel
+      this.form.tireSizeRearWheel = vehicleModel.tireSizeRearWheel
+      this.form.remarks = vehicleModel.remarks
     }
   },
   async mounted() {
