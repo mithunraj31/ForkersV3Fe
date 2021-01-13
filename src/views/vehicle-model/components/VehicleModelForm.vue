@@ -5,10 +5,10 @@
         ref="form"
         :rules="formRules"
         :model="form"
-        label-width="120px"
+        label-width="300px"
         size="mini"
       >
-        <el-col :span="10">
+        <el-col :span="12">
           <el-form-item
             :label="$t('vehicleModel.form.manufacturer')"
             prop="manufacturerId"
@@ -54,6 +54,8 @@
           <el-form-item :label="$t('vehicleModel.form.maximumLift')" prop="maximumLift">
             <el-input v-model="form.maximumLift" />
           </el-form-item>
+        </el-col>
+        <el-col :span="12">
           <el-form-item
             :label="$t('vehicleModel.form.batteryVoltage')"
             prop="batteryVoltage"
@@ -66,13 +68,11 @@
           >
             <el-input v-model="form.batteryCapacity" />
           </el-form-item>
-        </el-col>
-        <el-col :span="10" align="right">
           <el-form-item
-            :label="$t('vehicleModel.form.fuelTankCapcity')"
-            prop="fuelTankCapcity"
+            :label="$t('vehicleModel.form.fuelTankCapacity')"
+            prop="fuelTankCapacity"
           >
-            <el-input v-model="form.fuelTankCapcity" />
+            <el-input v-model="form.fuelTankCapacity" />
           </el-form-item>
           <el-form-item :label="$t('vehicleModel.form.bodyWeight')" prop="bodyWeight">
             <el-input v-model="form.bodyWeight" />
@@ -155,7 +155,7 @@ export default {
           maximumLift: '',
           batteryVoltage: '',
           batteryCapacity: '',
-          fuelTankCapcity: '',
+          fuelTankCapacity: '',
           bodyWeight: '',
           bodyLength: '',
           bodyWidth: '',
@@ -187,7 +187,6 @@ export default {
     }
 
     const validateManufacturerId = (rule, value, callback) => {
-      console.log('validateManufacturerId')
       if (!value) {
         callback(new Error(this.$t('message.manufacturerRequired')))
       } else {
@@ -196,7 +195,7 @@ export default {
     }
     const validateModelName = (rule, value, callback) => {
       if (!value) {
-        callback(new Error(this.$t('message.Required')))
+        callback(new Error(this.$t('message.modelNameRequired')))
       } else {
         callback()
       }
@@ -271,9 +270,9 @@ export default {
         callback()
       }
     }
-    const validateFuelTankCapcity = (rule, value, callback) => {
+    const validateFuelTankCapacity = (rule, value, callback) => {
       if (!value) {
-        callback(new Error(this.$t('message.fuelTankCapcityRequired')))
+        callback(new Error(this.$t('message.fuelTankCapacityRequired')))
       } else {
         callback()
       }
@@ -364,7 +363,7 @@ export default {
         maximumLift: '',
         batteryVoltage: '',
         batteryCapacity: '',
-        fuelTankCapcity: '',
+        fuelTankCapacity: '',
         bodyWeight: '',
         bodyLength: '',
         bodyWidth: '',
@@ -475,11 +474,11 @@ export default {
             validator: validateBatteryCapacity
           }
         ],
-        fuelTankCapcity: [
+        fuelTankCapacity: [
           {
             required: true,
             trigger: 'blur',
-            validator: validateFuelTankCapcity
+            validator: validateFuelTankCapacity
           }
         ],
         bodyWeight: [
@@ -564,7 +563,7 @@ export default {
       this.form.maximumLift = vehicleModel.maximumLift
       this.form.batteryVoltage = vehicleModel.batteryVoltage
       this.form.batteryCapacity = vehicleModel.batteryCapacity
-      this.form.fuelTankCapcity = vehicleModel.fuelTankCapcity
+      this.form.fuelTankCapacity = vehicleModel.fuelTankCapacity
       this.form.bodyWeight = vehicleModel.bodyWeight
       this.form.bodyLength = vehicleModel.bodyLength
       this.form.bodyWidth = vehicleModel.bodyWidth

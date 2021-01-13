@@ -7,9 +7,7 @@
 
 <script>
 import VehicleModelForm from '../components/VehicleModelForm'
-import {
-  newVehicleModels
-} from '@/api/vehicle-model'
+import { newVehicleModels } from '@/api/vehicle-model'
 
 export default {
   name: 'NewVehicleModel',
@@ -23,6 +21,7 @@ export default {
   },
   methods: {
     onFormSubmit(form) {
+      console.log('form arrived')
       this.loading = true
       newVehicleModels(form)
         .then((response) => {

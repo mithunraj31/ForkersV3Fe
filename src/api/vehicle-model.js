@@ -29,7 +29,31 @@ export function newVehicleModels(data) {
     url: '/vehicle-models',
     method: 'post',
     data: {
-
+      name: data.name,
+      description: data.description,
+      manufacturer_id: data.manufacturerId,
+      series_name: data.seriesName,
+      model_name: data.modelName,
+      power_type: data.powerType,
+      structural_method: data.structuralMethod,
+      engine_model: data.engineModel,
+      rated_load: data.ratedLoad,
+      fork_length: data.forkLength,
+      fork_width: data.forkWidth,
+      standard_lift: data.standardLift,
+      maximum_lift: data.maximumLift,
+      battery_voltage: data.batteryVoltage,
+      battery_capacity: data.batteryCapacity,
+      fuel_tank_capacity: data.fuelTankCapacity,
+      body_weight: data.bodyWeight,
+      body_length: data.bodyLength,
+      body_width: data.bodyWidth,
+      head_guard_height: data.headGuardHeight,
+      min_turning_radius: data.minTurningRadius,
+      ref_load_center: data.refLoadCenter,
+      tire_size_front_wheel: data.tireSizeFrontWheel,
+      tire_size_rear_wheel: data.tireSizeRearWheel,
+      remarks: data.remarks
     }
   })
 }
