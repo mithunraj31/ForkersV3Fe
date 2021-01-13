@@ -85,6 +85,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/vitualization',
+    component: Layout,
+    redirect: '/vitualization',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/dynamic-dashboard/index'),
+        name: 'charts',
+        meta: { title: 'charts', icon: 'chart', affix: false }
+      }
+    ]
+  },
+  {
     path: '/video',
     component: Layout,
     hidden: true,
