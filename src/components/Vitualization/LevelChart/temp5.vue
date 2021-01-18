@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>B1) オペレータ毎のアラーム数・種別と稼働時間​</h3>
+    <h3>C2) 期間毎の全車両のアラーム総数・種別と総稼働時間​</h3>
     <div
       :id="elementId"
       :class="className"
@@ -13,7 +13,7 @@
 import echarts from 'echarts'
 
 export default {
-  name: 'LevelChart',
+  name: 'LevelChartTemp5',
   props: {
     size: {
       type: Number,
@@ -90,7 +90,7 @@ export default {
           {
             // name: 'オペレータ',
             type: 'category',
-            data: ['A', 'B', 'C', 'D', 'E', 'H', 'I']
+            data: ['2021/01/01', '2021/01/02', '2021/01/03', '2021/01/04', '2021/01/05', '2021/01/06', '2021/01/07']
           }
         ],
         yAxis: [

@@ -1,6 +1,19 @@
 <template>
   <div class="app-container">
     <el-row :gutter="5">
+      <el-col class="col-layout">
+        <el-card class="box-card">
+          <h3>オペレータ毎の総アラーム数、総稼働時間、運転スコア（リスト表示）​</h3>
+          <el-table :data="tableData" border style="width: 100%">
+            <el-table-column prop="operatorName" :label="'オペレータ'" />
+            <el-table-column prop="alarmCount" :label="'合計アラーム数'" />
+            <el-table-column prop="totalDrivingTime" :label="'総運転時間'" />
+            <el-table-column prop="drivingScore" :label="'ドライビングスコア​'" />
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5">
       <el-col
         v-for="chart in charts"
         :key="chart.id"
@@ -23,27 +36,93 @@ import {
   LevelChart
 } from '@/components/Vitualization'
 import { CHART_COMPONENT, CHART_SIZE } from '@/enums/chart'
+import LevelChartTemp2 from '@/components/Vitualization/LevelChart/temp2'
+import LevelChartTemp3 from '@/components/Vitualization/LevelChart/temp3'
+import LevelChartTemp4 from '@/components/Vitualization/LevelChart/temp4'
+import LevelChartTemp5 from '@/components/Vitualization/LevelChart/temp5'
+
+import SetsChartTemp2 from '@/components/Vitualization/SetsChart/temp2'
+
+import RegularBarChartTemp2 from '@/components/Vitualization/RegularBarChart/temp2'
 
 export default {
   name: 'Dashboard',
-  components: { SetsChart, RegularBarChart, LevelChart },
+  components: { SetsChart, RegularBarChart, LevelChart,
+    LevelChartTemp2, LevelChartTemp3, LevelChartTemp4, LevelChartTemp5,
+    SetsChartTemp2, RegularBarChartTemp2 },
   data() {
     return {
       charts: [
         {
+          id: 5,
+          chartKey: 'level-chart-temp-2',
+          size: CHART_SIZE.EXTRA_LARGE
+        },
+        {
           id: 1,
           chartKey: CHART_COMPONENT.LEVEL_CHART,
-          size: CHART_SIZE.LARGE
+          size: CHART_SIZE.EXTRA_LARGE
+        },
+        {
+          id: 6,
+          chartKey: 'level-chart-temp-3',
+          size: CHART_SIZE.EXTRA_LARGE
+        },
+        {
+          id: 7,
+          chartKey: 'level-chart-temp-4',
+          size: CHART_SIZE.EXTRA_LARGE
+        },
+        {
+          id: 8,
+          chartKey: 'level-chart-temp-5',
+          size: CHART_SIZE.EXTRA_LARGE
         },
         {
           id: 2,
           chartKey: CHART_COMPONENT.SETS_CHART,
-          size: CHART_SIZE.LARGE
+          size: CHART_SIZE.EXTRA_LARGE
+        },
+        {
+          id: 10,
+          chartKey: 'sets-chart-temp-2',
+          size: CHART_SIZE.EXTRA_LARGE
         },
         {
           id: 3,
           chartKey: CHART_COMPONENT.REGULAR_BAR_CHART,
-          size: CHART_SIZE.LARGE
+          size: CHART_SIZE.EXTRA_LARGE
+        },
+        {
+          id: 23,
+          chartKey: 'regular-bar-chart-temp-2',
+          size: CHART_SIZE.EXTRA_LARGE
+        }
+      ],
+      tableData: [
+        {
+          operatorName: 'A',
+          alarmCount: 10,
+          totalDrivingTime: '10’54’’​',
+          drivingScore: 2
+        },
+        {
+          operatorName: 'B',
+          alarmCount: 25,
+          totalDrivingTime: '58’06’’​',
+          drivingScore: 2
+        },
+        {
+          operatorName: 'C',
+          alarmCount: 8,
+          totalDrivingTime: '23’48’’​',
+          drivingScore: 2
+        },
+        {
+          operatorName: 'D',
+          alarmCount: 9,
+          totalDrivingTime: '5’12’’​',
+          drivingScore: 2
         }
       ]
     }

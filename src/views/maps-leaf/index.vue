@@ -102,10 +102,10 @@ export default {
     async fetchSummary() {
       this.eventPanelLoading = true
       const { data } = await fetchEventSummary()
-      this.events.acceleration = data.accelerate
-      this.events.deceleration = data.decelerate
-      this.events.accident = data.impact
-      this.events.handle = data.turn_left + data.turn_right
+      this.events.acceleration = data.accelerate || 0
+      this.events.deceleration = data.decelerate || 0
+      this.events.accident = data.impact || 0
+      this.events.handle = (data.turn_left || 0) + (data.turn_right || 0)
       this.eventPanelLoading = false
     },
     zoomUpdate(zoom) {

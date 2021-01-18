@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>1. 車両のメンテナンス情報</h3>
+    <h3>2. オペレータ毎の連続安全運転時間​</h3>
     <div
       :id="elementId"
       :class="className"
@@ -13,7 +13,7 @@
 import echarts from 'echarts'
 
 export default {
-  name: 'RegularBarChart',
+  name: 'RegularBarChartTemp2',
   props: {
     size: {
       type: Number,
@@ -72,9 +72,9 @@ export default {
         },
         xAxis: [
           {
-            name: '車両グループ',
+            name: 'オペレータ',
             type: 'category',
-            data: ['#1', '#2', '#3', '#4', '#5', '#6', '#7'],
+            data: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
             axisTick: {
               alignWithLabel: true
             }
@@ -82,13 +82,13 @@ export default {
         ],
         yAxis: [
           {
-            name: 'メンテナンスが必要な車両の数',
+            name: '最長連続安全運転時間（分）',
             type: 'value'
           }
         ],
         series: [
           {
-            name: 'メンテナンスが必要な車両の数',
+            name: '最長連続安全運転時間（分）',
             type: 'bar',
             barWidth: '60%',
             data: [30, 10, 15, 12, 27, 20, 19]
