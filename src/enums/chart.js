@@ -9,5 +9,7 @@ export const CHART_SIZE = Object.freeze({
 export const CHART_COMPONENT = Object.freeze({
   LEVEL_CHART: 'level-chart',
   REGULAR_BAR_CHART: 'regular-bar-chart',
-  SETS_CHART: 'sets-chart'
+  SETS_CHART: 'sets-chart',
+  OPERATOR_DRIVING_TIME: 'operator-driving-time',
+  VEHICLE_MAINTENANCE: 'vehicle-maintenance'
 })

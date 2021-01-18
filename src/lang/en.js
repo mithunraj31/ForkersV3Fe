@@ -671,5 +671,10 @@ export default {
       name: 'Name',
       description: 'description'
     }
+  },
+  chart: {
+    operatorDrivingTime: {
+      title: 'Operator\'s driving time'
+    }
   }
 }

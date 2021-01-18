@@ -21,7 +21,7 @@
         :span="chart.size"
       >
         <el-card class="box-card">
-          <component :is="chart.chartKey" :id="chart.id" />
+          <component :is="chart.chartKey" :id="chart.id" :api="chart.api" :title="chart.title" />
         </el-card>
       </el-col>
     </el-row>
@@ -43,13 +43,15 @@ import LevelChartTemp5 from '@/components/Vitualization/LevelChart/temp5'
 
 import SetsChartTemp2 from '@/components/Vitualization/SetsChart/temp2'
 
-import RegularBarChartTemp2 from '@/components/Vitualization/RegularBarChart/temp2'
+import OperatorDrivingTime from '@/components/Charts/OperatorDrivingTime'
+import VehicleMaintenance from '@/components/Charts/VehicleMaintenance'
+
 
 export default {
   name: 'Dashboard',
   components: { SetsChart, RegularBarChart, LevelChart,
     LevelChartTemp2, LevelChartTemp3, LevelChartTemp4, LevelChartTemp5,
-    SetsChartTemp2, RegularBarChartTemp2 },
+    SetsChartTemp2, OperatorDrivingTime, VehicleMaintenance },
   data() {
     return {
       charts: [
@@ -90,13 +92,15 @@ export default {
         },
         {
           id: 3,
-          chartKey: CHART_COMPONENT.REGULAR_BAR_CHART,
-          size: CHART_SIZE.EXTRA_LARGE
+          chartKey: CHART_COMPONENT.OPERATOR_DRIVING_TIME,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/data-summary/operator-driving-time',
         },
         {
-          id: 23,
-          chartKey: 'regular-bar-chart-temp-2',
-          size: CHART_SIZE.EXTRA_LARGE
+          id: 4,
+          chartKey: CHART_COMPONENT.VEHICLE_MAINTENANCE,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/data-summary/vehicle-group-maintenance',
         }
       ],
       tableData: [

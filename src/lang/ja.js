@@ -671,5 +671,10 @@ export default {
       name: '車両名',
       description: '備考'
     }
+  },
+  chart: {
+    operatorDrivingTime: {
+      title: 'オペレータ毎の連続安全運転時間​'
+    }
   }
 }
