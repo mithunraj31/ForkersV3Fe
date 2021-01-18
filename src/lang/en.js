@@ -40,6 +40,13 @@ export default {
     OperatorListing: 'Operator Listings',
     newDriver: 'New Operator',
     editDriver: 'Edit Operator',
+    RfidListing: 'RFID Listings',
+    newRfid: 'New RFID',
+    editRfid: 'Edit RFID',
+    rfidHistory: 'Rfid History',
+    driverDetail: 'Operator Information',
+    assignOperator: 'Assign Operator',
+    assignRFID: 'Assign RFID',
     menu1: 'Menu 1',
     'menu1-1': 'Menu 1-1',
     'menu1-2': 'Menu 1-2',
@@ -83,7 +90,16 @@ export default {
     editRole: 'Edit role',
     groupManagement: 'Group Manangement',
     newUser: 'New user',
-    editUser: 'Edit User'
+    editUser: 'Edit User',
+    manufacturerListings: 'Manufacturer listings',
+    newManufacturer: 'New manufacturer',
+    editManufacturer: 'Edit manufacturer',
+    vehicleModelListings: 'Vehicle model listings',
+    newVehicleModel: 'New vehicle model',
+    editVehicleModel: 'Edit vehicle model',
+    vehicleListings: 'Vehicle listings',
+    newVehicle: 'New vehicle',
+    editVehicle: 'Edit vehicle'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -207,6 +223,8 @@ export default {
     phoneNumberRequired: 'Phone Number is Required',
     driverHasBeenCreated: 'Operator is created',
     driverHasBeenEdited: 'Operator has been edited',
+    confirmDelete: 'Are you sure you want to delete {0}?',
+    confirmRemove: 'Are you sure you want to UnAssign Operator and RFID for {0}?',
     userNameRequired: 'User Name is Required',
     stkUserRequired: 'STK user is Required',
     emailRequired: 'Email is Required',
@@ -223,7 +241,6 @@ export default {
     serialNumberRequired: 'Serial number is required',
     deviceHasBeenCreated: 'Device has been created',
     somethingWentWrong: 'Something went wrong',
-    confirmDelete: 'Are you sure you want to delete {0}?',
     deviceHasBeenDeleted: 'Device has been deleted',
     deviceHasBeenEdited: 'Device has been edited',
     userHasBeenCreated: 'User has been created',
@@ -236,12 +253,38 @@ export default {
     maintenanceInfoHasBeenDeleted: 'Maintenance has been deleted',
     maintenanceInfoHasBeenEdited: 'Maintenance has been edited',
     descriptionRequired: 'Description is required',
+    operatorHasAssigned: 'Operator has been Assigned',
+    operatorIsRemoved: 'Operator is Removed',
+    rfidDataHasBeenCreated: 'RFID has been created',
+    rfidDataHasBeenEdited: 'RFID has been edited',
+    driverIdNotFound: 'OperatorId Not Found',
     roleHasBeenCreated: 'Role has been created',
     roleHasBeenDeleted: 'Role has been deleted',
     roleHasBeenEdited: 'Role has been edited',
     groupHasBeenCreated: 'Group has been created',
     groupHasBeenDeleted: 'Group has been deleted',
-    groupHasBeenEdited: 'Group has been edited'
+    groupHasBeenEdited: 'Group has been edited',
+    rfidHasAssigned: 'RFID has been Assigned',
+    rfidIsRemoved: 'RFID is Removed',
+    rfidRequired: 'RFID is Required',
+    driverHasBeenDeleted: 'Operator Has been Deleted',
+    rfidHasBeenDeleted: 'RFID Has been Deleted',
+    customerRequired: 'Customer Required',
+    ownerRequired: 'Owner Required',
+    groupRequired: 'Group reguired',
+    manufacturerRequired: 'Manufacturer name is required',
+    manufacturerHasBeenCreated: 'Manufacturer has been created',
+    manufacturerHasBeenDeleted: 'Manufacturer has been deleted',
+    manufacturerHasBeenEdited: 'Manufacturer has been edited',
+    vehicleModelNameRequired: 'Vehicle model name is required',
+    seriesNameRequired: 'Series name is required',
+    vehicleModelHasBeenCreated: 'Vehicle model has been created',
+    vehicleModelHasBeenDeleted: 'Vehicle model has been deleted',
+    vehicleModelHasBeenEdited: 'Vehicle model has been edited',
+    selectCustomer: 'Select Customer First to View Suggestions',
+    vehicleHasBeenCreated: 'Vehicle has been created',
+    vehicleHasBeenDeleted: 'Vehicle has been deleted',
+    vehicleHasBeenEdited: 'Vehicle has been edited'
   },
 
   event: {
@@ -352,7 +395,9 @@ export default {
     clear: 'Clear',
     add: 'Add',
     view: 'View',
-    select: 'Select'
+    select: 'Select',
+    assigned: 'Assigned',
+    unAssigned: 'UnAssigned'
   },
   maps: {
     status: {
@@ -407,17 +452,22 @@ export default {
 
   driver: {
     listings: {
-      id: 'Id',
-      driverId: 'OperatorId',
+      id: 'ID',
+      driverId: 'Operator',
       age: 'Age',
       name: 'Name',
       licenseNo: 'License Number',
       licensevalidTill: 'License Valid Till',
-      phoneNo: 'Phone Number'
+      phoneNo: 'Phone Number',
+      rfid: 'RFID',
+      unMapRFID: 'Remove RFID',
+      mapRFID: 'Assign RFID',
+      customer: 'Customer'
 
     },
     new: {
-      title: 'Add Operator'
+      title: 'New Operator',
+      assignRfid: 'Assign RFID'
     },
     edit: {
       title: 'Edit Operator'
@@ -431,7 +481,40 @@ export default {
       address: 'Address',
       licenseLocation: 'License Location',
       licenseReceived: 'License Received Date',
-      licenseRenewal: 'License Valid Till'
+      licenseRenewal: 'License Valid Till',
+      operatorName: 'Operator Name',
+      customer: 'Customer'
+    }
+  },
+
+  rfid: {
+    listings: {
+      id: 'Id',
+      rfid: 'RFID',
+      createdBy: 'Created By',
+      assignStatus: 'Assign Status',
+      notAssigned: 'Not Assigned',
+      assigned: 'Operator Assigned',
+      mapOperator: 'Assign Operator',
+      unMapOperator: 'Remove Operator',
+      assignedFrom: 'Start Date',
+      assignedTill: 'End Date',
+      total: 'Total'
+    },
+    new: {
+      title: 'New RFID',
+      operatorHistory: 'RFID Operator History',
+      assignOperator: 'Assign Operator'
+    },
+    edit: {
+      title: 'Edit RFID'
+    },
+    form: {
+      rfid: 'RFID',
+      customer: 'Customer',
+      owner: 'Owner',
+      group: 'Group'
+
     }
   },
   user: {
@@ -515,7 +598,10 @@ export default {
       role: 'Role',
       group: 'Group',
       customer: 'Customer',
-      vehicle: 'Vehicle'
+      vehicle: 'Vehicle',
+      rfid: 'RFID',
+      driver: 'Driver',
+      manufacturer: 'Manufacturer'
     }
   },
 
@@ -532,5 +618,58 @@ export default {
     filterPlaceholder: 'Search by group name',
     append: 'Append',
     delete: 'Delete'
+  },
+  manufacturer: {
+    new: {
+      title: 'New Manufacturer'
+    },
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      description: 'Description',
+      updated: 'Last updated'
+    },
+    form: {
+      customer: 'Customer',
+      name: 'Name',
+      description: 'Description'
+    }
+  },
+  vehicleModel: {
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      seriesName: 'Series name',
+      updated: 'Last updated'
+    },
+    new: {
+      title: 'New model'
+    },
+    edit: {
+      title: 'Edit model'
+    },
+    form: {
+      manufacturer: 'Manufacturer',
+      name: 'Name',
+      seriesName: 'Series name'
+    }
+  },
+  vehicle: {
+    listings: {
+      id: 'ID',
+      name: 'Name',
+      description: 'description',
+      updated: 'Last updated'
+    },
+    new: {
+      title: 'New vehicle'
+    },
+    edit: {
+      title: 'Edit vehicle'
+    },
+    form: {
+      name: 'Name',
+      description: 'description'
+    }
   }
 }

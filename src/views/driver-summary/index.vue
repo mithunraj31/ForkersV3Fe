@@ -1,10 +1,31 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="24" class="new-driver-button-section">
-        <el-button type="primary" @click="$router.push('/drivers/new')">{{
-          this.$t("driver.new.title")
-        }}</el-button>
+      <el-col :span="10">
+        <span
+          v-if="!hasAdminPermission"
+        >{{ $t("rfid.listings.total") }}: {{ total }}</span>
+        <company-selector v-if="hasAdminPermission" @change="onCustomerChanged" />
+      </el-col>
+      <el-col :span="14" class="new-driver-button-section">
+        <el-checkbox
+          v-model="assigned"
+          :label="$t('general.assigned')"
+          border
+          @change="onChecked()"
+        />
+        <el-checkbox
+          v-model="unAssigned"
+          class="checkbox-filter"
+          :label="$t('general.unAssigned')"
+          border
+          @change="onChecked()"
+        />
+        <el-button
+          v-permission="[systemRole.ADMIN, driverPrivilege.ADD]"
+          type="primary"
+          @click="$router.push('/drivers/new')"
+        >{{ this.$t("driver.new.title") }}</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -18,61 +39,109 @@
         >
           <el-table-column
             prop="id"
-            :label="this.$t('driver.listings.id')"
-            width="35px"
-          />
-          <el-table-column prop="operatorId" :label="this.$t('driver.listings.driverId')">
+            :label="$t('driver.listings.licenseNo')"
+            width="90px"
+          >
             <template slot-scope="scope">
-              <label class="click" @click="driverClick(scope.row.operatorId)">
-                {{ scope.row.operatorId }}
+              <label class="click" @click="driverDetailClick(scope.row.id)">
+                {{ scope.row.licenseNo }}
               </label>
             </template>
           </el-table-column>
-          <el-table-column prop="name" :label="this.$t('driver.listings.name')">
-            <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <p>{{ $t("driver.listings.name") }}: {{ scope.row.name }}</p>
-                <p>{{ $t("driver.form.address") }}: {{ scope.row.address }}</p>
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                </div>
-              </el-popover>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="dob"
-            :label="this.$t('driver.listings.age')"
-            width="50px"
-          >
-            <template slot-scope="scope">
-              {{ calculateAge(scope.row.dob) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="licenseNo"
-            :label="this.$t('driver.listings.licenseNo')"
-          />
+          <el-table-column prop="name" :label="this.$t('driver.listings.name')" />
           <el-table-column
             prop="licenseRenewal"
             :label="this.$t('driver.listings.licensevalidTill')"
           />
           <el-table-column prop="phoneNo" :label="this.$t('driver.listings.phoneNo')" />
-          <el-table-column :label="this.$t('general.action')">
+          <el-table-column prop="rfid" :label="this.$t('driver.listings.rfid')">
             <template slot-scope="scope">
-              <el-button
-                type="primary"
-                size="small"
-                @click.native.prevent="$router.push(`/drivers/${scope.row.id}/edit`)"
+              <div
+                v-if="scope.row.rfid !== null"
+                class="click"
+                @click="rfidHistoryClick(scope.row.rfid)"
               >
-                {{ $t("general.edit") }}
-              </el-button>
-              <el-button
-                type="danger"
-                size="small"
-                @click="onDeletedriverClicked(scope.row.id)"
-              >
-                {{ $t("general.delete") }}
-              </el-button>
+                {{ scope.row.rfid }}
+              </div>
+              <div v-else>
+                {{ $t("rfid.listings.notAssigned") }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column :label="this.$t('general.action')" width="400px">
+            <template slot-scope="scope">
+              <el-row>
+                <el-col :span="6">
+                  <el-dropdown>
+                    <el-button type="info" class="device-summary-btn" size="mini">
+                      {{ $t("device.drive")
+                      }}<i class="el-icon-arrow-down el-icon--right" />
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown" size="mini">
+                      <el-dropdown-item>
+                        <div class="block">
+                          <el-date-picker
+                            v-model="drivetimeRange"
+                            type="datetimerange"
+                            :picker-options="pickerOptions"
+                            range-separator="~"
+                            :start-placeholder="$t('general.begin')"
+                            :end-placeholder="$t('general.end')"
+                            align="right"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            @change="driveClick(drivetimeRange, scope.row.rfid)"
+                          />
+                        </div>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </el-col>
+                <el-col :span="8">
+                  <el-button
+                    v-if="scope.row.rfid !== null"
+                    type="danger"
+                    plain
+                    size="mini"
+                    @click="
+                      removeRFIDClicked(scope.row.id, scope.row.rfid, scope.row.licenseNo)
+                    "
+                  >
+                    {{ $t("driver.listings.unMapRFID") }}
+                  </el-button>
+                  <el-button
+                    v-if="scope.row.rfid === null"
+                    type="primary"
+                    plain
+                    size="mini"
+                    @click.native.prevent="
+                      $router.push(`/drivers/${scope.row.id}/assign-rfid`)
+                    "
+                  >
+                    {{ $t("driver.listings.mapRFID") }}
+                  </el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    v-permission="[systemRole.ADMIN, driverPrivilege.EDIT]"
+                    type="primary"
+                    size="mini"
+                    @click.native.prevent="$router.push(`/drivers/${scope.row.id}/edit`)"
+                  >
+                    {{ $t("general.edit") }}
+                  </el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    v-if="scope.row.rfid === null"
+                    v-permission="[systemRole.ADMIN, driverPrivilege.DELETE]"
+                    type="danger"
+                    size="mini"
+                    @click="onDeletedriverClicked(scope.row.id, scope.row.licenseNo)"
+                  >
+                    {{ $t("general.delete") }}
+                  </el-button>
+                </el-col>
+              </el-row>
             </template>
           </el-table-column>
         </el-table>
@@ -88,20 +157,23 @@
 </template>
 
 <script>
-import { fetchDrivers, deleteDriver } from '@/api/driver'
+import { fetchDrivers, deleteDriver, removeRFID } from '@/api/driver'
 import Pagination from '@/components/Pagination'
-import permission from '@/directive/permission/index.js'
+import permission from '@/directive/permission'
+import checkPermission from '@/utils/permission'
+import { SYSTEM_ROLE, DRIVER_PRIVILAGE } from '@/enums'
+import * as moment from 'moment'
+import CompanySelector from '@/components/CompanySelector'
 
 export default {
   name: 'DriverListings',
+  directives: { permission },
   components: {
-    Pagination
-  },
-  directives: {
-    permission
+    Pagination,
+    CompanySelector
   },
   props: {
-    operatorId: {
+    id: {
       type: Number,
       default() {
         return 0
@@ -113,33 +185,76 @@ export default {
     return {
       drivers: null,
       total: 0,
+      unAssigned: true,
+      assigned: true,
       listQuery: {
         page: 1,
         limit: 10
       },
-      loading: false
+      loading: false,
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: this.$t('general.thisHour'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 1)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.toDay'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setHours(0)
+              start.setMinutes(0)
+              start.setSeconds(0)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.thisWeek'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: this.$t('general.thisMonth'),
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      },
+      drivetimeRange: ''
     }
   },
 
   computed: {
-    calculateAge() {
-      return (dob) => {
-        var today = new Date()
-        var birthDate = new Date(dob)
-        var age = today.getFullYear() - birthDate.getFullYear()
-        var m = today.getMonth() - birthDate.getMonth()
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-          age--
-        }
-        return age
-      }
+    systemRole() {
+      return SYSTEM_ROLE
+    },
+    hasAdminPermission() {
+      return checkPermission([SYSTEM_ROLE.ADMIN])
+    },
+    driverPrivilege() {
+      return DRIVER_PRIVILAGE
     }
   },
-
   async created() {
     this.listQuery = {
       page: +(this.$route.query.page || this.listQuery.page),
-      limit: +(this.$route.query.limit || this.listQuery.limit)
+      limit: +(this.$route.query.limit || this.listQuery.limit),
+      unAssigned: this.unAssigned,
+      assigned: this.assigned
     }
     this.$router.push({
       query: this.listQuery
@@ -150,36 +265,50 @@ export default {
     mapdriversToDataTable(driver) {
       return {
         id: driver.id,
-        operatorId: driver.operator_id,
         name: driver.name,
         dob: driver.dob,
         address: driver.address,
         licenseNo: driver.license_no,
-        licenseRenewal: driver.license_renewal_date,
+        licenseRenewal: driver.license_renewal_date
+          ? moment(driver.license_renewal_date).format('yyyy/MM/DD')
+          : '',
         licenseLocation: driver.license_location,
-        phoneNo: driver.phone_no
+        phoneNo: driver.phone_no,
+        rfid: driver.rfid
       }
+    },
+    async rfidHistoryClick($rfid) {
+      this.$router.push(`/rfid/${$rfid}/history`)
+    },
+    driveClick(drivetimeRange, rfid) {
+      this.$router.push(
+        `/operator/${rfid}/driveSummary?start=${drivetimeRange[0]}&end=${drivetimeRange[1]}`
+      )
     },
     async fetchListings() {
       let response = null
       this.loading = true
-      response = await fetchDrivers(this.listQuery)
-      const { data, total } = response
-      this.drivers = data.map(this.mapdriversToDataTable)
-      this.total = total
-      this.loading = false
-      this.$router.push({
-        query: this.listQuery
-      })
+      try {
+        response = await fetchDrivers(this.listQuery, this.customerId)
+        const { data, total } = response
+        this.drivers = data.map(this.mapdriversToDataTable)
+        this.total = total
+        this.loading = false
+        this.$router.push({
+          query: this.listQuery
+        })
+      } catch (exception) {
+        this.loading = false
+      }
     },
-    driverClick(operatorId) {
-      this.$router.push(`/operator/${operatorId}/driveSummary`)
+    driverDetailClick(id) {
+      this.$router.push(`/drivers/${id}/detail`)
     },
-    onDeletedriverClicked(id) {
+    onDeletedriverClicked(id, licenseNo) {
       let deleteConfirmMessage = this.$t('message.confirmDelete')
       deleteConfirmMessage = String.format(
         deleteConfirmMessage,
-        `${this.$t('driver.listings.driverId')}: ${id}`
+        `${this.$t('driver.listings.licenseNo')}: ${licenseNo}`
       )
 
       this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
@@ -208,13 +337,67 @@ export default {
     },
     async onPaged() {
       await this.fetchListings()
+    },
+    async onChecked() {
+      this.listQuery = {
+        page: +(this.$route.query.page || this.listQuery.page),
+        limit: +(this.$route.query.limit || this.listQuery.limit),
+        unAssigned: this.unAssigned,
+        assigned: this.assigned
+      }
+      this.$router.push({
+        query: this.listQuery
+      })
+      await this.fetchListings()
+    },
+    removeRFIDClicked($id, $rfid, licenseNo) {
+      let deleteConfirmMessage = this.$t('message.confirmRemove')
+      deleteConfirmMessage = String.format(
+        deleteConfirmMessage,
+        `${this.$t('driver.listings.licenseNo')}: ${licenseNo}`
+      )
+
+      this.$confirm(deleteConfirmMessage, this.$t('general.warning'), {
+        confirmButtonText: this.$t('general.confirm'),
+        cancelButtonText: this.$t('general.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.removeRFIDConfirmed($id, $rfid)
+      })
+    },
+    removeRFIDConfirmed($id, $rfid) {
+      this.loading = true
+      removeRFID($id, $rfid)
+        .then(() => {
+          this.$message({
+            message: this.$t('message.rfidIsRemoved'),
+            type: 'success'
+          })
+          this.fetchListings()
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = false
+          this.$message({
+            message: this.$t('message.somethingWentWrong'),
+            type: 'danger'
+          })
+        })
+    },
+    async onCustomerChanged(customerId) {
+      this.customerId = customerId
+      await this.fetchListings()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$--color-primary: #005D74;
+$--color-primary: #005d74;
+
+.device-summary-btn {
+  margin-right: 5px;
+}
 .filter-section {
   margin-bottom: 15px;
 }
@@ -226,5 +409,9 @@ $--color-primary: #005D74;
 .click {
   color: $--color-primary;
   cursor: pointer;
+}
+
+.checkbox-filter {
+  margin-right: 15px;
 }
 </style>

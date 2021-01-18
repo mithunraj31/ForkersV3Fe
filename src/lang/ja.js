@@ -38,8 +38,15 @@ export default {
     CreateVideo: 'ビデオの作成',
     DeviceListing: 'デバイスリスト',
     OperatorListing: 'オペレーターリスト',
-    newDriver: '新しいオペレーター',
+    newDriver: 'オペレーターを追加',
     editDriver: 'オペレーターの編集',
+    RfidListing: 'RFIDリスト',
+    newRfid: 'RFIDを追加',
+    editRfid: 'RFIDの編集',
+    rfidHistory: 'RFIDの履歴',
+    driverDetail: 'オペレーター情報',
+    assignOperator: '演算子の割り当て',
+    assignRFID: 'RFIDを割り当てる',
     menu1: 'メニュー１',
     'menu1-1': 'メニュー 1-1',
     'menu1-2': 'メニュー 1-2',
@@ -83,7 +90,16 @@ export default {
     editRole: 'ロールを編集',
     groupManagement: 'グループを管理',
     newUser: 'ユーザーを追加',
-    editUser: 'ユーザーを編集'
+    editUser: 'ユーザーを編集',
+    manufacturerListings: 'メーカーリスト',
+    newManufacturer: 'メーカーを追加',
+    editManufacturer: 'メーカーを編集',
+    vehicleModelListings: 'マスタデータ',
+    newVehicleModel: 'マスタを追加',
+    editVehicleModel: 'マスタを編集',
+    vehicleListings: '車両リスト',
+    newVehicle: '車両を追加',
+    editVehicle: '車両を編集'
   },
   navbar: {
     dashboard: 'トップ',
@@ -199,7 +215,7 @@ export default {
     driverIdRequired: 'オペレーターIdが必要です',
     nameRequired: '名前は必須です',
     dobRequired: 'DOBが必要です',
-    addressRequired: 'アドレスが必要です',
+    addressRequired: '住所が必要です',
     licenseNoRequired: '免許番号が必要です',
     licenseReceivedDateRequired: '免許の受領日が必要です',
     licenseRenewalDateRequired: '免許の有効期限が必要です',
@@ -207,6 +223,8 @@ export default {
     phoneNumberRequired: '電話番号が必要です',
     driverHasBeenCreated: '演算子が作成されました',
     driverHasBeenEdited: '演算子が編集されました',
+    confirmDelete: '「{0}」を削除してもよろしいでしょうか',
+    confirmRemove: '「{0}」オペレーターとRFIDの割り当てを解除してもよろしいですか？',
     userNameRequired: 'ユーザー名が必要があります',
     stkUserRequired: 'STKユーザーが必要があります',
     emailRequired: 'メールが必要があります',
@@ -223,7 +241,6 @@ export default {
     serialNumberRequired: '通し番号は必要があります',
     deviceHasBeenCreated: 'デバイスが作成されました',
     somethingWentWrong: '何かがうまくいきませんでした',
-    confirmDelete: '「{0}」を削除してもよろしいでしょうか',
     deviceHasBeenDeleted: 'デバイスが削除されました',
     deviceHasBeenEdited: 'デバイスが編集されました',
     userHasBeenCreated: 'ユーザーが作成されました',
@@ -237,12 +254,38 @@ export default {
     maintenanceInfoHasBeenEdited: 'メンテナンス履歴が編集されました',
     descriptionRequired: '説明は必要があります',
     customerBeenCreated: '会社が作成されました',
+    operatorHasAssigned: 'オペレーターが割り当てました',
+    operatorIsRemoved: '演算子が削除されました',
+    rfidDataHasBeenCreated: 'RFIDが作成されました',
+    rfidDataHasBeenEdited: 'RFIDが編集されました',
+    driverIdNotFound: 'オペレーターIdが見つかりません',
     roleHasBeenCreated: 'ロールが作成されました',
     roleHasBeenDeleted: 'ロールが削除されました',
     roleHasBeenEdited: 'ロールが編集されました',
     groupHasBeenCreated: 'グループが作成されました',
     groupHasBeenDeleted: 'グループが削除されました',
-    groupHasBeenEdited: 'グループが編集されました'
+    groupHasBeenEdited: 'グループが編集されました',
+    rfidHasAssigned: 'RFIDが割り当てました',
+    rfidIsRemoved: 'RFIDが削除されました',
+    rfidRequired: 'RFIDは必要があります',
+    driverHasBeenDeleted: 'オペレーターが削除されました',
+    rfidHasBeenDeleted: 'RFIDが削除されました',
+    customerRequired: '顧客が必要',
+    ownerRequired: '所有者が必要',
+    groupRequired: 'グループが必要',
+    manufacturerRequired: 'メーカーが必要です',
+    manufacturerHasBeenCreated: 'メーカー名が作成されました',
+    manufacturerBeenDeleted: 'メーカー名が削除されました',
+    manufacturerHasBeenEdited: 'メーカー名が編集されました',
+    vehicleModelNameRequired: 'マスタ名が必要です',
+    seriesNameRequired: 'シリーズ名が必要です',
+    vehicleModelHasBeenCreated: 'マスタが作成されました',
+    vehicleModelHasBeenDeleted: 'マスタが削除されました',
+    vehicleModelHasBeenEdited: 'マスタが編集されました',
+    selectCustomer: '提案を表示するには、最初に顧客を選択してください',
+    vehicleHasBeenCreated: '車両が作成されました',
+    vehicleHasBeenDeleted: '車両が削除されました',
+    vehicleHasBeenEdited: '車両が編集されました'
   },
 
   event: {
@@ -352,6 +395,8 @@ export default {
     longitude: '経度 (Lng)',
     add: '追加',
     clear: '入力をクリア',
+    assigned: '割り当てられた',
+    unAssigned: '未割り当て',
     view: '見る',
     select: '選択'
   },
@@ -407,16 +452,21 @@ export default {
   driver: {
     listings: {
       id: 'ID',
-      driverId: 'オペレーターID',
+      driverId: 'オペレーター',
       age: '年齢',
       name: '名前',
       licenseNo: '免許番号',
       licensevalidTill: '免許有効期限',
-      phoneNo: '電話番号'
+      phoneNo: '電話番号',
+      rfid: 'RFID',
+      unMapRFID: 'RFIDを削除',
+      mapRFID: 'RFIDの割り当て',
+      customer: 'お客様'
 
     },
     new: {
-      title: 'オペレーターの追加'
+      title: 'オペレーターの追加',
+      assignRfid: 'RFIDの割り当て'
     },
     edit: {
       title: 'オペレーターの編集'
@@ -427,10 +477,41 @@ export default {
       name: '名前',
       licenseNo: '免許番号',
       phoneNo: '電話番号',
-      address: 'アドレス',
+      address: '住所',
       licenseReceived: '免許受領日',
       licenseRenewal: '免許有効期限',
-      licenseLocation: '免許の場所'
+      licenseLocation: '免許の場所',
+      operatorName: '演算子名',
+      customer: '会社'
+    }
+  },
+  rfid: {
+    listings: {
+      id: 'ID',
+      rfid: 'RFID',
+      createdBy: '作成されたユーザー',
+      assignStatus: 'ステータスの割り当て',
+      notAssigned: 'なし',
+      assigned: 'オペレーター割り当て済み',
+      mapOperator: '演算子の割り当て',
+      unMapOperator: '演算子の削除',
+      assignedFrom: '開始日',
+      assignedTill: '終了日',
+      total: '全RFID数'
+    },
+    new: {
+      title: 'RFIDを追加',
+      operatorHistory: 'RFIDのオペレーター履歴',
+      assignOperator: '演算子の割り当て'
+    },
+    edit: {
+      title: 'RFIDを編集する'
+    },
+    form: {
+      rfid: 'RFID',
+      customer: '会社',
+      owner: 'オーナー',
+      group: 'グループ'
     }
   },
   user: {
@@ -492,7 +573,7 @@ export default {
     },
 
     edit: {
-      title: 'ロールを追加'
+      title: 'ロールを編集'
     },
 
     listings: {
@@ -514,7 +595,10 @@ export default {
       role: 'ロール',
       group: 'グループ',
       customer: '会社',
-      vehicle: '車両'
+      vehicle: '車両',
+      rfid: 'RFID',
+      driver: 'ドライバー',
+      manufacturer: 'メーカー'
     }
   },
 
@@ -531,6 +615,61 @@ export default {
     filterPlaceholder: 'グループ名で検索',
     append: '追加',
     delete: '削除'
+  },
+  manufacturer: {
+    new: {
+      title: 'メーカーを追加'
+    },
+    listings: {
+      id: '番号',
+      name: 'メーカー名',
+      description: '備考  ',
+      updated: '最終更新時刻'
+    },
+    form: {
+      customer: '会社',
+      name: 'メーカー名',
+      description: '備考'
+    },
+    edit: {
+      title: 'メーカーを編集'
+    }
+  },
+  vehicleModel: {
+    listings: {
+      id: '番号',
+      name: 'マスタ名',
+      seriesName: 'シリーズ名',
+      updated: '最終更新時刻'
+    },
+    new: {
+      title: 'マスタを追加'
+    },
+    edit: {
+      title: 'マスタを編集'
+    },
+    form: {
+      manufacturer: 'メーカー',
+      name: 'マスタ名',
+      seriesName: 'シリーズ名'
+    }
+  },
+  vehicle: {
+    listings: {
+      id: '番号',
+      name: '車両名',
+      description: '備考',
+      updated: '最終更新時刻'
+    },
+    new: {
+      title: '車両を追加'
+    },
+    edit: {
+      title: '車両を編集'
+    },
+    form: {
+      name: '車両名',
+      description: '備考'
+    }
   }
-
 }

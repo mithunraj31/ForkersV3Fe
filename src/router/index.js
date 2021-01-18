@@ -8,6 +8,8 @@ import {
   DEVICE_PRIVILEGE,
   VEHICLE_PRIVILEGE,
   EVENT_PRIVILEGE
+  // MANUFACTURER_PRIVILEGE,
+  // VEHICLE_MODEL_PRIVILEGE
 } from '@/enums'
 
 Vue.use(Router)
@@ -83,6 +85,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/vitualization',
+    component: Layout,
+    redirect: '/vitualization',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/dynamic-dashboard/index'),
+        name: 'charts',
+        meta: { title: 'charts', icon: 'chart', affix: false }
+      }
+    ]
+  },
+  {
     path: '/video',
     component: Layout,
     hidden: true,
@@ -97,55 +112,6 @@ export const constantRoutes = [
           end: route.query.end,
           eventId: route.params.deviceId
         })
-      }
-    ]
-  },
-  {
-    path: '/operator',
-    component: Layout,
-    children: [
-      {
-        path: ':operatorId/driveSummary',
-        component: () => import('@/views/operator-drive-summery'),
-        name: 'OperatorDriveSummery',
-        hidden: true,
-        meta: { title: 'OperatorDriveSummary', icon: 'documentation', affix: false },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end,
-          operatorId: route.params.operatorId
-        })
-      }
-    ]
-  },
-  {
-    path: '/drivers',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/driver-summary/index'),
-        name: 'Driver',
-        meta: {
-          title: 'DriverListing',
-          icon: 'el-icon-s-tools',
-          noCache: true
-        }
-      },
-      {
-        path: 'new',
-        component: () => import('@/views/driver-summary/new-driver/index'),
-        name: 'NewDriver',
-        hidden: true,
-        meta: { title: 'newDriver', noCache: true }
-      },
-      {
-        path: ':id/edit',
-        component: () => import('@/views/driver-summary/edit-driver/index'),
-        name: 'EditDriver',
-        hidden: true,
-        meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
       }
     ]
   },
@@ -222,60 +188,47 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/event-summary',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/event-summary/index'),
-        name: 'EventSummary',
-        meta: {
-          title: 'EventSummary',
-          icon: 'el-icon-data-line',
-          affix: false,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        },
-        props: route => ({
-          start: route.query.start,
-          end: route.query.end
-        })
-      },
-      {
-        path: ':eventId/event-detail',
-        component: () => import('@/views/event-summary/event-detail-container/index'),
-        name: ':eventId',
-        hidden: true,
-        meta: {
-          title: 'EventDetail',
-          noCache: true,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        }
-      },
-      {
-        path: ':eventId/event-map',
-        component: () => import('@/views/event-summary/event-map/DeviceMap'),
-        name: 'EventMap',
-        hidden: true,
-        meta: {
-          title: 'EventMap',
-          noCache: true,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        }
-      },
-      {
-        path: ':eventId/event-video',
-        component: () => import('@/views/event-summary/event-video/index'),
-        name: 'EventVideo',
-        hidden: true,
-        meta: {
-          title: 'EventVideo',
-          noCache: true,
-          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/vehicles',
+  //   component: Layout,
+  //   redirect: '/vehicles/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/vehicle/index'),
+  //       name: 'Vehicles',
+  //       meta: {
+  //         title: 'vehicleListings',
+  //         icon: 'el-icon-truck',
+  //         noCache: true,
+  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+  //       }
+  //     },
+  //     {
+  //       path: 'new',
+  //       component: () => import('@/views/vehicle/new-vehicle/index'),
+  //       name: 'NewVehicle',
+  //       hidden: true,
+  //       meta: {
+  //         title: 'newVehicle',
+  //         noCache: true,
+  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+  //       }
+  //     },
+  //     {
+  //       path: ':id/edit',
+  //       component: () => import('@/views/vehicle/edit-vehicle/index'),
+  //       name: 'EditVehicle',
+  //       hidden: true,
+  //       meta: {
+  //         title: 'editVehicle',
+  //         noCache: true,
+  //         breadcrumbTitle: 'editVehicleBreadcrumbTitle',
+  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/customers',
     component: Layout,
@@ -414,6 +367,248 @@ export const asyncRoutes = [
           icon: 'peoples',
           noCache: true,
           roles: [SYSTEM_ROLE.ADMIN, GROUP_PRIVILEGE.VIEW, GROUP_PRIVILEGE.ADD, GROUP_PRIVILEGE.EDIT, GROUP_PRIVILEGE.DELETE]
+        }
+      }
+    ]
+  },
+  // {
+  //   path: '/manufacturers',
+  //   component: Layout,
+  //   redirect: '/manufacturers/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/manufacturer/index'),
+  //       name: 'Manufacturers',
+  //       meta: {
+  //         title: 'manufacturerListings',
+  //         icon: 'el-icon-s-tools',
+  //         noCache: true,
+  //         roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.VIEW]
+  //       }
+  //     },
+  //     {
+  //       path: 'new',
+  //       component: () => import('@/views/manufacturer/new-manufacturer/index'),
+  //       name: 'NewManufacturer',
+  //       hidden: true,
+  //       meta: {
+  //         title: 'newManufacturer',
+  //         noCache: true,
+  //         roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.ADD]
+  //       }
+  //     },
+  //     {
+  //       path: ':id/edit',
+  //       component: () => import('@/views/manufacturer/edit-manufacturer/index'),
+  //       name: 'EditManufacturer',
+  //       hidden: true,
+  //       meta: {
+  //         title: 'editManufacturer',
+  //         noCache: true,
+  //         breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
+  //         roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/vehicle-models',
+  //   component: Layout,
+  //   redirect: '/vehicle-model/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/vehicle-model/index'),
+  //       name: 'VehicleModels',
+  //       meta: {
+  //         title: 'vehicleModelListings',
+  //         icon: 'el-icon-odometer',
+  //         noCache: true,
+  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+  //       }
+  //     },
+  //     {
+  //       path: 'new',
+  //       component: () => import('@/views/vehicle-model/new-vehicle-model/index'),
+  //       name: 'NewVehicleModel',
+  //       hidden: true,
+  //       meta: {
+  //         title: 'newVehicleModel',
+  //         noCache: true,
+  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+  //       }
+  //     },
+  //     {
+  //       path: ':id/edit',
+  //       component: () => import('@/views/vehicle-model/edit-vehicle-model/index'),
+  //       name: 'EditVehicleModel',
+  //       hidden: true,
+  //       meta: {
+  //         title: 'editVehicleModel',
+  //         noCache: true,
+  //         breadcrumbTitle: 'editVehicleModelBreadcrumbTitle',
+  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
+  //       }
+  //     }
+  //   ]
+  // },
+  {
+    path: '/operator',
+    component: Layout,
+    children: [
+      {
+        path: ':operatorId/driveSummary',
+        component: () => import('@/views/operator-drive-summery'),
+        name: 'OperatorDriveSummery',
+        hidden: true,
+        meta: { title: 'OperatorDriveSummary', icon: 'documentation', affix: false },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end,
+          operatorId: route.params.operatorId
+        })
+      }
+    ]
+  },
+  {
+    path: '/drivers',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/driver-summary/index'),
+        name: 'Driver',
+        meta: {
+          title: 'OperatorListing',
+          icon: 'el-icon-s-help',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/driver-summary/new-driver/index'),
+        name: 'NewDriver',
+        hidden: true,
+        meta: { title: 'newDriver', noCache: true }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/driver-summary/edit-driver/index'),
+        name: 'EditDriver',
+        hidden: true,
+        meta: { title: 'editDriver', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editDriverBreadcrumbTitle' }
+      },
+      {
+        path: ':id/detail',
+        component: () => import('@/views/driver-summary/driver-detail/index'),
+        name: 'DriverDetail',
+        hidden: true,
+        meta: { title: 'driverDetail', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'driverDetailBreadcrumbTitle' }
+      },
+      {
+        path: ':id/assign-rfid',
+        component: () => import('@/views/driver-summary/assign-rfid/index'),
+        name: 'AssignRFID',
+        hidden: true,
+        meta: { title: 'assignRFID', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignRFIDBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/rfid',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/rfid-summary/index'),
+        name: 'RFID',
+        meta: {
+          title: 'RfidListing',
+          icon: 'el-icon-postcard',
+          noCache: true
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/rfid-summary/new-rfid/index'),
+        name: 'NewRfid',
+        hidden: true,
+        meta: { title: 'newRfid', noCache: true }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/rfid-summary/edit-rfid/index'),
+        name: 'EditRfid',
+        hidden: true,
+        meta: { title: 'editRfid', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'editRfidBreadcrumbTitle' }
+      },
+      {
+        path: ':rfid/assign-operator',
+        component: () => import('@/views/rfid-summary/assign-operator/index'),
+        name: 'AssignOperator',
+        hidden: true,
+        meta: { title: 'assignOperator', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'assignOperatorBreadcrumbTitle' }
+      },
+      {
+        path: ':rfid/history',
+        component: () => import('@/views/rfid-summary/rfid-history/index'),
+        name: 'RfidHistory',
+        hidden: true,
+        meta: { title: 'rfidHistory', icon: 'el-icon-mobile', noCache: true, breadcrumbTitle: 'rfidHistoryBreadcrumbTitle' }
+      }
+    ]
+  },
+  {
+    path: '/event-summary',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/event-summary/index'),
+        name: 'EventSummary',
+        meta: {
+          title: 'EventSummary',
+          icon: 'el-icon-data-line',
+          affix: false,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        },
+        props: route => ({
+          start: route.query.start,
+          end: route.query.end
+        })
+      },
+      {
+        path: ':eventId/event-detail',
+        component: () => import('@/views/event-summary/event-detail-container/index'),
+        name: ':eventId',
+        hidden: true,
+        meta: {
+          title: 'EventDetail',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-map',
+        component: () => import('@/views/event-summary/event-map/DeviceMap'),
+        name: 'EventMap',
+        hidden: true,
+        meta: {
+          title: 'EventMap',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: ':eventId/event-video',
+        component: () => import('@/views/event-summary/event-video/index'),
+        name: 'EventVideo',
+        hidden: true,
+        meta: {
+          title: 'EventVideo',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, EVENT_PRIVILEGE.VIEW]
         }
       }
     ]
