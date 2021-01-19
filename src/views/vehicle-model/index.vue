@@ -13,10 +13,20 @@
     <el-row>
       <el-col :span="24">
         <el-table v-loading="loading" :data="vehicleModels" border style="width: 100%">
-          <el-table-column prop="id" :label="this.$t('vehicleModel.listings.id')" width="50" />
+          <el-table-column
+            prop="id"
+            :label="this.$t('vehicleModel.listings.id')"
+            width="50"
+          />
           <el-table-column prop="name" :label="this.$t('vehicleModel.listings.name')" />
-          <el-table-column prop="seriesName" :label="this.$t('vehicleModel.listings.seriesName')" />
-          <el-table-column prop="updated" :label="this.$t('vehicleModel.listings.updated')" />
+          <el-table-column
+            prop="seriesName"
+            :label="this.$t('vehicleModel.listings.seriesName')"
+          />
+          <el-table-column
+            prop="updated"
+            :label="this.$t('vehicleModel.listings.updated')"
+          />
           <el-table-column :label="this.$t('general.action')">
             <template slot-scope="scope">
               <el-button
@@ -28,23 +38,29 @@
               >
                 {{ $t("general.edit") }}
               </el-button>
-              <el-button type="danger" size="small" @click="onDeleteClicked(scope.row.id)">
+              <el-button
+                type="danger"
+                size="small"
+                @click="onDeleteClicked(scope.row.id)"
+              >
                 {{ $t("general.delete") }}
               </el-button>
             </template>
           </el-table-column>
         </el-table>
-        <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="onPaged" />
+        <pagination
+          :total="total"
+          :page.sync="listQuery.page"
+          :limit.sync="listQuery.limit"
+          @pagination="onPaged"
+        />
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import {
-  fetchVehicleModels,
-  deleteVehicleModel
-} from '@/api/vehicle-model'
+import { fetchVehicleModels, deleteVehicleModel } from '@/api/vehicle-model'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 import permission from '@/directive/permission/index.js'
@@ -84,10 +100,12 @@ export default {
   },
   methods: {
     mapData(data) {
-      const datetime = moment(data.updated_at || data.created_at).format('YYYY/MM/DD hh:mm:ss')
+      const datetime = moment(data.updated_at || data.created_at).format(
+        'YYYY/MM/DD hh:mm:ss'
+      )
       return {
         id: data.id,
-        name: data.name,
+        name: data.model_name,
         seriesName: data.series_name,
         updated: datetime
       }
@@ -95,13 +113,18 @@ export default {
     async fetchListings() {
       this.loading = true
       try {
-        const { data, meta } = await fetchVehicleModels(this.listQuery, this.manufacturerId)
+        const { data, total } = await fetchVehicleModels(
+          this.listQuery,
+          this.manufacturerId
+        )
         this.vehicleModels = data.map(this.mapData)
-        this.total = meta.total
+        this.total = total
       } catch (ex) {
         this.vehicleModels = []
+        console.log(ex)
         this.total = 0
       } finally {
+        console.log(this.vehicleModels)
         this.loading = false
         this.$router.push({
           query: this.listQuery
@@ -152,10 +175,10 @@ export default {
 
 <style lang="scss" scoped>
 .filter-section {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .new-manufacturer-button-section {
-    text-align: right;
+  text-align: right;
 }
 </style>

@@ -117,7 +117,7 @@
             <el-input v-model="form.remarks" type="textarea" />
           </el-form-item>
         </el-col>
-        <el-col :span="24">
+        <el-col :span="24" align="center">
           <el-form-item>
             <el-button type="primary" @click="onSubmit">{{
               $t("general.save")
@@ -187,7 +187,7 @@ export default {
     }
 
     const validateManufacturerId = (rule, value, callback) => {
-      if (!value) {
+      if (!this.manufacturerId) {
         callback(new Error(this.$t('message.manufacturerRequired')))
       } else {
         callback()
@@ -394,6 +394,11 @@ export default {
           {
             required: true,
             trigger: 'blur',
+            validator: validateManufacturerId
+          },
+          {
+            required: true,
+            trigger: 'change',
             validator: validateManufacturerId
           }
         ],

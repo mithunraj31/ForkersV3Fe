@@ -7,10 +7,7 @@
 
 <script>
 import VehicleModelForm from '../components/VehicleModelForm'
-import {
-  editVehicleModel,
-  fetchVehicleModelById
-} from '@/api/vehicle-model'
+import { editVehicleModel, fetchVehicleModelById } from '@/api/vehicle-model'
 
 export default {
   name: 'EditVehicleModel',
@@ -29,7 +26,29 @@ export default {
       const { data } = await fetchVehicleModelById(+this.$route.params.id)
       this.vehicleModel = {
         id: +this.$route.params.id,
-        name: data.name
+        manufacturerId: data.manufacturer_id,
+        seriesName: data.series_name,
+        modelName: data.model_name,
+        powerType: data.power_type,
+        structuralMethod: data.structural_method,
+        engineModel: data.engine_model,
+        ratedLoad: data.rated_load,
+        forkLength: data.fork_length,
+        forkWidth: data.fork_width,
+        standardLift: data.standard_lift,
+        maximumLift: data.maximum_lift,
+        batteryVoltage: data.battery_voltage,
+        batteryCapacity: data.battery_capacity,
+        fuelTankCapacity: data.fuel_tank_capacity,
+        bodyWeight: data.body_weight,
+        bodyLength: data.body_length,
+        bodyWidth: data.body_width,
+        headGuardHeight: data.head_guard_height,
+        minTurningRadius: data.min_turning_radius,
+        refLoadCenter: data.ref_load_center,
+        tireSizeFrontWheel: data.tire_size_front_wheel,
+        tireSizeRearWheel: data.tire_size_rear_wheel,
+        remarks: data.remarks
       }
     } catch (err) {
       this.$router.push('/404')
