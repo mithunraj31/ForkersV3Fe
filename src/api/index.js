@@ -61,5 +61,70 @@ export function httpGet(apiRoute) {
         ]
       })
     })
+  } else if (apiRoute === '/data-summary/alarms/vehicle') {
+    return new Promise(resolve => {
+      resolve({
+        data: [
+          {
+            'summary_date': '2021/01/16',
+            'groups': [
+              {
+                'vehicle_group': {
+                  'id': 1,
+                  'name': 'A'
+                },
+                'alarm_count': 200,
+                'running_time': 20
+              },
+              {
+                'vehicle_group': {
+                  'id': 2,
+                  'name': 'B'
+                },
+                'alarm_count': 230,
+                'running_time': 10
+              },
+              {
+                'vehicle_group': {
+                  'id': 3,
+                  'name': 'C'
+                },
+                'alarm_count': 215,
+                'running_time': 30
+              }
+            ]
+          },
+          {
+            'summary_date': '2021/01/17',
+            'groups': [
+              {
+                'vehicle_group': {
+                  'id': 1,
+                  'name': 'A'
+                },
+                'alarm_count': 63,
+                'running_time': 36
+              },
+              {
+                'vehicle_group': {
+                  'id': 2,
+                  'name': 'B'
+                },
+                'alarm_count': 2,
+                'running_time': 1
+              },
+              {
+                'vehicle_group': {
+                  'id': 3,
+                  'name': 'C'
+                },
+                'alarm_count': 63,
+                'running_time': 62
+              }
+            ]
+          }
+        ]
+      })
+    })
   }
 }

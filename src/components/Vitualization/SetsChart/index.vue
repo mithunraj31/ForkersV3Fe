@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <h3>C3)期間毎の車両グループ毎のアラーム数と全車両グループの総稼働時間​</h3>
-    <div
-      :id="elementId"
-      :class="className"
-      :style="{ height: '400px', width: '900px' }"
-    />
-  </div>
+  <div
+    :id="elementId"
+    :class="className"
+    :style="{ height: '400px' }"
+  />
 </template>
 
 <script>
@@ -17,19 +14,45 @@ export default {
   props: {
     className: {
       type: String,
-      default: 'chart'
+      default() {
+        return 'chart'
+      }
     },
     id: {
       type: Number,
-      default: 0
+      default() {
+        return 0
+      }
     },
-    width: {
-      type: String,
-      default: '200px'
+    keyPairValue: {
+      type: Array,
+      default() {
+        return []
+      }
     },
-    height: {
-      type: String,
-      default: '200px'
+    lineKeyPairValue: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    yAxisOptions: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    xAxisOptions: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    lineOptions: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   data() {
@@ -39,7 +62,7 @@ export default {
   },
   computed: {
     elementId() {
-      return `LevelChart${this.id}`
+      return `SetsChart${this.id}`
     }
   },
   mounted() {
@@ -52,9 +75,47 @@ export default {
     this.chart.dispose()
     this.chart = null
   },
+  watch: {
+    keyPairValue() {
+      this.initChart()
+    }
+  },
   methods: {
     initChart() {
+      if (!this.keyPairValue || this.keyPairValue.length === 0) {
+        return
+      }
       this.chart = echarts.init(document.getElementById(this.elementId))
+      let legends = this.keyPairValue[0].value.map(x => x.key)
+      legends.push(this.lineOptions.label)
+      let categories = this.keyPairValue.map(x => x.key)
+
+      let series = []
+      let barMaxValue = 0
+      this.keyPairValue[0].value.forEach(x => {
+        series.push({
+          name: x.key,
+          type: 'bar',
+          data: this.keyPairValue.map(parentGroup => {
+            const val = parentGroup.value
+                        .filter(subGroup => subGroup.key === x.key)[0].value
+            if (val > barMaxValue) {
+              barMaxValue = val
+            }
+            return val
+          })
+        })
+      })
+      const barYAxisChartValueOptions = this.getChartMaxValueAndInterval(barMaxValue)
+      const lineValues = this.lineKeyPairValue.map(x => x.value)
+      const lineMaxValue = Math.max.apply(Math, lineValues)
+      const yAxisChartValueOptions = this.getChartMaxValueAndInterval(lineMaxValue)
+      series.push({
+        name: this.lineOptions.label,
+        type: 'line',
+        yAxisIndex: 1,
+        data: lineValues
+      })
       this.chart.setOption({
         tooltip: {
           trigger: 'axis',
@@ -65,33 +126,13 @@ export default {
             }
           }
         },
-        toolbox: {
-          feature: {
-            // dataView: {show: true, readOnly: false},
-            // saveAsImage: {show: true}
-          }
-        },
         legend: {
-          data: ['グループ1', 'グループ2', 'グループ3', '稼働時間​']
+          data: legends
         },
         xAxis: [
           {
-            // name: '期間',
             type: 'category',
-            data: [
-              '1月/10',
-              '1月/11',
-              '1月/12',
-              '1月/13',
-              '1月/14',
-              '1月/15',
-              '1月/16',
-              '1月/17',
-              '1月/18',
-              '1月/19',
-              '1月/20',
-              '1月/21'
-            ],
+            data: categories,
             axisPointer: {
               type: 'shadow'
             }
@@ -100,101 +141,35 @@ export default {
         yAxis: [
           {
             type: 'value',
-            name: 'すべてのフォークリフトグループのアラームの総数',
+            name: this.yAxisOptions.label,
             min: 0,
-            max: 250,
-            interval: 50,
+            max: barYAxisChartValueOptions.max,
+            interval: barYAxisChartValueOptions.interval,
             axisLabel: {
-              formatter: '{value}'
+              formatter: `${this.yAxisOptions.prefix} {value} ${this.yAxisOptions.suffix}`.trim()
             }
           },
           {
             type: 'value',
-            name: '稼働時間​',
+            name: this.lineOptions.label,
             min: 0,
-            max: 25,
-            interval: 5,
+            max: yAxisChartValueOptions.max,
+            interval: yAxisChartValueOptions.interval,
             axisLabel: {
-              formatter: '{value} 時間'
+              formatter: `${this.lineOptions.prefix} {value} ${this.lineOptions.suffix}`.trim()
             }
           }
         ],
-        series: [
-          {
-            name: 'グループ1',
-            type: 'bar',
-            data: [
-              2.0,
-              4.9,
-              7.0,
-              23.2,
-              25.6,
-              76.7,
-              135.6,
-              162.2,
-              32.6,
-              20.0,
-              6.4,
-              3.3
-            ]
-          },
-          {
-            name: 'グループ2',
-            type: 'bar',
-            data: [
-              2.6,
-              5.9,
-              9.0,
-              26.4,
-              28.7,
-              70.7,
-              175.6,
-              182.2,
-              48.7,
-              18.8,
-              6.0,
-              2.3
-            ]
-          },
-          {
-            name: 'グループ3',
-            type: 'bar',
-            data: [
-              2.6,
-              5.9,
-              9.0,
-              26.4,
-              28.7,
-              70.7,
-              175.6,
-              182.2,
-              48.7,
-              18.8,
-              6.0,
-              2.3
-            ]
-          },
-          {
-            name: '稼働時間​',
-            type: 'line',
-            yAxisIndex: 1,
-            data: [
-              2.0,
-              2.2,
-              3.3,
-              4.5,
-              6.3,
-              10.2,
-              20.3,
-              23.4,
-              23.0,
-              16.5,
-              12.0,
-              6.2
-            ]
-          }
-        ]
+        series: series
       })
+    },
+    getChartMaxValueAndInterval(maxValue) {
+      const lineMaxValuePlus15Percentage = maxValue * 1.15
+      const yAxisMaxValue = Math.round(lineMaxValuePlus15Percentage / 10) * 10
+      return {
+        max: yAxisMaxValue,
+        interval: Math.round(yAxisMaxValue / 5)
+      }
     }
   }
 }

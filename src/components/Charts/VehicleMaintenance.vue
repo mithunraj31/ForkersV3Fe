@@ -57,7 +57,6 @@ export default {
   methods: {
     async fetchData() {
       const { data } = await httpGet(this.api)
-      console.log(this.id)
       this.keyPairValue = data.map(m => {
         return {
           key: m.group.name,

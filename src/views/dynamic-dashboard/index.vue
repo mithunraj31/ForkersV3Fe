@@ -41,8 +41,9 @@ import LevelChartTemp3 from '@/components/Vitualization/LevelChart/temp3'
 import LevelChartTemp4 from '@/components/Vitualization/LevelChart/temp4'
 import LevelChartTemp5 from '@/components/Vitualization/LevelChart/temp5'
 
-import SetsChartTemp2 from '@/components/Vitualization/SetsChart/temp2'
 
+import VehicleGroupEventWithRunningHours from '@/components/Charts/VehicleGroupEventWithRunningHours'
+import AlarmVehicleGroup from '@/components/Charts/AlarmVehicleGroup'
 import OperatorDrivingTime from '@/components/Charts/OperatorDrivingTime'
 import VehicleMaintenance from '@/components/Charts/VehicleMaintenance'
 
@@ -51,7 +52,11 @@ export default {
   name: 'Dashboard',
   components: { SetsChart, RegularBarChart, LevelChart,
     LevelChartTemp2, LevelChartTemp3, LevelChartTemp4, LevelChartTemp5,
-    SetsChartTemp2, OperatorDrivingTime, VehicleMaintenance },
+    OperatorDrivingTime,
+    VehicleMaintenance,
+    VehicleGroupEventWithRunningHours,
+    AlarmVehicleGroup
+  },
   data() {
     return {
       charts: [
@@ -82,13 +87,15 @@ export default {
         },
         {
           id: 2,
-          chartKey: CHART_COMPONENT.SETS_CHART,
-          size: CHART_SIZE.EXTRA_LARGE
+          chartKey: CHART_COMPONENT.ALARM_VEHICLE_GROUP,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/data-summary/alarms/vehicle'
         },
         {
           id: 10,
-          chartKey: 'sets-chart-temp-2',
-          size: CHART_SIZE.EXTRA_LARGE
+          chartKey: CHART_COMPONENT.VEHICLE_GROUP_EVENT_WITH_RUNNING_HOURS,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/data-summary/alarms/vehicle',
         },
         {
           id: 3,

@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     elementId() {
-      return `LevelChart${this.id}`
+      return `RegularChart${this.id}`
     }
   },
   mounted() {
