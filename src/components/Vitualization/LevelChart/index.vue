@@ -4,7 +4,7 @@
     <div
       :id="elementId"
       :class="className"
-      :style="{ height: '400px', width: '900px' }"
+      :style="{ height: '400px'}"
     />
   </div>
 </template>
