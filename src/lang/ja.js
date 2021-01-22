@@ -676,6 +676,27 @@ export default {
   chart: {
     operatorDrivingTime: {
       title: 'オペレータ毎の連続安全運転時間​'
+    },
+    operatorEventSummary: {
+      title: 'オペレータ毎のアラーム数・種別と稼働時間​'
+    },
+    vehicleEventSummary: {
+      title: '車両毎のアラーム数・種別と稼働時間​'
+    },
+    vehicleGroupEventSummary: {
+      title: '車両グループ毎のアラーム数・種別と稼働時間​'
+    },
+    allPerriodOperatorEventSummary: {
+      title: '期間毎の全オペレータのアラーム総数・種別と総稼働時間​'
+    },
+    allPeriodVehicleEventSummary: {
+      title: '期間毎の全車両のアラーム総数・種別と総稼働時間​'
+    },
+    vehicleGroupEventWithRunningHours: {
+      title: '期間毎の車両グループ毎のアラーム数と全車両グループの総稼働時間​'
+    },
+    vehicleMaintenance: {
+      title: '車両のメンテナンス情報​'
     }
   }
 }

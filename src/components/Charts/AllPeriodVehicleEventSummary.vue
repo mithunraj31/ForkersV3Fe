@@ -23,7 +23,7 @@ export default {
     title: {
       type: String,
       default() {
-        return this.$t('chart.AllPeriodVehicleEventSummary.title')
+        return this.$t('chart.allPeriodVehicleEventSummary.title')
       }
     },
     api: {
