@@ -324,7 +324,8 @@ export default {
     drive: 'Drive',
     route: 'Route',
     video: 'Video',
-    device: 'Device'
+    device: 'Device',
+    channelNumber: 'Channel number'
   },
 
   type: {

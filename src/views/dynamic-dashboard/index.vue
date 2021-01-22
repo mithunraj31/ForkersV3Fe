@@ -65,19 +65,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import {
-  SetsChart,
-  RegularBarChart,
-  LevelChart
-} from '@/components/Vitualization'
 import draggable from 'vuedraggable'
 import { CHART_COMPONENT, CHART_SIZE } from '@/enums/chart'
-import LevelChartTemp2 from '@/components/Vitualization/LevelChart/temp2'
-import LevelChartTemp3 from '@/components/Vitualization/LevelChart/temp3'
-import LevelChartTemp4 from '@/components/Vitualization/LevelChart/temp4'
-import LevelChartTemp5 from '@/components/Vitualization/LevelChart/temp5'
 
-
+import OperatorEventSummary from '@/components/Charts/OperatorEventSummary'
+import VehicleEventSummary from '@/components/Charts/VehicleEventSummary'
+import VehicleGroupEventSummary from '@/components/Charts/VehicleGroupEventSummary'
+import AllPeriodOperatorEventSummary from '@/components/Charts/AllPeriodOperatorEventSummary'
+import AllPeriodVehicleEventSummary from '@/components/Charts/AllPeriodVehicleEventSummary'
 import VehicleGroupEventWithRunningHours from '@/components/Charts/VehicleGroupEventWithRunningHours'
 import AlarmVehicleGroup from '@/components/Charts/AlarmVehicleGroup'
 import OperatorDrivingTime from '@/components/Charts/OperatorDrivingTime'
@@ -86,13 +81,17 @@ import VehicleMaintenance from '@/components/Charts/VehicleMaintenance'
 
 export default {
   name: 'Dashboard',
-  components: { SetsChart, RegularBarChart, LevelChart,
-    LevelChartTemp2, LevelChartTemp3, LevelChartTemp4, LevelChartTemp5,
+  components: {
     OperatorDrivingTime,
     VehicleMaintenance,
     VehicleGroupEventWithRunningHours,
     AlarmVehicleGroup,
-    draggable
+    draggable,
+    OperatorEventSummary,
+    VehicleEventSummary,
+    VehicleGroupEventSummary,
+    AllPeriodOperatorEventSummary,
+    AllPeriodVehicleEventSummary
   },
   data() {
     return {
@@ -100,30 +99,35 @@ export default {
         form: {
           name: '',
           template: null,
-          size: 24
+          size: CHART_SIZE.EXTRA_LARGE
         },
         formLabelWidth: '120px',
       isEditable: false,
       chartTemplates: [
         {
           name: 'B1) オペレータ毎のアラーム数・種別と稼働時間​​',
-          component: 'level-chart-temp-2'
+          component: CHART_COMPONENT.OPERATOR_EVENT_SUMMARY,
+          api: '/api/v1/data-summary/event/operators'
         },
         {
           name: 'B2) 車両毎のアラーム数・種別と稼働時間',
-          component: CHART_COMPONENT.LEVEL_CHART
+          component: CHART_COMPONENT.VEHICLE_EVENT_SUMMARY,
+          api: '/api/v1/data-summary/event/vehicles'
         },
         {
           name: 'B3) 車両グループ毎のアラーム数・種別と稼働時間​',
-          component: 'level-chart-temp-3'
+          component: CHART_COMPONENT.VEHICLE_GROUP_EVENT_SUMMARY,
+          api: '/api/v1/data-summary/event/vehicle-groups'
         },
         {
           name: 'C1) 期間毎の全オペレータのアラーム総数・種別と総稼働時間​',
-          component: 'level-chart-temp-4'
+          component: CHART_COMPONENT.ALL_PERIOD_OPERATOR_EVENT_SUMMARY,
+          api: '/api/v1/data-summary/alarms/operators'
         },
         {
           name: 'C2) 期間毎の全車両のアラーム総数・種別と総稼働時間​',
-          component: 'level-chart-temp-5'
+          component: CHART_COMPONENT.ALL_PERIOD_VEHICLE_EVENT_SUMMARY,
+          api: '/api/v1/data-summary/alarms/vehicle'
         },
         {
           name: '期間毎の車両グループ毎のアラーム数と全車両グループの総稼働時間​',
@@ -149,29 +153,33 @@ export default {
       charts: [
         {
           id: 1,
-          chartKey: CHART_COMPONENT.LEVEL_CHART,
-          size: CHART_SIZE.MEDUIM
+          chartKey: CHART_COMPONENT.OPERATOR_EVENT_SUMMARY,
+          size: CHART_SIZE.MEDUIM,
+          api: '/api/v1/data-summary/event/operators'
         },
         {
           id: 5,
-          chartKey: 'level-chart-temp-2',
-          size: CHART_SIZE.MEDUIM
+          chartKey: CHART_COMPONENT.VEHICLE_EVENT_SUMMARY,
+          size: CHART_SIZE.MEDUIM,
+          api: '/api/v1/data-summary/event/vehicles'
         },
-
         {
           id: 6,
-          chartKey: 'level-chart-temp-3',
-          size: CHART_SIZE.EXTRA_LARGE
+          chartKey: CHART_COMPONENT.VEHICLE_GROUP_EVENT_SUMMARY,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/api/v1/data-summary/event/vehicle-groups'
         },
         {
           id: 7,
-          chartKey: 'level-chart-temp-4',
-          size: CHART_SIZE.EXTRA_LARGE
+          chartKey: CHART_COMPONENT.ALL_PERIOD_OPERATOR_EVENT_SUMMARY,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/api/v1/data-summary/alarms/operators'
         },
         {
           id: 8,
-          chartKey: 'level-chart-temp-5',
-          size: CHART_SIZE.EXTRA_LARGE
+          chartKey: CHART_COMPONENT.ALL_PERIOD_VEHICLE_EVENT_SUMMARY,
+          size: CHART_SIZE.EXTRA_LARGE,
+          api: '/api/v1/data-summary/alarms/vehicle'
         },
         {
           id: 2,
@@ -234,7 +242,7 @@ export default {
     addNewChart() {
       const template = this.chartTemplates.filter(x => x.component === this.form.template)[0]
       this.charts.unshift({
-          id: Math.floor(Math.random() * 1000),
+          id: Math.floor(Math.random() * 1000000),
           chartKey: template.component,
           size: this.form.size,
           api: template.api,

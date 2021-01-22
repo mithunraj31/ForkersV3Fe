@@ -353,7 +353,8 @@ export default {
     drive: '概要',
     route: 'ルート',
     video: 'ビデオ',
-    device: 'デバイス'
+    device: 'デバイス',
+    channelNumber: 'チャンネル番号'
   },
 
   general: {
