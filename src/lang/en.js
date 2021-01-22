@@ -324,7 +324,8 @@ export default {
     drive: 'Drive',
     route: 'Route',
     video: 'Video',
-    device: 'Device'
+    device: 'Device',
+    channelNumber: 'Channel number'
   },
 
   type: {
@@ -670,6 +671,32 @@ export default {
     form: {
       name: 'Name',
       description: 'description'
+    }
+  },
+  chart: {
+    operatorDrivingTime: {
+      title: 'Operator\'s driving time'
+    },
+    operatorEventSummary: {
+      title: 'Operator event summary​'
+    },
+    vehicleEventSummary: {
+      title: 'Vehicle event summary'
+    },
+    vehicleGroupEventSummary: {
+      title: 'Vehicle group event summary'
+    },
+    allPerriodOperatorEventSummary: {
+      title: 'All period operator event summary'
+    },
+    allPeriodVehicleEventSummary: {
+      title: 'All period vehicle event summary​'
+    },
+    vehicleGroupEventWithRunningHours: {
+      title: 'vehicle group event with running hours'
+    },
+    vehicleMaintenance: {
+      title: 'vehicle maintenance'
     }
   }
 }

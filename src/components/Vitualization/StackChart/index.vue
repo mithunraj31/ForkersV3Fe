@@ -1,27 +1,27 @@
 <template>
-  <div
-    :id="elementId"
-    :class="className"
-    :style="{ height: '400px' }"
-  />
+ <div
+      :id="elementId"
+      :class="className"
+      :style="{ height: '400px'}"
+    />
 </template>
 
 <script>
 import echarts from 'echarts'
 
 export default {
-  name: 'SetsChart',
+  name: 'StackChart',
   props: {
-    className: {
-      type: String,
-      default() {
-        return 'chart'
-      }
-    },
     id: {
       type: Number,
       default() {
         return 0
+      }
+    },
+    className: {
+      type: String,
+      default() {
+        return ''
       }
     },
     keyPairValue: {
@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     elementId() {
-      return `SetsChart${this.id}`
+      return `StackChart${this.id}`
     }
   },
   mounted() {
@@ -85,17 +85,21 @@ export default {
       if (!this.keyPairValue || this.keyPairValue.length === 0) {
         return
       }
+
       this.chart = echarts.init(document.getElementById(this.elementId))
-      let legends = this.keyPairValue[0].value.map(x => x.key)
+      const legends =  this.keyPairValue[0].value.map(x => x.key)
       legends.push(this.lineOptions.label)
-      let categories = this.keyPairValue.map(x => x.key)
+
 
       let series = []
-      let barMaxValue = 0
+      let countStackEachGroup = this.keyPairValue.map(x => x.value.map(m => m.value).reduce((a, b) => a + b, 0))
+      let barMaxValue  = Math.max.apply(Math, countStackEachGroup)
       this.keyPairValue[0].value.forEach(x => {
+
         series.push({
           name: x.key,
           type: 'bar',
+          stack: 'Stck1',
           data: this.keyPairValue.map(parentGroup => {
             const val = parentGroup.value
                         .filter(subGroup => subGroup.key === x.key)[0].value
@@ -116,32 +120,34 @@ export default {
         yAxisIndex: 1,
         data: lineValues
       })
+
       this.chart.setOption({
+        toolbox: {
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            type: 'cross',
-            crossStyle: {
-              color: '#999'
-            }
+            type: 'shadow'
           }
         },
         legend: {
           data: legends
         },
+        grid: {
+          left: '3%',
+          bottom: '3%',
+          containLabel: true
+        },
         xAxis: [
           {
             type: 'category',
-            data: categories,
-            axisPointer: {
-              type: 'shadow'
-            }
+            data: this.keyPairValue.map(x => x.key)
           }
         ],
         yAxis: [
           {
-            type: 'value',
             name: this.yAxisOptions.label,
+            type: 'value',
             min: 0,
             max: barYAxisChartValueOptions.max,
             interval: barYAxisChartValueOptions.interval,

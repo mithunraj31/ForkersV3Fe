@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <h3>1. 車両のメンテナンス情報</h3>
-    <div
+  <div
       :id="elementId"
       :class="className"
-      :style="{ height: '400px', width: '900px' }"
-    />
-  </div>
+      :style="{ height: '400px' }"
+  />
 </template>
 
 <script>
@@ -15,12 +12,6 @@ import echarts from 'echarts'
 export default {
   name: 'RegularBarChart',
   props: {
-    size: {
-      type: Number,
-      default() {
-        return 0
-      }
-    },
     id: {
       type: Number,
       default() {
@@ -32,6 +23,24 @@ export default {
       default() {
         return ''
       }
+    },
+    yAxisLabel: {
+      type: String,
+      default() {
+        return ''
+      }
+    },
+    xAxisLabel: {
+      type: String,
+      default() {
+        return ''
+      }
+    },
+    keyPairValue: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   data() {
@@ -41,7 +50,7 @@ export default {
   },
   computed: {
     elementId() {
-      return `LevelChart${this.id}`
+      return `RegularChart${this.id}`
     }
   },
   mounted() {
@@ -53,6 +62,11 @@ export default {
     }
     this.chart.dispose()
     this.chart = null
+  },
+  watch: {
+    keyPairValue() {
+      this.initChart()
+    }
   },
   methods: {
     initChart() {
@@ -72,9 +86,9 @@ export default {
         },
         xAxis: [
           {
-            name: '車両グループ',
+            name: this.xAxisLabel,
             type: 'category',
-            data: ['#1', '#2', '#3', '#4', '#5', '#6', '#7'],
+            data: this.keyPairValue.map(x => x.key),
             axisTick: {
               alignWithLabel: true
             }
@@ -82,16 +96,16 @@ export default {
         ],
         yAxis: [
           {
-            name: 'メンテナンスが必要な車両の数',
+            name: this.yAxisLabel,
             type: 'value'
           }
         ],
         series: [
           {
-            name: 'メンテナンスが必要な車両の数',
+            name: this.yAxisLabel,
             type: 'bar',
             barWidth: '60%',
-            data: [30, 10, 15, 12, 27, 20, 19]
+            data: this.keyPairValue.map(x => x.value)
           }
         ]
       })
