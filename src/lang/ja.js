@@ -286,27 +286,7 @@ export default {
     vehicleHasBeenCreated: '車両が作成されました',
     vehicleHasBeenDeleted: '車両が削除されました',
     vehicleHasBeenEdited: '車両が編集されました',
-    modelNameRequired: 'モデル名が必要です',
-    powerTypeRequired: '電源タイプが必要です',
-    structuralMethodRequired: '構造メソッドが必要です',
-    engineModelRequired: 'エンジンモデルが必要です',
-    ratedLoadRequired: '定格負荷が必要です',
-    forkLengthRequired: 'フォークの長さが必要です',
-    forkWidthRequired: 'フォーク幅が必要です',
-    standardLiftRequired: '標準リフトが必要',
-    maximumLiftRequired: '必要な最大リフト',
-    batteryVoltageRequired: '必要なバッテリー電圧',
-    batteryCapacityRequired: '必要なバッテリー容量',
-    fuelTankCapacityRequired: '燃料タンク容量が必要',
-    bodyWeightRequired: '必要な体重',
-    bodyLengthRequired: '必要な体長',
-    bodyWidthRequired: '必要な体幅',
-    headGuardHeightRequired: 'ヘッドガードの高さが必要',
-    minTurningRadiusRequired: 'マイナス回転半径が必要',
-    refLoadCenterRequired: '基準荷重中心が必要',
-    tireSizeFrontWheelRequired: 'タイヤサイズの前輪が必要',
-    tireSizeRearWheelRequired: 'タイヤサイズ後輪が必要',
-    remarksRequired: '備考が必要'
+    modelNameRequired: 'モデル名が必要です'
   },
 
   event: {

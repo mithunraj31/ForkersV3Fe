@@ -124,7 +124,6 @@ export default {
         console.log(ex)
         this.total = 0
       } finally {
-        console.log(this.vehicleModels)
         this.loading = false
         this.$router.push({
           query: this.listQuery

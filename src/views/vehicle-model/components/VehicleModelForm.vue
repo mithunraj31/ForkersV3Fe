@@ -18,16 +18,22 @@
               @change="onManufacturerChanged"
             />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.name')" prop="name">
-            <el-input v-model="form.name" />
-          </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.seriesName')" prop="seriesName">
+          <el-form-item
+            :label="$t('vehicleModel.form.seriesName')"
+            prop="seriesName"
+          >
             <el-input v-model="form.seriesName" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.modelName')" prop="modelName">
+          <el-form-item
+            :label="$t('vehicleModel.form.modelName')"
+            prop="modelName"
+          >
             <el-input v-model="form.modelName" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.powerType')" prop="powerType">
+          <el-form-item
+            :label="$t('vehicleModel.form.powerType')"
+            prop="powerType"
+          >
             <el-input v-model="form.powerType" />
           </el-form-item>
           <el-form-item
@@ -36,22 +42,40 @@
           >
             <el-input v-model="form.structuralMethod" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.engineModel')" prop="engineModel">
+          <el-form-item
+            :label="$t('vehicleModel.form.engineModel')"
+            prop="engineModel"
+          >
             <el-input v-model="form.engineModel" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.ratedLoad')" prop="ratedLoad">
+          <el-form-item
+            :label="$t('vehicleModel.form.ratedLoad')"
+            prop="ratedLoad"
+          >
             <el-input v-model="form.ratedLoad" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.forkLength')" prop="forkLength">
+          <el-form-item
+            :label="$t('vehicleModel.form.forkLength')"
+            prop="forkLength"
+          >
             <el-input v-model="form.forkLength" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.forkWidth')" prop="forkWidth">
+          <el-form-item
+            :label="$t('vehicleModel.form.forkWidth')"
+            prop="forkWidth"
+          >
             <el-input v-model="form.forkWidth" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.standardLift')" prop="standardLift">
+          <el-form-item
+            :label="$t('vehicleModel.form.standardLift')"
+            prop="standardLift"
+          >
             <el-input v-model="form.standardLift" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.maximumLift')" prop="maximumLift">
+          <el-form-item
+            :label="$t('vehicleModel.form.maximumLift')"
+            prop="maximumLift"
+          >
             <el-input v-model="form.maximumLift" />
           </el-form-item>
         </el-col>
@@ -74,13 +98,22 @@
           >
             <el-input v-model="form.fuelTankCapacity" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.bodyWeight')" prop="bodyWeight">
+          <el-form-item
+            :label="$t('vehicleModel.form.bodyWeight')"
+            prop="bodyWeight"
+          >
             <el-input v-model="form.bodyWeight" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.bodyLength')" prop="bodyLength">
+          <el-form-item
+            :label="$t('vehicleModel.form.bodyLength')"
+            prop="bodyLength"
+          >
             <el-input v-model="form.bodyLength" />
           </el-form-item>
-          <el-form-item :label="$t('vehicleModel.form.bodyWidth')" prop="bodyWidth">
+          <el-form-item
+            :label="$t('vehicleModel.form.bodyWidth')"
+            prop="bodyWidth"
+          >
             <el-input v-model="form.bodyWidth" />
           </el-form-item>
           <el-form-item
@@ -122,7 +155,9 @@
             <el-button type="primary" @click="onSubmit">{{
               $t("general.save")
             }}</el-button>
-            <el-button @click="$router.go(-1)">{{ $t("general.cancel") }}</el-button>
+            <el-button @click="$router.go(-1)">{{
+              $t("general.cancel")
+            }}</el-button>
           </el-form-item>
         </el-col>
       </el-form>
@@ -142,7 +177,6 @@ export default {
       default: () => {
         return {
           id: 0,
-          name: '',
           seriesName: '',
           modelName: '',
           powerType: '',
@@ -170,14 +204,6 @@ export default {
     }
   },
   data() {
-    const validateName = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.vehicleModelNameRequired')))
-      } else {
-        callback()
-      }
-    }
-
     const validateSeriesName = (rule, value, callback) => {
       if (!value) {
         callback(new Error(this.$t('message.seriesNameRequired')))
@@ -187,7 +213,7 @@ export default {
     }
 
     const validateManufacturerId = (rule, value, callback) => {
-      if (!this.manufacturerId) {
+      if (!value) {
         callback(new Error(this.$t('message.manufacturerRequired')))
       } else {
         callback()
@@ -200,146 +226,6 @@ export default {
         callback()
       }
     }
-    const validatePowerType = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.powerTypeRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateStructuralMethod = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.structuralMethodRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateEngineModel = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.engineModelRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateRatedLoad = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.ratedLoadRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateForkLength = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.forkLengthRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateForkWidth = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.forkWidthRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateStandardLift = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.standardLiftRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateMaximumLift = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.maximumLiftRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateBatteryVoltage = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.batteryVoltageRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateBatteryCapacity = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.batteryCapacityRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateFuelTankCapacity = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.fuelTankCapacityRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateBodyWeight = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.bodyWeightRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateBodyLength = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.bodyLengthRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateBodyWidth = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.bodyWidthRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateHeadGuardHeight = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.headGuardHeightRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateMinTurningRadius = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.minTurningRadiusRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateRefLoadCenter = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.refLoadCenterRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateTireSizeFrontWheel = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.tireSizeFrontWheelRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateTireSizeRearWheel = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.tireSizeRearWheelRequired')))
-      } else {
-        callback()
-      }
-    }
-    const validateRemarks = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(this.$t('message.remarksRequired')))
-      } else {
-        callback()
-      }
-    }
 
     return {
       manufacturers: [],
@@ -348,7 +234,6 @@ export default {
 
       form: {
         id: 0,
-        name: '',
         description: '',
         manufacturerId: '',
         seriesName: '',
@@ -376,13 +261,6 @@ export default {
       },
       dialogVisible: false,
       formRules: {
-        name: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateName
-          }
-        ],
         seriesName: [
           {
             required: true,
@@ -408,146 +286,6 @@ export default {
             trigger: 'blur',
             validator: validateModelName
           }
-        ],
-        powerType: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validatePowerType
-          }
-        ],
-        structuralMethod: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateStructuralMethod
-          }
-        ],
-        engineModel: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateEngineModel
-          }
-        ],
-        ratedLoad: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateRatedLoad
-          }
-        ],
-        forkLength: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateForkLength
-          }
-        ],
-        forkWidth: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateForkWidth
-          }
-        ],
-        standardLift: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateStandardLift
-          }
-        ],
-        maximumLift: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateMaximumLift
-          }
-        ],
-        batteryVoltage: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateBatteryVoltage
-          }
-        ],
-        batteryCapacity: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateBatteryCapacity
-          }
-        ],
-        fuelTankCapacity: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateFuelTankCapacity
-          }
-        ],
-        bodyWeight: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateBodyWeight
-          }
-        ],
-        bodyLength: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateBodyLength
-          }
-        ],
-        bodyWidth: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateBodyWidth
-          }
-        ],
-        headGuardHeight: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateHeadGuardHeight
-          }
-        ],
-        minTurningRadius: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateMinTurningRadius
-          }
-        ],
-        refLoadCenter: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateRefLoadCenter
-          }
-        ],
-        tireSizeFrontWheel: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateTireSizeFrontWheel
-          }
-        ],
-        tireSizeRearWheel: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateTireSizeRearWheel
-          }
-        ],
-        remarks: [
-          {
-            required: true,
-            trigger: 'blur',
-            validator: validateRemarks
-          }
         ]
       }
     }
@@ -555,7 +293,7 @@ export default {
   watch: {
     vehicleModel: function(vehicleModel) {
       this.form.id = vehicleModel.id
-      this.form.name = vehicleModel.name
+      this.form.manufacturerId = vehicleModel.manufacturerId
       this.form.seriesName = vehicleModel.seriesName
       this.form.modelName = vehicleModel.modelName
       this.form.powerType = vehicleModel.powerType

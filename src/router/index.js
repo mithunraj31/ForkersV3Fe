@@ -415,7 +415,7 @@ export const asyncRoutes = [
   {
     path: '/vehicle-models',
     component: Layout,
-    redirect: '/vehicle-model/index',
+    redirect: '/vehicle-models/index',
     children: [
       {
         path: 'index',

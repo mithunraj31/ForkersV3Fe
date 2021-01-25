@@ -285,27 +285,7 @@ export default {
     vehicleHasBeenCreated: 'Vehicle has been created',
     vehicleHasBeenDeleted: 'Vehicle has been deleted',
     vehicleHasBeenEdited: 'Vehicle has been edited',
-    modelNameRequired: 'Model Name  is Required',
-    powerTypeRequired: 'Power Type is Required',
-    structuralMethodRequired: 'Structural Method is Required',
-    engineModelRequired: 'Engine Model is Required',
-    ratedLoadRequired: 'Rated Load is Required',
-    forkLengthRequired: 'Fork Length is Required',
-    forkWidthRequired: 'Fork Width is Required',
-    standardLiftRequired: 'Standard Lift Required',
-    maximumLiftRequired: 'Maximum Lift Required',
-    batteryVoltageRequired: 'Battery Voltage Required',
-    batteryCapacityRequired: 'Battery Capacity Required',
-    fuelTankCapacityRequired: 'Fuel Tank CapacityRequired',
-    bodyWeightRequired: 'Body Weight Required',
-    bodyLengthRequired: 'Body Length Required',
-    bodyWidthRequired: 'Body Width Required',
-    headGuardHeightRequired: 'Head Guard Height Required',
-    minTurningRadiusRequired: 'Minus Turning Radius Required',
-    refLoadCenterRequired: 'Ref Load Center Required',
-    tireSizeFrontWheelRequired: 'Tire Size Front Wheel Required',
-    tireSizeRearWheelRequired: 'Tire Size Rear Wheel Required',
-    remarksRequired: 'Remarks Required'
+    modelNameRequired: 'Model Name  is Required'
   },
 
   event: {

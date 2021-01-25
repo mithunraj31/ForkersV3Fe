@@ -29,7 +29,6 @@ export function newVehicleModels(data) {
     url: '/vehicles/models',
     method: 'post',
     data: {
-      name: data.name,
       description: data.description,
       manufacturer_id: data.manufacturerId,
       series_name: data.seriesName,
@@ -63,7 +62,6 @@ export function editVehicleModel(data) {
     url: `/vehicles/models/${data.id}`,
     method: 'put',
     data: {
-      name: data.name,
       description: data.description,
       manufacturer_id: data.manufacturerId,
       series_name: data.seriesName,
