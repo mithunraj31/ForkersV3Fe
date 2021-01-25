@@ -1,9 +1,12 @@
 import request from '@/utils/request'
 import { convertStrUtcToLocalDatetime } from '@/utils'
+import * as moment from 'moment'
 
 export function fetchEventSummary() {
+  const start = moment().add(-1, 'months').format('YYYY-MM-DD')
+  const end = moment().format('YYYY-MM-DD')
   return request({
-    url: '/events/summary',
+    url: `/events/summary&start=${start}&end=${end}`,
     method: 'get'
   })
 }

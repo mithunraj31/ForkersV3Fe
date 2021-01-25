@@ -9,14 +9,8 @@
         style="width: 100%"
       >
         <el-table-column :label="this.$t('device.deviceId')" prop="deviceId" />
-        <el-table-column :label="this.$t('device.driverId')" prop="driverId" />
-        <el-table-column :label="this.$t('device.type')" prop="status">
-          <template slot-scope="scope">
-            <span v-if="scope.row.status" class="online-status">{{ $t('maps.online') }}</span>
-            <span v-else>{{ $t('maps.offline') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column :label="this.$t('device.userName')" prop="userName" />
+        <el-table-column :label="this.$t('device.channelNumber')" prop="channelNumber" />
+        <el-table-column :label="this.$t('device.type')" prop="deviceType" />
         <el-table-column :label="this.$t('general.action')" width="300">
           <template slot-scope="scope">
             <el-dropdown>
@@ -179,9 +173,9 @@ export default {
   methods: {
     mapDatasToDataTable(device) {
       return {
-        deviceId: device.device_id,
-        driverId: device.latest_driver_id,
-        status: device.is_online === 1,
+        deviceId: device.id,
+        deviceType: (device.device_type || '').toUpperCase(),
+        channelNumber: device.channel_number,
         userName: device.stk_user
       }
     },

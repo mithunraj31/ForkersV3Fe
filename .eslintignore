@@ -4,3 +4,5 @@ public
 dist
 src/views/drive-summery/components/timeline-lib.js
 src/views/drive-summery/components/timeline-lib-min.js
+src/views/dynamic-dashboard/*
+src/components/Vitualization/*

@@ -9,6 +9,11 @@
           <el-form-item :label="$t('vehicle.form.description')" prop="description">
             <el-input v-model="form.description" type="textarea" />
           </el-form-item>
+
+          <el-form-item :label="$t('vehicle.form.')">
+            <el-input v-model="form.description" type="textarea" />
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" @click="onSubmit">{{
               $t("general.save")
