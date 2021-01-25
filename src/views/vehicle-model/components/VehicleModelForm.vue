@@ -600,8 +600,7 @@ export default {
       })
     },
     async onManufacturerChanged(manufacturerId) {
-      this.manufacturerId = manufacturerId
-      await this.fetchManufacturerListings()
+      this.form.manufacturerId = manufacturerId
     }
   }
 }
