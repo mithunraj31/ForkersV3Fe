@@ -586,7 +586,7 @@ export default {
   methods: {
     async fetchManufacturerListings() {
       this.loading = true
-      const { data } = await fetchManufacturers(null, this.manufacturerId)
+      const { data } = await fetchManufacturers(null)
       this.manufacturers = data
       this.loading = false
     },

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchManufacturers(listQuery, customerId = null) {
+export function fetchManufacturers(listQuery) {
   let params = ''
   if (listQuery) {
     params = `?perPage=${listQuery.limit}&page=${listQuery.page}`
@@ -8,9 +8,6 @@ export function fetchManufacturers(listQuery, customerId = null) {
     params = `?perPage=${1000}`
   }
 
-  if (customerId) {
-    params += `&customer_id=${customerId}`
-  }
   return request({
     url: `/manufacturers${params}`,
     method: 'get'
