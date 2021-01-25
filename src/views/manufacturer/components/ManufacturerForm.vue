@@ -3,9 +3,6 @@
     <el-row>
       <el-col :span="12">
         <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
-          <el-form-item :label="$t('manufacturer.form.customer')">
-            <company-selector :id="this.form.customerId" @change="onCustomerChanged" />
-          </el-form-item>
           <el-form-item :label="$t('manufacturer.form.name')" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
@@ -27,11 +24,8 @@
 </template>
 
 <script>
-import CompanySelector from '@/components/CompanySelector'
-
 export default {
   name: 'ManufacturerForm',
-  components: { CompanySelector },
   props: {
     manufacturer: {
       type: Object,
@@ -75,7 +69,6 @@ export default {
       this.form.id = manufacturer.id
       this.form.name = manufacturer.name
       this.form.description = manufacturer.description
-      this.form.customerId = manufacturer.customerId
     }
   },
   methods: {
@@ -87,9 +80,6 @@ export default {
           })
         }
       })
-    },
-    onCustomerChanged(customerId) {
-      this.form.customerId = customerId
     }
   }
 }

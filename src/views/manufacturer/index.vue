@@ -1,10 +1,7 @@
 <template>
   <div class="app-container">
     <el-row class="filter-section">
-      <el-col :span="10" class="new-customer-button-section">
-        <company-selector @change="onCustomerChanged" />
-      </el-col>
-      <el-col :span="14" class="new-manufacturer-button-section">
+      <el-col :span="24" class="new-manufacturer-button-section">
         <el-button type="primary" @click="$router.push('/manufacturers/new')">{{
           this.$t("manufacturer.new.title")
         }}</el-button>
@@ -48,12 +45,10 @@ import {
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 import permission from '@/directive/permission/index.js'
-import CompanySelector from '@/components/CompanySelector'
 
 export default {
   name: 'ManufacturerListings',
   components: {
-    CompanySelector,
     Pagination
   },
   directives: {
@@ -67,8 +62,7 @@ export default {
         page: 1,
         limit: 10
       },
-      loading: false,
-      customerId: 0
+      loading: false
     }
   },
 
@@ -94,7 +88,7 @@ export default {
     },
     async fetchListings() {
       this.loading = true
-      const { data, meta } = await fetchManufacturers(this.listQuery, this.customerId)
+      const { data, meta } = await fetchManufacturers(this.listQuery)
       this.manufacturers = data.map(this.mapData)
       this.total = meta.total
       this.loading = false
@@ -134,10 +128,6 @@ export default {
         })
     },
     async onPaged() {
-      await this.fetchListings()
-    },
-    async onCustomerChanged(customerId) {
-      this.customerId = customerId
       await this.fetchListings()
     }
   }

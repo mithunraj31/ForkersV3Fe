@@ -7,9 +7,9 @@ import {
   ROLE_PRIVILEGE,
   DEVICE_PRIVILEGE,
   VEHICLE_PRIVILEGE,
-  EVENT_PRIVILEGE
-  // MANUFACTURER_PRIVILEGE,
-  // VEHICLE_MODEL_PRIVILEGE
+  EVENT_PRIVILEGE,
+  MANUFACTURER_PRIVILEGE,
+  VEHICLE_MODEL_PRIVILEGE
 } from '@/enums'
 
 Vue.use(Router)
@@ -371,88 +371,88 @@ export const asyncRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/manufacturers',
-  //   component: Layout,
-  //   redirect: '/manufacturers/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/manufacturer/index'),
-  //       name: 'Manufacturers',
-  //       meta: {
-  //         title: 'manufacturerListings',
-  //         icon: 'el-icon-s-tools',
-  //         noCache: true,
-  //         roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.VIEW]
-  //       }
-  //     },
-  //     {
-  //       path: 'new',
-  //       component: () => import('@/views/manufacturer/new-manufacturer/index'),
-  //       name: 'NewManufacturer',
-  //       hidden: true,
-  //       meta: {
-  //         title: 'newManufacturer',
-  //         noCache: true,
-  //         roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.ADD]
-  //       }
-  //     },
-  //     {
-  //       path: ':id/edit',
-  //       component: () => import('@/views/manufacturer/edit-manufacturer/index'),
-  //       name: 'EditManufacturer',
-  //       hidden: true,
-  //       meta: {
-  //         title: 'editManufacturer',
-  //         noCache: true,
-  //         breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
-  //         roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/vehicle-models',
-  //   component: Layout,
-  //   redirect: '/vehicle-model/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/vehicle-model/index'),
-  //       name: 'VehicleModels',
-  //       meta: {
-  //         title: 'vehicleModelListings',
-  //         icon: 'el-icon-odometer',
-  //         noCache: true,
-  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
-  //       }
-  //     },
-  //     {
-  //       path: 'new',
-  //       component: () => import('@/views/vehicle-model/new-vehicle-model/index'),
-  //       name: 'NewVehicleModel',
-  //       hidden: true,
-  //       meta: {
-  //         title: 'newVehicleModel',
-  //         noCache: true,
-  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
-  //       }
-  //     },
-  //     {
-  //       path: ':id/edit',
-  //       component: () => import('@/views/vehicle-model/edit-vehicle-model/index'),
-  //       name: 'EditVehicleModel',
-  //       hidden: true,
-  //       meta: {
-  //         title: 'editVehicleModel',
-  //         noCache: true,
-  //         breadcrumbTitle: 'editVehicleModelBreadcrumbTitle',
-  //         roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/manufacturers',
+    component: Layout,
+    redirect: '/manufacturers/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/manufacturer/index'),
+        name: 'Manufacturers',
+        meta: {
+          title: 'manufacturerListings',
+          icon: 'el-icon-s-tools',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/manufacturer/new-manufacturer/index'),
+        name: 'NewManufacturer',
+        hidden: true,
+        meta: {
+          title: 'newManufacturer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/manufacturer/edit-manufacturer/index'),
+        name: 'EditManufacturer',
+        hidden: true,
+        meta: {
+          title: 'editManufacturer',
+          noCache: true,
+          breadcrumbTitle: 'editManufacturerBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, MANUFACTURER_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
+  {
+    path: '/vehicle-models',
+    component: Layout,
+    redirect: '/vehicle-models/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/vehicle-model/index'),
+        name: 'VehicleModels',
+        meta: {
+          title: 'vehicleModelListings',
+          icon: 'el-icon-odometer',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.VIEW]
+        }
+      },
+      {
+        path: 'new',
+        component: () => import('@/views/vehicle-model/new-vehicle-model/index'),
+        name: 'NewVehicleModel',
+        hidden: true,
+        meta: {
+          title: 'newVehicleModel',
+          noCache: true,
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.ADD]
+        }
+      },
+      {
+        path: ':id/edit',
+        component: () => import('@/views/vehicle-model/edit-vehicle-model/index'),
+        name: 'EditVehicleModel',
+        hidden: true,
+        meta: {
+          title: 'editVehicleModel',
+          noCache: true,
+          breadcrumbTitle: 'editVehicleModelBreadcrumbTitle',
+          roles: [SYSTEM_ROLE.ADMIN, VEHICLE_MODEL_PRIVILEGE.EDIT]
+        }
+      }
+    ]
+  },
   {
     path: '/operator',
     component: Layout,
