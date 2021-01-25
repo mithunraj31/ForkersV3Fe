@@ -75,27 +75,27 @@ export default {
       const { data } = await httpGet(this.api)
       this.keyPairValue = data.map(x => {
         return {
-          key: x.vehicle_group.name,
+          key: x.group.name,
           value: [
             {
               key: 'handleLeft',
-              value: x.event_summary['handle_left']
+              value: x.event_summery['handle_left']
             },
             {
               key: 'handleRight',
-              value: x.event_summary['handle_right']
+              value: x.event_summery['handle_right']
             },
             {
               key: 'acceleration​',
-              value: x.event_summary['acceleration​']
+              value: x.event_summery['acceleration​']
             },
             {
               key: 'deacceleration',
-              value: x.event_summary['deacceleration​']
+              value: x.event_summery['deacceleration​']
             },
             {
               key: 'accident',
-              value: x.event_summary['accident']
+              value: x.event_summery['accident']
             }
           ]
         }
@@ -103,7 +103,7 @@ export default {
 
       this.lineKeyPairValue = data.map(m => {
         return {
-          key: m.vehicle_group.name,
+          key: m.group.name,
           value: m.running_time
         }
       })
