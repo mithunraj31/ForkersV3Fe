@@ -111,7 +111,7 @@
                     {{ $t("rfid.listings.mapOperator") }}
                   </el-button>
                 </el-col>
-                <el-col :span="4">
+                <!-- <el-col :span="4">
                   <el-button
                     v-permission="[systemRole.ADMIN, rfidPrivilege.EDIT]"
                     type="primary"
@@ -120,7 +120,7 @@
                   >
                     {{ $t("general.edit") }}
                   </el-button>
-                </el-col>
+                </el-col> -->
                 <el-col :span="4">
                   <el-button
                     v-if="scope.row.operatorId === null"
