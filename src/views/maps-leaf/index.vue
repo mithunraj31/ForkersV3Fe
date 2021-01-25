@@ -25,7 +25,7 @@
           :url="url"
           :attribution="attribution"
         />
-        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.latitude, item.longitude]" :z-index-offset="item.online?100:0">
+        <l-marker v-for="item in devices" :key="item.id" :lat-lng="[item.location.latitude, item.location.longitude]" :z-index-offset="item.online?100:0">
           <l-icon>
             <font-awesome-icon icon="truck" :class="{ 'truck-online': item.online, 'truck-offline': !item.online }" />
           </l-icon>
@@ -36,11 +36,11 @@
 </template>
 
 <script>
-import { fetchDevices } from '@/api/device'
 import { fetchEventSummary } from '@/api/event'
 import { latLng } from 'leaflet'
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
 import EventPanel from './components/EventPanel'
+import { fetchVehicles } from '@/api/vehicle'
 
 export default {
   name: 'MapsLeaf',
@@ -87,9 +87,10 @@ export default {
   methods: {
     async fetchData() {
       this.mapsLoading = true
-      const { data } = await fetchDevices()
-
-      const datafilter = data.filter(device => device.latitude !== 0)
+      const data = await fetchVehicles()
+      const datafilter = data.filter(device => device.location !== null &&
+        device.location.latitude !== 0 &&
+        device.location.longitude !== 0)
 
       this.devices = datafilter
 
@@ -102,6 +103,8 @@ export default {
     async fetchSummary() {
       this.eventPanelLoading = true
       const { data } = await fetchEventSummary()
+
+      console.log(data)
       this.events.acceleration = data.accelerate || 0
       this.events.deceleration = data.decelerate || 0
       this.events.accident = data.impact || 0
