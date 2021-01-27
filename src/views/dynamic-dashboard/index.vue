@@ -60,6 +60,11 @@
     </el-row>
     <el-dialog title="New Chart" :visible.sync="dialogFormVisible">
       <el-form :model="form">
+        <el-row align="text-right">
+          <el-form-item>
+            <el-checkbox v-model="form.isPrivate">isPrivate</el-checkbox>
+          </el-form-item>
+        </el-row>
         <el-form-item label="chart name" :label-width="formLabelWidth">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
@@ -67,6 +72,7 @@
           <el-select
             v-model="form.template"
             placeholder="Please select a chart templete"
+            @change="onTemplateChanged(form.template)"
           >
             <el-option
               v-for="temp in chartTemplates"
@@ -76,6 +82,14 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item>
+          <el-checkbox
+            v-model="timePeriod"
+            label="TimePeriod"
+            border
+          ></el-checkbox>
+        </el-form-item>
+        <el-form-item> </el-form-item>
         <el-form-item label="size" :label-width="formLabelWidth">
           <el-select
             v-model="form.size"
@@ -111,6 +125,7 @@ import VehicleGroupEventWithRunningHours from "@/components/Charts/VehicleGroupE
 import AlarmVehicleGroup from "@/components/Charts/AlarmVehicleGroup";
 import OperatorDrivingTime from "@/components/Charts/OperatorDrivingTime";
 import VehicleMaintenance from "@/components/Charts/VehicleMaintenance";
+import { newChart } from "@/api/charts";
 
 export default {
   name: "Dashboard",
@@ -133,6 +148,9 @@ export default {
         name: "",
         template: null,
         size: CHART_SIZE.EXTRA_LARGE,
+        isPrivate: false,
+        apiPath: null,
+        timePeriod: false,
       },
       formLabelWidth: "120px",
       isEditable: false,
@@ -281,6 +299,7 @@ export default {
   created() {},
   methods: {
     addNewChart() {
+      this.loading = true;
       const template = this.chartTemplates.filter(
         (x) => x.component === this.form.template
       )[0];
@@ -291,12 +310,25 @@ export default {
         api: template.api,
         title: this.form.name,
       });
-      this.form = {
-        name: "",
-        template: null,
-        size: 24,
-      };
       this.dialogFormVisible = false;
+      console.log(this.form);
+
+      newChart(this.form)
+        .then((response) => {
+          this.loading = false;
+          this.$message({
+            message: this.$t("message.chartHasBeenCreated"),
+            type: "success",
+          });
+          this.$router.push("/vitualization/index");
+        })
+        .catch(() => {
+          this.loading = false;
+          this.$message({
+            message: this.$t("message.somethingWentWrong"),
+            type: "error",
+          });
+        });
     },
     onDeleteChartClicked(id) {
       let deleteConfirmMessage = this.$t("message.confirmDelete");
@@ -317,6 +349,10 @@ export default {
     deleteChart(id) {
       console.log(this.charts);
       this.charts = this.charts.filter((x) => x.id !== id);
+    },
+
+    onTemplateChanged(template) {
+      this.form.apiPath = template;
     },
   },
 };
