@@ -285,7 +285,8 @@ export default {
     selectCustomer: '提案を表示するには、最初に顧客を選択してください',
     vehicleHasBeenCreated: '車両が作成されました',
     vehicleHasBeenDeleted: '車両が削除されました',
-    vehicleHasBeenEdited: '車両が編集されました'
+    vehicleHasBeenEdited: '車両が編集されました',
+    modelNameRequired: 'モデル名が必要です'
   },
 
   event: {
@@ -652,7 +653,28 @@ export default {
     form: {
       manufacturer: 'メーカー',
       name: 'マスタ名',
-      seriesName: 'シリーズ名'
+      seriesName: 'シリーズ名',
+      modelName: '車種名',
+      powerType: '動力タイプ',
+      structuralMethod: '構造方式',
+      engineModel: 'エンジン型式',
+      ratedLoad: '定格荷重(kg)',
+      forkLength: 'フォーク長さ(mm)',
+      forkWidth: 'フォーク幅(mm)',
+      standardLift: '標準揚高(mm)',
+      maximumLift: '最大揚高時(mm)',
+      batteryVoltage: 'バッテリー電圧(V)',
+      batteryCapacity: 'バッテリー容量(Ah)',
+      fuelTankCapacity: '燃料タンク容量(L)',
+      bodyWeight: '車両重量(kg)',
+      bodyLength: '全長(mm)',
+      bodyWidth: '全幅(mm)',
+      headGuardHeight: 'ヘッドガード高さ(mm)',
+      minTurningRadius: '最小旋回半径(mm)	',
+      refLoadCenter: '基準荷重中心(mm)',
+      tireSizeFrontWheel: 'タイヤサイズ前輪',
+      tireSizeRearWheel: 'タイヤサイズ後輪	',
+      remarks: '備考'
     }
   },
   vehicle: {
