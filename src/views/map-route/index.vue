@@ -40,7 +40,7 @@ import {
   LMarker,
   LIcon
 } from 'vue2-leaflet'
-import { fetchDriveRoute } from '@/api/device'
+import { fetchDriveRoute } from '@/api/vehicle'
 import moment from '@/utils/moment'
 
 export default {

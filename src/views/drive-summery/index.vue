@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { fetchDriveSummery, fetchEventsByDeviceIdAndTime } from '@/api/device'
+import { fetchEventsByDeviceIdAndTime } from '@/api/device'
+import { fetchDriveSummery } from '@/api/vehicle'
 import TimeLine from './components/TimeLine'
 import DataTableDrive from './components/DataTableDrive'
 import DataTableEvents from './components/DataTableEvents'

@@ -73,29 +73,36 @@ export default {
   methods: {
     async fetchData() {
       const { data } = await httpGet(this.api)
-      this.keyPairValue = data.map(x => {
+      if (!data && data.length === 0) {
+        return
+      }
+      const strJson = JSON.stringify(data)
+      const jsonData = JSON.parse(strJson)
+
+      this.keyPairValue = jsonData.map(x => {
+        const eventSummery = x.event_summery
         return {
           key: x.operator.name,
           value: [
             {
               key: 'handleLeft',
-              value: x.event_summery['handle_left']
+              value: eventSummery.handle_left
             },
             {
               key: 'handleRight',
-              value: x.event_summery['handle_right']
+              value: eventSummery.handle_right
             },
             {
               key: 'acceleration​',
-              value: x.event_summery['acceleration​']
+              value: eventSummery.acceleration
             },
             {
               key: 'deacceleration',
-              value: x.event_summery['deacceleration​']
+              value: eventSummery.deacceleration
             },
             {
               key: 'accident',
-              value: x.event_summery['accident']
+              value: eventSummery.accident
             }
           ]
         }
