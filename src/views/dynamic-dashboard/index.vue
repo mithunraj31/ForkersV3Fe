@@ -158,27 +158,30 @@ export default {
         {
           name: "B1) オペレータ毎のアラーム数・種別と稼働時間​​",
           component: CHART_COMPONENT.OPERATOR_EVENT_SUMMARY,
-          api: '/data-summary/event/operators?start=2020-11-01&end=2021-01-25&operator_ids=3,4,5'
+          api:
+            "/data-summary/event/operators?start=2020-11-01&end=2021-01-25&operator_ids=3,4,5",
         },
         {
           name: "B2) 車両毎のアラーム数・種別と稼働時間",
           component: CHART_COMPONENT.VEHICLE_EVENT_SUMMARY,
-          api: '/data-summary/event/vehicles?start=2020-11-01&end=2021-01-25&vehicle_ids=2'
+          api:
+            "/data-summary/event/vehicles?start=2020-11-01&end=2021-01-25&vehicle_ids=2",
         },
         {
           name: "B3) 車両グループ毎のアラーム数・種別と稼働時間​",
           component: CHART_COMPONENT.VEHICLE_GROUP_EVENT_SUMMARY,
-          api: '/data-summary/event/vehicle-groups?start=2020-11-01&end=2021-01-25&group_ids=83,84,86,107,92,107'
+          api:
+            "/data-summary/event/vehicle-groups?start=2020-11-01&end=2021-01-25&group_ids=83,84,86,107,92,107",
         },
         {
           name: "C1) 期間毎の全オペレータのアラーム総数・種別と総稼働時間​",
           component: CHART_COMPONENT.ALL_PERIOD_OPERATOR_EVENT_SUMMARY,
-          api: '/data-summary/alarms/operators?start=2021-01-18&end=2021-01-22'
+          api: "/data-summary/alarms/operators?start=2021-01-18&end=2021-01-22",
         },
         {
           name: "C2) 期間毎の全車両のアラーム総数・種別と総稼働時間​",
           component: CHART_COMPONENT.ALL_PERIOD_VEHICLE_EVENT_SUMMARY,
-          api: '/data-summary/alarms/vehicles?start=2021-01-18&end=2021-01-22'
+          api: "/data-summary/alarms/vehicles?start=2021-01-18&end=2021-01-22",
         },
         {
           name:
@@ -208,31 +211,34 @@ export default {
           id: 1,
           chartKey: CHART_COMPONENT.OPERATOR_EVENT_SUMMARY,
           size: CHART_SIZE.MEDUIM,
-          api: '/data-summary/event/operators?start=2020-11-01&&end=2021-01-25&operator_ids=3,4,5'
+          api:
+            "/data-summary/event/operators?start=2020-11-01&&end=2021-01-26&operator_ids=6,9,10",
         },
         {
           id: 5,
           chartKey: CHART_COMPONENT.VEHICLE_EVENT_SUMMARY,
           size: CHART_SIZE.MEDUIM,
-          api: '/data-summary/event/vehicles?start=2020-11-01&end=2021-01-25&vehicle_ids=2'
+          api:
+            "/data-summary/event/vehicles?start=2020-11-01&end=2021-01-25&vehicle_ids=2",
         },
         {
           id: 6,
           chartKey: CHART_COMPONENT.VEHICLE_GROUP_EVENT_SUMMARY,
           size: CHART_SIZE.EXTRA_LARGE,
-          api: '/data-summary/event/vehicle-groups?start=2020-11-01&end=2021-01-25&group_ids=83,84,86,107,92,107'
+          api:
+            "/data-summary/event/vehicle-groups?start=2020-11-01&end=2021-01-25&group_ids=83,84,86,107,92,107",
         },
         {
           id: 7,
           chartKey: CHART_COMPONENT.ALL_PERIOD_OPERATOR_EVENT_SUMMARY,
           size: CHART_SIZE.EXTRA_LARGE,
-          api: '/data-summary/alarms/operators?start=2021-01-18&end=2021-01-22'
+          api: "/data-summary/alarms/operators?start=2021-01-18&end=2021-01-22",
         },
         {
           id: 8,
           chartKey: CHART_COMPONENT.ALL_PERIOD_VEHICLE_EVENT_SUMMARY,
           size: CHART_SIZE.EXTRA_LARGE,
-          api: '/data-summary/alarms/vehicles?start=2021-01-18&end=2021-01-22'
+          api: "/data-summary/alarms/vehicles?start=2021-01-18&end=2021-01-22",
         },
         // {
         //   id: 2,
